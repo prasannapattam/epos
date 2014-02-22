@@ -1,0 +1,19 @@
+﻿@using System.Web.Optimization
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Pediatric Ophthalmology</title>
+    @Styles.Render("~/Content/css")
+</head>
+<body class="main">
+
+    <div id="applicationHost">
+        <div class="splash">
+            <img class="splash-loading" src="~/content/images/loading.gif" />
+        </div>
+    </div>
+
+    @Scripts.Render("~/scripts/libraries")
+    <script src="~/Scripts/require.js" data-main="@Url.Content("~/App/main")"></script>
+</body>
+</html>
