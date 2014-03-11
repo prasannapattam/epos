@@ -1,6 +1,36 @@
 ﻿<div>
-    <h1>Title</h1>
+    <div class="top-header">
+        <div class="left-header">
+            <img class="top-header" data-bind="attr: { src: utility.virtualDirectory + '/content/images/logo.gif' }" />
+        </div>
+        <div class="right-header">
+            <img class="top-header" data-bind="attr: { src: utility.virtualDirectory + '/Data/Prasanna.jpg' }" />
+        </div>
+        <div class="loading" data-bind="css: { display_block: router.isNavigating() || utility.loading() }">
+            <img class="loading" data-bind="attr: { src: utility.virtualDirectory + '/content/images/loading.gif' }" />
+        </div>        
+        <div class="content">
+            <ul class="tabrow" data-bind="foreach: navigation.tabs">
+                <li data-bind="css: {selected: active }">
+                    <a data-bind="click: $root.navigation.activateTab, text: title"></a>
+                    <a class="tab-close" data-bind="click: $root.navigation.removeTab, css: { display_none: firstTab }">x</a></li>
+            </ul>
+            <!--<pre data-bind="text: ko.toJSON($root.router.activeItem().title, null, 2)"></pre>-->
+        </div>
+    </div>
+    <div class="tight">
+        <div class="left-header" data-bind="css: { display_none: session.profile.isAutenticated() === false }">
+            <br />
+            <a href="#home/patient" title="Patients" class="nav-icon"><i class="fi-home"></i></a>
+            <br /><br />
+            <a href="#" title="Print" class="nav-icon"><i class="fi-print"></i></a>
+            <br /><br />
+            <a href="#home/user" title="Users" class="nav-icon"><i class="fi-torso-business"></i></a>
+            <br /><br />
+            <a href="#" title="Drop Downs" class="nav-icon"><i class="fi-widget"></i></a>
+        </div>  
         <br />
         <div class="content"
-             data-bind="router: { transition: 'entrance', cacheViews: true }"></div>
-</div>
+                data-bind="router: { transition: 'entrance', cacheViews: true }"></div>
+        </div>
+    </div>

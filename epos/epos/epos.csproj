@@ -66,6 +66,8 @@
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
@@ -132,14 +134,80 @@
     <Reference Include="WebGrease">
       <HintPath>..\packages\WebGrease.1.5.2\lib\WebGrease.dll</HintPath>
     </Reference>
+    <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\AutoMapperConfig.cs" />
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\LoginController.cs" />
+    <Compile Include="Controllers\LookUpController.cs" />
+    <Compile Include="Controllers\PatientController.cs" />
+    <Compile Include="Controllers\PatientSearchController.cs" />
+    <Compile Include="Controllers\PrintController.cs" />
+    <Compile Include="Controllers\UserController.cs" />
+    <Compile Include="Controllers\UserSearchController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Lib\Repository\AutoCorrect.cs">
+      <DependentUpon>Pos.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Lib\Repository\Exam.cs">
+      <DependentUpon>Pos.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Lib\Repository\ExamDefault.cs">
+      <DependentUpon>Pos.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Lib\Repository\ExamLookUp.cs">
+      <DependentUpon>Pos.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Lib\Repository\LookUp.cs">
+      <DependentUpon>Pos.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Lib\Repository\Patient.cs">
+      <DependentUpon>Pos.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Lib\Repository\Pos.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Pos.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Lib\Repository\Pos.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Pos.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Lib\Repository\Pos.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Pos.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="Lib\Repository\PosRepository.cs" />
+    <Compile Include="Lib\Repository\PrintQueue.cs">
+      <DependentUpon>Pos.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Lib\Repository\Schedule.cs">
+      <DependentUpon>Pos.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Lib\Repository\User.cs">
+      <DependentUpon>Pos.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Lib\Shared\DBUtil.cs" />
+    <Compile Include="Lib\Shared\PatientLetter.cs" />
+    <Compile Include="Lib\Shared\PatientPrint.cs" />
+    <Compile Include="Lib\Shared\PosConstants.cs" />
+    <Compile Include="Lib\Shared\PosMessage.cs" />
+    <Compile Include="Lib\Shared\WebUtil.cs" />
+    <Compile Include="Models\AjaxModel.cs" />
+    <Compile Include="Models\ExamDefaultModel.cs" />
+    <Compile Include="Models\LoginModel.cs" />
+    <Compile Include="Models\LookUpModel.cs" />
+    <Compile Include="Models\PatientHistoryModel.cs" />
+    <Compile Include="Models\PatientModel.cs" />
+    <Compile Include="Models\PatientSearchResultModel.cs" />
+    <Compile Include="Models\ProfileModel.cs" />
+    <Compile Include="Models\UserModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -147,9 +215,25 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Content Include="App\main.js" />
+    <Content Include="App\services\constants.js" />
+    <Content Include="App\services\message.js" />
+    <Content Include="App\services\navigation.js" />
+    <Content Include="App\services\patient.js" />
+    <Content Include="App\services\profile.js" />
+    <Content Include="App\services\session.js" />
+    <Content Include="App\services\user.js" />
+    <Content Include="App\services\utility.js" />
     <Content Include="App\viewmodels\home.js" />
+    <Content Include="App\viewmodels\login.js" />
+    <Content Include="App\viewmodels\logout.js" />
+    <Content Include="App\viewmodels\messagebox.js" />
+    <Content Include="App\viewmodels\notfound.js" />
     <Content Include="App\viewmodels\shell.js" />
     <Content Include="App\views\home.html" />
+    <Content Include="App\views\login.html" />
+    <Content Include="App\views\logout.html" />
+    <Content Include="App\views\messagebox.html" />
+    <Content Include="App\views\notfound.html" />
     <Content Include="App\views\shell.html" />
     <Content Include="Content\app.css" />
     <Content Include="Content\durandal.css" />
@@ -210,7 +294,9 @@
     <Content Include="Scripts\require.js" />
     <Content Include="Scripts\text.js" />
     <Content Include="Scripts\toastr.js" />
-    <Content Include="Web.config" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </Content>
@@ -221,7 +307,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Models\" />
+    <Folder Include="Data\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
@@ -232,6 +318,30 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Home\Index.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <EntityDeploy Include="Lib\Repository\Pos.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>Pos.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Lib\Repository\Pos.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>Pos.edmx</DependentUpon>
+      <LastGenOutput>Pos.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="Lib\Repository\Pos.edmx.diagram">
+      <DependentUpon>Pos.edmx</DependentUpon>
+    </Content>
+    <Content Include="Lib\Repository\Pos.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>Pos.edmx</DependentUpon>
+      <LastGenOutput>Pos.cs</LastGenOutput>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

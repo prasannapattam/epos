@@ -1,3 +1,240 @@
 ﻿<div>
-    Hello World!
+    <div class="row">
+        <div class="small-3 columns" >
+            <label data-bind="text: 'Search ' + title()"></label>
+            <input type="text" placeholder="Search" data-bind="value: criteria, valueUpdate: 'afterkeydown'" />
+            <table class="full-width search-header">
+                <thead>
+                    <tr>
+                        <th><span data-bind="text: resultHeader" /><br /><span class="result_header">(Maximum 20 records shown)</span></th>
+                    </tr>
+                </thead>
+            </table>
+            <div data-bind="style: {height: windowHeight }" class="search-results">
+                <table class="full-width">
+                    <tbody data-bind='template: { name: searchTemplate, foreach: results }'></tbody>
+                </table>
+            </div>
+        </div>
+        <div class="small-9 columns">
+            <div class="text-right" data-bind="css: {display_none: !moduleHideInd() }">
+                <a href="#" class="button tiny selected" data-bind="click: $root.add, css: { display_none: moduleAddInd }"><i class="button-icon fi-plus"></i><span data-bind="text: addText"></span></a>
+            </div>
+            <div data-bind="css: {display_none: moduleHideInd }">
+                <h4 data-bind="text: moduleTitle"></h4>
+                <div data-bind="template: { name: summaryTemplate, data: module }"></div>
+            </div>
+            <div data-bind="css: {display_none: detailHideInd }">
+                <table class="full-width">
+                    <thead>
+                        <tr>
+                            <th data-bind="text: moduleAddInd() ? addText : 'Details'"></th>
+                            <th class="button-bar">
+                                <a href="#" class="button tiny selected" data-bind="click: $root.edit, css: { display_none: moduleEditInd }"><i class="button-icon fi-pencil"></i>Edit</a>
+                                <a href="#" class="button tiny selected" data-bind="click: $root.save, css: { display_none: !moduleEditInd() }"><i class="button-icon fi-check"></i>Save</a>
+                                <a href="#" class="button tiny selected" data-bind="click: $root.cancelEdit, css: { display_none: !moduleEditInd() }"><i class="button-icon fi-x"></i>Cancel</a>
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr class="details">
+                            <td colspan="2" data-bind="template: { name: detailTemplate, data: module }"></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
 </div>
+
+<script type="text/html" id="patient-search-template">
+    <tr>
+        <td data-bind="click: $root.show, css: { selected: (ID() == $root.currentID()) }">
+            <div data-bind="attr: { id: ID }">
+                <span data-bind="text: PatientName"></span><br />
+                #: <span data-bind="text: PatientNumber"></span><br />
+                DOB: <span data-bind="text: moment(DateOfBirth()).format('L')"></span><br />
+                <span data-bind="css: {display_none: LastExamDate() == null}, text: 'Last Visit: ' +  moment(LastExamDate()).format('L')"></span>
+            </div>
+        </td>
+    </tr>
+</script>
+
+<script type="text/html" id="patient-history-template">
+    <table class="full-width">
+        <thead>
+            <tr>
+                <th colspan="2">History</th>
+            </tr>
+        </thead>
+        <tbody data-bind='css: { display_none: patientHistory().length > 0 }'>
+            <tr>
+                <td data-bind="text: noHistory"></td>
+            </tr>
+        </tbody>
+        <tbody data-bind='foreach: patientHistory'>
+            <tr>
+                <td>
+                    <span data-bind="text: moment(ExamDate).format('L')"></span>
+                    <span data-bind="css: {display_none : CorrectExamID === null}, text: '(Corrected on ' + moment(ExamCorrectDate).format('L') + ')'"></span>
+                    <span data-bind="css: {display_none : SavedInd != 1}, text: '(Saved on ' + moment(LastUpdatedDate).format('L h:mm:ss a') + ')'"></span>
+                </td>
+                <td align="right">
+                    <a href="#" title="Correct" class="grid-icon" data-bind="click: $parent.navigateNotes"><i class="fi-clipboard-pencil"></i></a>
+                    <a title="Letter" class="grid-icon" data-bind="attr: { href: utility.virtualDirectory + '/api/print/' + ExamID + '/1' }"><i class="fi-mail"></i></a>
+                    <a title="Print" class="grid-icon" data-bind="attr: { href: utility.virtualDirectory + '/api/print/' + ExamID + '/2' }"><i class=" fi-print"></i></a>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</script>
+<script type="text/html" id="patient-detail-template">
+    <div class="row row-narrow">
+        <div class="small-3 columns col-narrow">
+            <label>Patient Number</label>
+            <input type="hidden" data-bind="value: model.PatientID" />
+            <input type="text" placeholder="" data-bind="value: model.PatientNumber, enable: $root.moduleEditInd()" />
+        </div>
+        <div class="small-7 columns col-narrow">
+            <div class="row full-width row-narrow">
+                <label>&nbsp;Patient Name</label>
+            </div>
+            <div class="row full-width row-narrow">
+                <div class="small-2 columns tight">
+                    <select data-bind="options: session.lookups.Greet, optionsText: 'FieldValue', optionsValue: 'FieldValue', optionsCaption: '', value: model.Greeting, enable: $root.moduleEditInd()"></select>
+                </div>
+                <div class="small-4 columns tight">
+                    <input type="text" placeholder="" data-bind="value: model.FirstName, enable: $root.moduleEditInd()" />
+                </div>
+                <div class="small-2 columns left tight">
+                    <input type="text" placeholder="" data-bind="value: model.MiddleName, enable: $root.moduleEditInd()" />
+                </div>
+                <div class="small-4 columns left tight">
+                    <input type="text" placeholder="" data-bind="value: model.LastName, enable: $root.moduleEditInd()" />
+                </div>
+            </div>
+        </div>
+        <div class="small-2 columns left col-narrow">
+            <label>Nick Name</label>
+            <input type="text" placeholder="" data-bind="value: model.NickName, enable: $root.moduleEditInd()" />
+        </div>
+    </div>
+    <div class="row row-narrow">
+        <div class="small-2 columns left col-narrow">
+            <label>Date Of Birth</label>
+
+            <!--value: moment(model.DateOfBirth()).format('L')-->
+            <input type="text" placeholder="" data-bind="datepicker: model.DateOfBirth, enable: $root.moduleEditInd()" />
+        </div>
+        <div class="small-3 columns col-narrow">
+            <label>Premature Birth</label>
+            <!--<input type="checkbox" data-bind="checked: model.PrematureBirth">-->
+            <select data-bind="value: model.PrematureBirth, enable: $root.moduleEditInd()">
+                <option value="0">No</option>
+                <option value="1">Yes</option>
+            </select>
+        </div>
+        <div class="small-2 columns left col-narrow">
+            <label>Sex</label>
+            <select data-bind="options: session.lookups.Sex, optionsValue: 'FieldValue' , optionsText:'FieldValue', value: model.Sex, enable: $root.moduleEditInd()"></select>
+        </div>
+        <div class="small-5 columns col-narrow">
+            <label>Grade/Occupation</label>
+            <input type="text" placeholder="" data-bind="value: model.Occupation, enable: $root.moduleEditInd()" />
+        </div>
+    </div>
+    <div class="row row-narrow">
+        <div class="small-5 columns col-narrow">
+            <label>Hx From</label>
+            <select class="narrow-bottom-margin" data-bind="options: session.lookups.HxFrom, optionsValue: 'FieldValue' , optionsText:'FieldValue', value: model.HxFromList, optionsCaption: '', enable: $root.moduleEditInd()"></select>
+            <input type="text" placeholder="" data-bind="value: model.HxFromOther, css: {display_none: model.HxFromList() !== undefined }, enable: $root.moduleEditInd()" />
+        </div>
+        <div class="small-7 columns col-narrow">
+            <label>Ref'd By</label>
+            <input type="text" class="narrow-bottom-margin" placeholder="" data-bind="value: model.ReferredFrom, enable: $root.moduleEditInd()" />
+            <div class="row">
+                <div class="small-1 columns align-bottom">
+                    PCP:
+                </div>
+                <div class="small-8 columns">
+                    <input class="inline-block" type="text" placeholder="" data-bind="value: model.ReferredDoctor, enable: $root.moduleEditInd()" />
+                </div>
+                <div class="small-3 left align-bottom">
+                    (<input type="checkbox" data-bind="checked: model.PcpInd, click: setPCP, enable: $root.moduleEditInd()" /> Same)
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row row-narrow">
+        <div class="small-5 columns col-narrow">
+            <label>Allergies</label>
+            <textarea rows="4" placeholder="" data-bind="value: model.Allergies, enable: $root.moduleEditInd()" />
+        </div>
+        <div class="small-7 columns col-narrow">
+            <label>Medications</label>
+            <textarea rows="4" placeholder="" data-bind="value: model.Medications, enable: $root.moduleEditInd()" />
+        </div>
+    </div>
+</script>
+<script type="text/html" id="user-search-template">
+    <tr>
+        <td data-bind="click: $root.show, css: { selected: (ID() == $root.currentID()) }">
+            <div data-bind="attr: { id: ID }">
+                <span data-bind="text: FullName"></span><br />
+                UserName: <span data-bind="text: UserName"></span>
+            </div>
+        </td>
+    </tr>
+</script>
+<script type="text/html" id="user-default-template">
+    <table class="full-width">
+        <thead>
+            <tr>
+                <th>Default Name</th>
+                <th>Age Start (months)</th>
+                <th>Age End (months)</th>
+                <th>Premature Birth</th>
+                <th>&nbsp;</th>
+            </tr>
+        </thead>
+        <tbody data-bind='css: { display_none: defaults().length > 0 }'>
+            <tr>
+                <td colspan="5" data-bind="text: noDefault"></td>
+            </tr>
+        </tbody>
+        <tbody data-bind='foreach: defaults'>
+            <tr>
+                <td data-bind="text: DefaultName"></td>
+                <td data-bind="text: AgeStart"></td>
+                <td data-bind="text: AgeEnd"></td>
+                <td data-bind="text: PrematureBirth"></td>
+                <td align="right">
+                    <a href="#" title="Edit" class="grid-icon" data-bind="click: $parent.navigateNotes"><i class="fi-clipboard-pencil"></i></a>
+                    <a href="#" title="Delete" class="grid-icon" data-bind="click: $parent.navigateNotes"><i class="fi-x"></i></a>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</script>
+<script type="text/html" id="user-detail-template">
+    <div class="row row-narrow">
+        <div class="small-3 columns col-narrow">
+            <label>First Name</label>
+            <input type="hidden" data-bind="value: model.UserID" />
+            <input type="text" placeholder="" data-bind="value: model.FirstName, enable: $root.moduleEditInd()" />
+        </div>
+        <div class="small-3 columns left col-narrow">
+            <label>Last Name</label>
+            <input type="text" placeholder="" data-bind="value: model.LastName, enable: $root.moduleEditInd()" />
+        </div>
+        <div class="small-3 columns left col-narrow">
+            <label>User Name</label>
+            <input type="text" placeholder="" data-bind="value: model.UserName, enable: $root.moduleEditInd()" />
+        </div>
+        <div class="small-3 columns left col-narrow">
+            <label>Password</label>
+            <input type="password" placeholder="" data-bind="value: model.Password, enable: $root.moduleEditInd()" />
+        </div>
+    </div>
+</script>
+
