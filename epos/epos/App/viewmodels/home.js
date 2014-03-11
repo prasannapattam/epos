@@ -235,8 +235,9 @@
             if (data.Success === true) {
                 vm.moduleTitle(vm.model.Name());
                 vm.moduleHideInd(false);
-                if (vm.currentRecord === undefined)
-                    setCurrentRecord();
+                //if (vm.currentRecord === undefined)
+                //    setCurrentRecord();
+                setCurrentRecord();
 
                 //setting the tabs & url
                 var hash = '#home/' + vm.moduleName() + '/' + vm.model.ID() + '/' + encodeURI(vm.lastCriteria);
@@ -256,6 +257,7 @@
         ko.viewmodel.updateFromModel(vm.model, newModel);
         vm.moduleAddInd(true);
         vm.model.errors.showAllMessages(false)
+        vm.currentRecord = undefined;
     }
 
     function edit() {
@@ -275,7 +277,6 @@
 
     function save() {
         if (vm.model.isValid()) {
-
             vm.module.save(vm.currentRecord).then(function (data) {
                 if (data.Success === true) {
                     toastr.info(data.Message);

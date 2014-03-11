@@ -35,6 +35,11 @@
         return this.PatientID();
     }, model);
 
+    model.PrematureBirthString = ko.computed({
+        read: function () { return (this.PrematureBirth() ? "Yes" : "No"); },
+        write: function (value) { this.PrematureBirth(value == "Yes" ? true : false); }
+    }, model);
+
     var originalModel;
 
     var vm = {

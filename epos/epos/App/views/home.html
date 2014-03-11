@@ -129,9 +129,9 @@
         <div class="small-3 columns col-narrow">
             <label>Premature Birth</label>
             <!--<input type="checkbox" data-bind="checked: model.PrematureBirth">-->
-            <select data-bind="value: model.PrematureBirth, enable: $root.moduleEditInd()">
-                <option value="0">No</option>
-                <option value="1">Yes</option>
+            <select data-bind="value: model.PrematureBirthString, enable: $root.moduleEditInd()">
+                <option value="No">No</option>
+                <option value="Yes">Yes</option>
             </select>
         </div>
         <div class="small-2 columns left col-narrow">
@@ -207,7 +207,7 @@
                 <td data-bind="text: DefaultName"></td>
                 <td data-bind="text: AgeStart"></td>
                 <td data-bind="text: AgeEnd"></td>
-                <td data-bind="text: PrematureBirth"></td>
+                <td data-bind="text: s"></td>
                 <td align="right">
                     <a href="#" title="Edit" class="grid-icon" data-bind="click: $parent.navigateNotes"><i class="fi-clipboard-pencil"></i></a>
                     <a href="#" title="Delete" class="grid-icon" data-bind="click: $parent.navigateNotes"><i class="fi-x"></i></a>

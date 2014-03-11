@@ -372,7 +372,7 @@ label{
     margin-bottom: 0.2rem;
 }
 
-input[type="text"], select{
+input[type="text"], input[type="password"], select{
     height: 2.0rem;
 }
 
