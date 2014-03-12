@@ -145,6 +145,7 @@
     <Compile Include="Controllers\PatientController.cs" />
     <Compile Include="Controllers\PatientSearchController.cs" />
     <Compile Include="Controllers\PrintController.cs" />
+    <Compile Include="Controllers\PrintQueueController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Controllers\UserSearchController.cs" />
     <Compile Include="Global.asax.cs">
@@ -206,6 +207,7 @@
     <Compile Include="Models\PatientHistoryModel.cs" />
     <Compile Include="Models\PatientModel.cs" />
     <Compile Include="Models\PatientSearchResultModel.cs" />
+    <Compile Include="Models\PrintQueueModel.cs" />
     <Compile Include="Models\ProfileModel.cs" />
     <Compile Include="Models\UserModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -228,12 +230,14 @@
     <Content Include="App\viewmodels\logout.js" />
     <Content Include="App\viewmodels\messagebox.js" />
     <Content Include="App\viewmodels\notfound.js" />
+    <Content Include="App\viewmodels\queue.js" />
     <Content Include="App\viewmodels\shell.js" />
     <Content Include="App\views\home.html" />
     <Content Include="App\views\login.html" />
     <Content Include="App\views\logout.html" />
     <Content Include="App\views\messagebox.html" />
     <Content Include="App\views\notfound.html" />
+    <Content Include="App\views\queue.html" />
     <Content Include="App\views\shell.html" />
     <Content Include="Content\app.css" />
     <Content Include="Content\durandal.css" />

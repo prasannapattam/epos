@@ -10,7 +10,7 @@
         var routes = [
                         { route: ['','home(/:module)(/:id)(/:criteria)'], moduleId: 'home', title: 'Home' },
                         { route: 'login', moduleId: 'login', title: 'Login' },
-                        { route: 'printqueue', moduleId: 'printqueue', title: 'Print Queue' },
+                        { route: 'queue', moduleId: 'queue', title: 'Print Queue' },
                         { route: 'default', moduleId: 'default', title: 'Defaults' },
                         { route: 'dropdown', moduleId: 'dropdown', title: 'Drop Downs' },
                         { route: 'autocorrect', moduleId: 'autocorrect', title: 'Auto Correct' },
