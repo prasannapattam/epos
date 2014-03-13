@@ -2,12 +2,13 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using System.Web.Mvc;
 
 namespace epos.Models
 {
     public class PrintQueueModel
     {
-        public List<KeyValuePair<string, string>> Doctors { get; set; }
+        public List<SelectListItem> Doctors { get; set; }
 
         public List<PrintQueueItem> Items { get; set; }
     }
