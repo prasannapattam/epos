@@ -1,9 +1,45 @@
 ﻿<div>
-    <div class="row">
-        <div class="small-4 left columns">
+    <div class="row after-display">
+        <div class="small-4 columns">
             <label>Filter</label>
             <select data-bind="options: doctors, optionsValue: 'Value' , optionsText:'Text', value: username, optionsCaption: ''"></select>
         </div>
+        <div class="small-8 columns"></div>
     </div>
-    
+    <div class="row">
+        <div class="small-12 columns">
+            <table class="full-width">
+                <thead>
+                    <tr>
+                        <th>Patient Name</th>
+                        <th>Exam Date</th>
+                        <th>Doctor</th>
+                        <th>Letter</th>
+                        <th>TimeStamp</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody data-bind='css: { display_none: queueItems().length > 0 }'>
+                    <tr>
+                        <td colspan="6" data-bind="text: noQueue"></td>
+                    </tr>
+                </tbody>
+                <tbody data-bind='foreach: queueItems, beforeRemove: hidePlanetElement, afterAdd: showPlanetElement'>
+                    <tr>
+                        <td data-bind="text: PatientName"></td>
+                        <td data-bind="text: moment(ExamDate).format('L') + (CorrectExamID  === null ? '' : '(Corrected on ' + moment(ExamCorrectDate).format('L') + ')')"></td>
+                        <td data-bind="text: DoctorName"></td>
+                        <td>
+                            <a title="Letter" class="grid-icon" data-bind="css: { display_none: PrintExamNote !== null }, attr: { href: utility.virtualDirectory + '/api/print/' + ExamID + '/1' }"><i class="fi-mail"></i></a>
+                            <a title="Print" class="grid-icon" data-bind="css: { display_none: PrintExamNote === null }, attr: { href: utility.virtualDirectory + '/api/print/' + ExamID + '/2' }"><i class=" fi-print"></i></a>
+                        </td>
+                        <td data-bind="text: moment(LastUpdatedDate).format('M/d/YY h:mm a')"></td>
+                        <td>
+                            <a title="Remove" class="grid-icon" data-bind="click: $root.remove"><i class="fi-x"></i></a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div> 
+    </div>
 </div> 

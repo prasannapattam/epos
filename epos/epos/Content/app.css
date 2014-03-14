@@ -456,3 +456,7 @@ select:disabled{
 .message-button-bar{
     text-align: right;
 }
+
+.after-display:before, .after-display:after {
+    display: inline;
+}
