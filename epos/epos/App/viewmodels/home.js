@@ -46,6 +46,10 @@
                         vm.viewActivate = false;
                         getSelected();
                     }
+                    else {
+                        var el = document.getElementById('results');
+                        el.scrollTop = 0;
+                    }
                 }
             });
         }
@@ -157,6 +161,7 @@
             vm.detailTemplate(userDetailTemplate);
         }
 
+
         if (vm.moduleName() !== undefined && vm.moduleName() !== searchModule) {
             vm.criteria(undefined);
             vm.moduleAddInd(false);
@@ -164,14 +169,13 @@
         }
         vm.moduleName(searchModule);
         vm.model.errors = ko.validation.group(vm.model);
+        blankModel = vm.module.blankModel;
 
         vm.currentID(0);
         var homeTabActive = true;
         if ((searchID === undefined || searchID === null) && (searchCriteria === undefined || searchCriteria === null)) {
             setCriteria('');
             vm.moduleHideInd(true);
-            if (blankModel === undefined)
-                blankModel = ko.viewmodel.toModel(vm.model);
             if (vm.moduleAddInd() === true) {
                 ko.viewmodel.updateFromModel(vm.model, newModel);
                 vm.model.errors.showAllMessages(false)
@@ -245,8 +249,10 @@
                 router.navigate(hash, false);
 
                 var el = document.getElementById(vm.model.ID());
-                if(el !== undefined && el !== null)
+                if (el !== undefined && el !== null)
                     el.scrollIntoViewIfNeeded(false);
+                else
+                    el.scrollTop = 0;
 
             }
         });

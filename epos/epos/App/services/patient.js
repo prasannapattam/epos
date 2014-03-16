@@ -41,11 +41,14 @@
     }, model);
 
     var originalModel;
+    var blankModel = ko.viewmodel.toModel(model);
 
     var vm = {
         title: title,
         addText: addText,
         model: model,
+        originalModel: originalModel,
+        blankModel: blankModel,
         noHistory: message.noHistory,
         getSearchResults: getSearchResults,
         patientHistory: patientHistory,

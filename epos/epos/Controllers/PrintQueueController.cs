@@ -16,7 +16,7 @@ namespace epos.Controllers
         {
             AjaxModel<PrintQueueModel> ajax = null;
 
-            PrintQueueModel model = PosRepository.GetPrintQueue();
+            PrintQueueModel model = PosRepository.PrintQueueGet();
             if (model == null)
             {
                 ajax = new AjaxModel<PrintQueueModel>() { Success = false, Message = PosMessage.PrintQueueError, Model = null };
@@ -25,6 +25,23 @@ namespace epos.Controllers
             {
                 ajax = new AjaxModel<PrintQueueModel>() { Success = true, Message = "", Model = model };
             }
+            return ajax;
+        }
+
+        public AjaxModel<PrintQueueModel> Post(PrintQueueItem item)
+        {
+            AjaxModel<PrintQueueModel> ajax = null;
+
+            try
+            {
+                PosRepository.PrintQueueRemove(item);
+                ajax = new AjaxModel<PrintQueueModel>() { Success = true, Message = PosMessage.PrintQueueDeleteSuccessful, Model = null };
+            }
+            catch (Exception e)
+            {
+                ajax = new AjaxModel<PrintQueueModel>() { Success = false, Message = PosMessage.PrintQueueDeleteError + " - " + e.Message, Model = null };
+            }
+
             return ajax;
         }
     }

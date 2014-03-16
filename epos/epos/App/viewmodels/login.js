@@ -22,6 +22,8 @@
 
     function activate() {
         session.profile.isAutenticated(false);
+        navigation.clear();
+        navigation.setHomeTab(vm.title, '#login', true);
         return true;
     }
 

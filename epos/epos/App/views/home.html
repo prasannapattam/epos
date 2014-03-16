@@ -10,7 +10,7 @@
                     </tr>
                 </thead>
             </table>
-            <div data-bind="style: {height: windowHeight }" class="search-results">
+            <div id="results" data-bind="style: {height: windowHeight }" class="search-results">
                 <table class="full-width">
                     <tbody data-bind='template: { name: searchTemplate, foreach: results }'></tbody>
                 </table>
@@ -191,8 +191,8 @@
         <thead>
             <tr>
                 <th>Default Name</th>
-                <th>Age Start (months)</th>
-                <th>Age End (months)</th>
+                <th>Age Start<br />(months)</th>
+                <th>Age End<br />(months)</th>
                 <th>Premature Birth</th>
                 <th>&nbsp;</th>
             </tr>
@@ -205,9 +205,9 @@
         <tbody data-bind='foreach: defaults'>
             <tr>
                 <td data-bind="text: DefaultName"></td>
-                <td data-bind="text: AgeStart"></td>
-                <td data-bind="text: AgeEnd"></td>
-                <td data-bind="text: s"></td>
+                <td class="text-center" data-bind="text: AgeStart"></td>
+                <td class="text-center" data-bind="text: AgeEnd"></td>
+                <td class="text-center" data-bind="text: (PrematureBirth ? 'Yes' : 'No')"></td>
                 <td align="right">
                     <a href="#" title="Edit" class="grid-icon" data-bind="click: $parent.navigateNotes"><i class="fi-clipboard-pencil"></i></a>
                     <a href="#" title="Delete" class="grid-icon" data-bind="click: $parent.navigateNotes"><i class="fi-x"></i></a>
