@@ -3,7 +3,8 @@
         activate: activate,
         router: router,
         navigation: navigation,
-        utility: utility
+        utility: utility,
+        logout: logout
     };
 
     function activate() {
@@ -25,6 +26,15 @@
             .mapUnknownRoutes('notfound', 'not-found')
             .activate();            // Activate the router
 
+        //setting up the guardRoute
+        router.guardRoute = function (instance, instruction) {
+            if (session.profile.isAutenticated() === false && instruction.config.route !== "login") {
+                return 'login';
+            }
+
+            return true;
+        };
+
         //global variables
         window.session = session;
         window.utility = utility;
@@ -39,4 +49,10 @@
         return session.populateLookups();
 
     }
+
+    function logout() {
+        session.profile.logout();
+        router.navigate('login');
+    }
+
 });

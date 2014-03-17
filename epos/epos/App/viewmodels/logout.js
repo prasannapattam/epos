@@ -1,11 +1,11 @@
 ﻿define(['plugins/router'], function (router) {
     var vm = {
-        activate: activate
+        canActivate: canActivate
     };
 
     return vm;
 
-    function activate() {
+    function canActivate() {
         var self = this;
         session.profile.logout();
         router.navigate('login');

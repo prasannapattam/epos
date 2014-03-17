@@ -10,6 +10,7 @@
         LastName: ko.observable().extend({ required: { message: "required" } }),
         UserName: ko.observable().extend({ required: { message: "required" } }),
         Password: ko.observable().extend({ required: { message: "required" } }),
+        PhotoUrl: ko.observable(),
         ID: ko.observable()
     };
 

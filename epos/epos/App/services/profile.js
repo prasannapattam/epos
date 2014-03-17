@@ -3,7 +3,7 @@
     var firstName = ko.observable();
     var lastName = ko.observable();
     var userName = ko.observable();
-    var isAutenticated = ko.observable(true);
+    var isAutenticated = ko.observable(false);
 
 
     var vm = {
