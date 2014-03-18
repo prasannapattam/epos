@@ -1,6 +1,6 @@
 ﻿define(['services/profile', 'plugins/router'], function (profile, router) {
 
-    var title = ko.observable('login');
+    var title = ko.observable('Login');
 
     var model = {
          UserName:  ko.observable().extend({ required: { message: "Username is required" }}),
@@ -24,6 +24,9 @@
         session.profile.isAutenticated(false);
         navigation.clear();
         navigation.setHomeTab(vm.title, '#login', true);
+        vm.model.UserName('');
+        vm.model.UserPassword('');
+        vm.model.errors.showAllMessages(false);
         return true;
     }
 

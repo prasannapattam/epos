@@ -1,4 +1,4 @@
-﻿define([], function () {
+﻿define(['plugins/router'], function (router) {
     var self = this;
     var returnUrl;
     var tab = function (tabs, title, hash) {
@@ -40,6 +40,7 @@
 
         homeTab.title(title());
         homeTab.hash(hash);
+        router.activeInstruction().config.title = title();
 
         if (active) {
             homeTab.active(true);
@@ -67,7 +68,6 @@
             }
             tab.active(true);
 
-            var router = require('plugins/router');
             var hash = tab.hash();
             router.navigate(hash);
         }

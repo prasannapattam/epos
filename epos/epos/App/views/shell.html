@@ -4,7 +4,7 @@
             <img class="top-header" data-bind="attr: { src: utility.virtualDirectory + '/content/images/logo.gif' }" />
         </div>
         <div class="right-header">
-            <img class="top-header" data-bind="attr: { src: utility.virtualDirectory + '/Data/Prasanna.jpg' }" />
+            <img class="top-header" data-bind="attr: { src: session.profile.photoUrl }, css { display_none: session.profile.photoUrl() === undefined }" />
         </div>
         <div class="loading" data-bind="css: { display_block: router.isNavigating() || utility.loading() }">
             <img class="loading" data-bind="attr: { src: utility.virtualDirectory + '/content/images/loading.gif' }" />
