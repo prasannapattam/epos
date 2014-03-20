@@ -256,6 +256,7 @@
     <Content Include="Content\Images\WordImage.jpg" />
     <Content Include="Content\normalize.css" />
     <Content Include="Content\toastr.css" />
+    <Content Include="Data\NoPhoto.jpg" />
     <Content Include="Global.asax" />
     <Content Include="Scripts\durandal\activator.js" />
     <Content Include="Scripts\durandal\app.js" />
@@ -311,7 +312,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Data\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
