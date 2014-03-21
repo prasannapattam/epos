@@ -62,6 +62,13 @@
 
     function setUser(model) {
         ko.viewmodel.updateFromModel(vm.model, model);
+        if (model.PhotoUrl === null) {
+            model.PhotoUrl = utility.virtualDirectory + '/Data/NoPhoto.jpg';
+        }
+        else {
+            model.PhotoUrl = utility.virtualDirectory + '/Data/' + model.PhotoUrl + '.jpg';
+        }
+        vm.model.PhotoUrl(model.PhotoUrl);
         vm.originalModel = model;
     }
 

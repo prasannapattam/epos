@@ -13,6 +13,11 @@ img.top-header{
     width: 40px;
 }
 
+img.photo{
+    height: 100px;
+    width: 100px;
+}
+
 body.main
 {
     font-size: 10pt !important;

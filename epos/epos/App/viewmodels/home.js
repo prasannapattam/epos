@@ -120,6 +120,7 @@
         edit: edit,
         save: save,
         cancelEdit: cancelEdit,
+        photoSelect: photoSelect,
 
         //durandal events
         activate: activate,
@@ -251,9 +252,6 @@
                 var el = document.getElementById(vm.model.ID());
                 if (el !== undefined && el !== null)
                     el.scrollIntoViewIfNeeded(false);
-                else
-                    el.scrollTop = 0;
-
             }
         });
     }
@@ -300,6 +298,24 @@
             toastr.error('Please fix the validation errors');
             vm.model.errors.showAllMessages();
         }
+    }
 
+    function photoSelect(elemet, event) {
+        var file = event.target.files[0];
+        if (!file.type.match('image.*')) {
+            return;
+        }    
+        var reader = new FileReader();
+
+        // Closure to capture the file information.
+        reader.onload = (function(theFile) {
+            return function(e) {                             
+                //self.files.push(new FileModel(escape(theFile.name),e.target.result));
+                //alert(e.target.result);
+                vm.model.PhotoUrl(e.target.result);
+            };                            
+        })(file);
+        // Read in the image file as a data URL.
+        reader.readAsDataURL(file);
     }
 });

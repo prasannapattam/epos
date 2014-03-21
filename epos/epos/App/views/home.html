@@ -218,31 +218,39 @@
 </script>
 <script type="text/html" id="user-detail-template">
     <div class="row">
-        <div class="small-4 columns">
-            <img class="" data-bind="attr: { src: model.PhotoUrl }, css { display_none: model.PhotoUrl() === null }" />
-            <img class="" data-bind="attr: { src: utility.virtualDirectory + '/Data/NoPhoto.jpg' }, css { display_none: model.PhotoUrl() !== null }" />
-            http://jsfiddle.net/dmitry_zaets/rSArN/20/
+        <div class="small-3 columns text-center">
+            <br />
+            <img class="photo" data-bind="attr: { src: model.PhotoUrl }" />
         </div>
-        <div class="small-8 columns">
+        <div class="small-9 columns">
             <div class="row row-narrow">
-                <div class="small-3 columns col-narrow">
+                <div class="small-6 columns col-narrow">
                     <label>First Name</label>
                     <input type="hidden" data-bind="value: model.UserID" />
                     <input type="text" placeholder="" data-bind="value: model.FirstName, enable: $root.moduleEditInd()" />
                 </div>
-                <div class="small-3 columns left col-narrow">
+                <div class="small-6 columns left col-narrow">
                     <label>Last Name</label>
                     <input type="text" placeholder="" data-bind="value: model.LastName, enable: $root.moduleEditInd()" />
                 </div>
-                <div class="small-3 columns left col-narrow">
+            </div>
+            <div class="row row-narrow">
+                <div class="small-6 columns left col-narrow">
                     <label>User Name</label>
                     <input type="text" placeholder="" data-bind="value: model.UserName, enable: $root.moduleEditInd()" />
                 </div>
-                <div class="small-3 columns left col-narrow">
+                <div class="small-6 columns left col-narrow">
                     <label>Password</label>
                     <input type="password" placeholder="" data-bind="value: model.Password, enable: $root.moduleEditInd()" />
                 </div>
             </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="small-12 columns">
+            Upload Photo:
+            <input type="file" name="UploadPhoto" data-bind="enable: $root.moduleEditInd(), event:{change: $root.photoSelect}" />
+            <!--http://jsfiddle.net/dmitry_zaets/rSArN/20/-->
         </div>
     </div>
 </script>
