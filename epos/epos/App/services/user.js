@@ -11,6 +11,7 @@
         UserName: ko.observable().extend({ required: { message: "required" } }),
         Password: ko.observable().extend({ required: { message: "required" } }),
         PhotoUrl: ko.observable(),
+        Photo: ko.observable(),
         ID: ko.observable()
     };
 
@@ -33,7 +34,8 @@
         navigateNotes: navigateNotes,
         getSelected: getSelected,
         cancelEdit: cancelEdit,
-        save: save
+        save: save,
+        photoSelect: photoSelect
     };
 
     return vm;
@@ -62,14 +64,18 @@
 
     function setUser(model) {
         ko.viewmodel.updateFromModel(vm.model, model);
-        if (model.PhotoUrl === null) {
-            model.PhotoUrl = utility.virtualDirectory + '/Data/NoPhoto.jpg';
+        vm.originalModel = model;
+        vm.model.Photo(getPhotoUrl(model.PhotoUrl));
+        //vm.model.PhotoUrl(model.PhotoUrl);
+    }
+
+    function getPhotoUrl(photoUrl) {
+        if (photoUrl === null) {
+            return utility.virtualDirectory + '/Data/NoPhoto.jpg';
         }
         else {
-            model.PhotoUrl = utility.virtualDirectory + '/Data/' + model.PhotoUrl + '.jpg';
+            return utility.virtualDirectory + '/Data/' + photoUrl + '.jpg';
         }
-        vm.model.PhotoUrl(model.PhotoUrl);
-        vm.originalModel = model;
     }
 
     function cancelEdit() {
@@ -83,16 +89,54 @@
     }
 
     function save(currentRecord) {
-        return utility.httpPost('api/user', vm.model).then(function (data) {
+        utility.loading(true);
+        $("#user_form").submit();  // Submits the form on change event, you consider this code as the start point of your request (to show loader)
+        var defer = $.Deferred();
+        $("#uploader_iframe").unbind().load(function () {  // This block of code will execute when the response is sent from the server.
+            var data = JSON.parse($(this).contents().text());
             if (data.Success === true) {
+                if (vm.model.Photo() !== getPhotoUrl(vm.model.PhotoUrl())) {
+                    vm.model.PhotoUrl(vm.model.UserName());
+                    vm.model.Photo(getPhotoUrl(vm.model.PhotoUrl()));
+                    $("#Photo").replaceWith($("#Photo").clone());
+
+                }
                 vm.originalModel = ko.viewmodel.toModel(vm.model);
                 if (currentRecord !== undefined) {
                     currentRecord.FullName(vm.model.Name());
                     currentRecord.UserName(vm.model.UserName());
                 }
             }
+            else {
+                toastr.error(data.Message);
+            }
+            utility.loading(false);
+            defer.resolve(data);
+        });
+
+        return defer;
+
+        return utility.httpPost('api/user', vm.model).then(function (data) {
             return data;
         });
     }
 
+    function photoSelect(elemet, event) {
+        var file = event.target.files[0];
+        if (!file.type.match('image.*')) {
+            return;
+        }
+        var reader = new FileReader();
+
+        // Closure to capture the file information.
+        reader.onload = (function (theFile) {
+            return function (e) {
+                //self.files.push(new FileModel(escape(theFile.name),e.target.result));
+                //alert(e.target.result);
+                vm.model.Photo(e.target.result);
+            };
+        })(file);
+        // Read in the image file as a data URL.
+        reader.readAsDataURL(file);
+    }
 });

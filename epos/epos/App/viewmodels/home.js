@@ -120,7 +120,6 @@
         edit: edit,
         save: save,
         cancelEdit: cancelEdit,
-        photoSelect: photoSelect,
 
         //durandal events
         activate: activate,
@@ -281,6 +280,7 @@
 
     function save() {
         if (vm.model.isValid()) {
+
             vm.module.save(vm.currentRecord).then(function (data) {
                 if (data.Success === true) {
                     toastr.info(data.Message);
@@ -298,24 +298,5 @@
             toastr.error('Please fix the validation errors');
             vm.model.errors.showAllMessages();
         }
-    }
-
-    function photoSelect(elemet, event) {
-        var file = event.target.files[0];
-        if (!file.type.match('image.*')) {
-            return;
-        }    
-        var reader = new FileReader();
-
-        // Closure to capture the file information.
-        reader.onload = (function(theFile) {
-            return function(e) {                             
-                //self.files.push(new FileModel(escape(theFile.name),e.target.result));
-                //alert(e.target.result);
-                vm.model.PhotoUrl(e.target.result);
-            };                            
-        })(file);
-        // Read in the image file as a data URL.
-        reader.readAsDataURL(file);
     }
 });

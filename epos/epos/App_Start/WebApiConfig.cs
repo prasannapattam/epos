@@ -9,6 +9,10 @@ namespace epos
     {
         public static void Register(HttpConfiguration config)
         {
+
+            // Remove the XML formatter
+            //config.Formatters.Remove(config.Formatters.XmlFormatter);
+
             config.Routes.MapHttpRoute(
                 name: "PrintApi",
                 routeTemplate: "api/{controller}/{id}/{type}"

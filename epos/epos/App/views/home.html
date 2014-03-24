@@ -217,41 +217,45 @@
     </table>
 </script>
 <script type="text/html" id="user-detail-template">
-    <div class="row">
-        <div class="small-3 columns text-center">
-            <br />
-            <img class="photo" data-bind="attr: { src: model.PhotoUrl }" />
-        </div>
-        <div class="small-9 columns">
-            <div class="row row-narrow">
-                <div class="small-6 columns col-narrow">
-                    <label>First Name</label>
-                    <input type="hidden" data-bind="value: model.UserID" />
-                    <input type="text" placeholder="" data-bind="value: model.FirstName, enable: $root.moduleEditInd()" />
+    <form id="user_form" method="post" enctype="multipart/form-data" target="uploader_iframe" data-bind="attr: { action: utility.virtualDirectory + '/api/user' }">
+        <div class="row">
+            <div class="small-3 columns text-center">
+                <br />
+                <img class="photo" data-bind="attr: { src: model.Photo }" />
+            </div>
+            <div class="small-9 columns">
+                <div class="row row-narrow">
+                    <div class="small-6 columns col-narrow">
+                        <label>First Name</label>
+                        <input type="hidden" id="UserID" name="UserID" data-bind="value: model.UserID" />
+                        <input type="text" id="FirstName" name="FirstName" placeholder="" data-bind="value: model.FirstName, enable: $root.moduleEditInd()" />
+                    </div>
+                    <div class="small-6 columns left col-narrow">
+                        <label>Last Name</label>
+                        <input type="text" id="LastName" name="LastName" placeholder="" data-bind="value: model.LastName, enable: $root.moduleEditInd()" />
+                    </div>
                 </div>
-                <div class="small-6 columns left col-narrow">
-                    <label>Last Name</label>
-                    <input type="text" placeholder="" data-bind="value: model.LastName, enable: $root.moduleEditInd()" />
+                <div class="row row-narrow">
+                    <div class="small-6 columns left col-narrow">
+                        <label>User Name</label>
+                        <input type="text" id="UserName" name="UserName" placeholder="" data-bind="value: model.UserName, enable: $root.moduleEditInd()" />
+                    </div>
+                    <div class="small-6 columns left col-narrow">
+                        <label>Password</label>
+                        <input type="password" id="Password" name="Password" placeholder="" data-bind="value: model.Password, enable: $root.moduleEditInd()" />
+                    </div>
                 </div>
             </div>
-            <div class="row row-narrow">
-                <div class="small-6 columns left col-narrow">
-                    <label>User Name</label>
-                    <input type="text" placeholder="" data-bind="value: model.UserName, enable: $root.moduleEditInd()" />
-                </div>
-                <div class="small-6 columns left col-narrow">
-                    <label>Password</label>
-                    <input type="password" placeholder="" data-bind="value: model.Password, enable: $root.moduleEditInd()" />
-                </div>
+        </div>
+        <div class="row">
+            <div class="small-12 columns">
+                Upload Photo:
+                <input type="file" id="Photo" name="Photo" data-bind="enable: $root.moduleEditInd(), event:{change: $root.module.photoSelect}" />
+                <input type="hidden" id="PhotoUrl" name="PhotoUrl" data-bind="value: model.PhotoUrl" />
+                <!--http://jsfiddle.net/dmitry_zaets/rSArN/20/-->
             </div>
         </div>
-    </div>
-    <div class="row">
-        <div class="small-12 columns">
-            Upload Photo:
-            <input type="file" name="UploadPhoto" data-bind="enable: $root.moduleEditInd(), event:{change: $root.photoSelect}" />
-            <!--http://jsfiddle.net/dmitry_zaets/rSArN/20/-->
-        </div>
-    </div>
+    </form>
+    <iframe id="uploader_iframe" name="uploader_iframe" style="display: none;"></iframe>
 </script>
 
