@@ -8,11 +8,6 @@ img.splash-loading{
     width: 100px;
 }
 
-img.top-header{
-    height: 40px;
-    width: 40px;
-}
-
 img.photo{
     height: 100px;
     width: 100px;
@@ -34,6 +29,13 @@ body.main
     background-size: contain;*/
 }
 
+
+img.top-header{
+    height: 40px;
+    width: 40px;
+}
+
+
 div.top-header{
     background-color: #3f3f3f;
     background-image: -webkit-linear-gradient(top, #696969 0%,#3f3f3f 100%);
@@ -41,6 +43,33 @@ div.top-header{
     width: 100%;
     margin: 0 0 0 0; 
     padding: 0 0 0 0;
+}
+
+div.left-header{
+    width: 50px; 
+    float: left; 
+    padding: 0 0 0 5px;
+}
+
+div.right-header{
+    width: 40px; 
+    float: right; 
+}
+
+
+ul.top-menu{
+    width: auto;
+}
+
+ul.top-menu > li > a {
+	border-color: #3f3f3f;
+    background-color: #3f3f3f;
+    background-image: -webkit-linear-gradient(top, #696969 0%,#3f3f3f 100%);
+    color: white !important;
+}
+
+.f-dropdown:before{
+	border-bottom-color: #3f3f3f;
 }
 
 .nav-icon{
@@ -58,23 +87,12 @@ div.top-header{
     font-size: xx-small;
 }
 
-div.left-header{
-    width: 50px; 
-    float: left; 
-    padding: 0 0 0 5px;
-}
-
 div.body-content{
 
 }
 
 div.main-content{
     /*overflow:hidden;*/ 
-}
-
-div.right-header{
-    width: 40px; 
-    float: right; 
 }
 
 

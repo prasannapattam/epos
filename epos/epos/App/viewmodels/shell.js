@@ -42,8 +42,6 @@
 
         if (location.href.indexOf('#') !== -1)
             navigation.returnUrl = location.href.substring(location.href.indexOf('#'));
-        //if (session.profile.isAutenticated() === false)
-        //    router.navigate('login');
 
         //sync loading lookups
         return session.populateLookups();

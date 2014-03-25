@@ -199,6 +199,7 @@
 
         //setting the Home tab
         navigation.setHomeTab(vm.title, '#home/' + searchModule, homeTabActive);
+        $(document).foundation();
     }
 
     function setCriteria(searchCriteria) {
