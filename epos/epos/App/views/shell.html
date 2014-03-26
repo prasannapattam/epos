@@ -4,10 +4,10 @@
         <div class="left-header">
             <img class="top-header" data-bind="attr: { src: utility.virtualDirectory + '/content/images/logo.gif' }" />
         </div>
-        <div class="right-header">
-            <img data-dropdown="top-menu-drop" data-options="is_hover:true" class="top-header" data-bind="attr: { src: session.profile.photoUrl }, css { display_none: session.profile.photoUrl() === undefined }" />
+        <div class="right-header" data-bind="css { display_none: session.profile.photoUrl() === undefined }">
+            <img data-dropdown="top-menu-drop" data-options="is_hover:true" class="top-header" data-bind="attr: { src: session.profile.photoUrl }" />
             <ul id="top-menu-drop" class="f-dropdown top-menu" data-dropdown-content>
-                <li><a href="#">Logout</a></li>
+                <li><a data-bind="click: logout">Logout</a></li>
             </ul>
         </div>
         <div class="loading" data-bind="css: { display_block: router.isNavigating() || utility.loading() }">
@@ -32,8 +32,6 @@
             <a href="#home/user" title="Users" class="nav-icon"><i class="fi-torso-business"></i></a>
             <br /><br />
             <a href="#" title="Settings" class="nav-icon"><i class="fi-widget"></i></a>
-            <br /><br />
-            <a data-bind="click: logout" title="Logout" class="nav-icon"><i class="fi-arrow-right"></i></a>
         </div>  
         <br />
         <div class="content"

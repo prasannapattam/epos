@@ -4,8 +4,18 @@
         router: router,
         navigation: navigation,
         utility: utility,
-        logout: logout
+        logout: logout,
+        attached: attached,
+        compositionComplete: compositionComplete
     };
+
+
+    function attached() {
+        $(document).foundation();
+    }
+    function compositionComplete() {
+        //alert('shell compositionComplete')
+    }
 
     function activate() {
         var routes = [
@@ -13,10 +23,10 @@
                         { route: 'login', moduleId: 'login', title: 'Login' },
                         { route: 'queue', moduleId: 'queue', title: 'Print Queue' },
                         { route: 'default', moduleId: 'default', title: 'Defaults' },
+                        { route: 'notes', moduleId: 'notes', title: 'Exam Notes' },
                         { route: 'dropdown', moduleId: 'dropdown', title: 'Drop Downs' },
                         { route: 'autocorrect', moduleId: 'autocorrect', title: 'Auto Correct' },
                         { route: 'messagebox', moduleId: 'messagebox', title: 'messagebox' },
-                        { route: 'logout', moduleId: 'logout', title: 'Logout' },
                         { route: 'patient/:id', moduleId: 'patient', title: 'Patient' },
         ];
 

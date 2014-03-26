@@ -17,10 +17,13 @@
             </div>
         </div>
         <div class="small-9 columns">
-            <div class="text-right" data-bind="css: {display_none: !moduleHideInd() }">
-                <a href="#" class="button tiny selected" data-bind="click: $root.add, css: { display_none: moduleAddInd }"><i class="button-icon fi-plus"></i><span data-bind="text: addText"></span></a>
+            <div class="text-right">
+                <a href="#" class="button tiny selected" data-bind="click: $root.add, css: { display_none: moduleAddInd() || !moduleHideInd() }"><i class="button-icon fi-plus"></i><span data-bind="text: addText"></span></a>
             </div>
             <div data-bind="css: {display_none: moduleHideInd }">
+                <div class="right">
+                    <a href="#" class="button tiny selected notes-button" data-bind="click: $root.notes"><i class="button-icon fi-clipboard-notes"></i><span data-bind="text: notesText"></span></a>
+                </div>
                 <h4 data-bind="text: moduleTitle"></h4>
                 <div data-bind="template: { name: summaryTemplate, data: module }"></div>
             </div>

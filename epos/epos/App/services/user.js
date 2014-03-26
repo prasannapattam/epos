@@ -2,6 +2,7 @@
 
     var title = "Users";
     var addText = "Add User";
+    var notesText = "New Default";
     var defaults = ko.observableArray();
 
     var model = {
@@ -25,6 +26,7 @@
     var vm = {
         title: title,
         addText: addText,
+        notesText: notesText,
         model: model,
         originalModel: originalModel,
         blankModel: blankModel,

@@ -22,6 +22,7 @@
     //search results
     var title = ko.observable();
     var addText = ko.observable();
+    var notesText = ko.observable();
     var criteria = ko.observable();
     var lastCriteria = '';
     var viewActivate = false;
@@ -98,6 +99,7 @@
 
         title: title,
         addText: addText,
+        notesText: notesText,
 
         //search
         criteria: criteria,
@@ -120,6 +122,7 @@
         edit: edit,
         save: save,
         cancelEdit: cancelEdit,
+        notes: notes,
 
         //durandal events
         activate: activate,
@@ -147,6 +150,7 @@
             vm.model = patient.model;
             vm.title(patient.title);
             vm.addText(patient.addText);
+            vm.notesText(patient.notesText);
             vm.searchTemplate(patientSearchTemplate);
             vm.summaryTemplate(patientHistoryTemplate);
             vm.detailTemplate(patientDetailTemplate);
@@ -156,6 +160,7 @@
             vm.model = user.model;
             vm.title(user.title);
             vm.addText(user.addText);
+            vm.notesText(user.notesText);
             vm.searchTemplate(userSearchTemplate);
             vm.summaryTemplate(userDefaultTemplate);
             vm.detailTemplate(userDetailTemplate);
@@ -199,7 +204,6 @@
 
         //setting the Home tab
         navigation.setHomeTab(vm.title, '#home/' + searchModule, homeTabActive);
-        $(document).foundation();
     }
 
     function setCriteria(searchCriteria) {
@@ -299,5 +303,9 @@
             toastr.error('Please fix the validation errors');
             vm.model.errors.showAllMessages();
         }
+    }
+
+    function notes() {
+        router.navigate('notes');
     }
 });

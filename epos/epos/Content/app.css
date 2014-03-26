@@ -484,3 +484,7 @@ select:disabled{
 .after-display:before, .after-display:after {
     display: inline;
 }
+
+.notes-button{
+    width: 120px;
+}

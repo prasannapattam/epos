@@ -227,15 +227,15 @@
     <Content Include="App\services\utility.js" />
     <Content Include="App\viewmodels\home.js" />
     <Content Include="App\viewmodels\login.js" />
-    <Content Include="App\viewmodels\logout.js" />
     <Content Include="App\viewmodels\messagebox.js" />
+    <Content Include="App\viewmodels\notes.js" />
     <Content Include="App\viewmodels\notfound.js" />
     <Content Include="App\viewmodels\queue.js" />
     <Content Include="App\viewmodels\shell.js" />
     <Content Include="App\views\home.html" />
     <Content Include="App\views\login.html" />
-    <Content Include="App\views\logout.html" />
     <Content Include="App\views\messagebox.html" />
+    <Content Include="App\views\notes.html" />
     <Content Include="App\views\notfound.html" />
     <Content Include="App\views\queue.html" />
     <Content Include="App\views\shell.html" />
@@ -294,6 +294,7 @@
     <Content Include="Scripts\knockout-3.0.0.js" />
     <Content Include="Scripts\knockout.validation.js" />
     <Content Include="Scripts\knockout.viewmodel.js" />
+    <Content Include="Scripts\modernizr-2.7.1.js" />
     <Content Include="Scripts\moment-with-langs.js" />
     <Content Include="Scripts\moment.min.js" />
     <Content Include="Scripts\require.js" />

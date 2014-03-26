@@ -2,6 +2,7 @@
 
     var title = "Patients";
     var addText = "Add Patient";
+    var notesText = "New Notes";
     var patientHistory = ko.observableArray();
 
     var model = {
@@ -46,6 +47,7 @@
     var vm = {
         title: title,
         addText: addText,
+        notesText:notesText,
         model: model,
         originalModel: originalModel,
         blankModel: blankModel,

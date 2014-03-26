@@ -17,6 +17,7 @@ namespace epos.App_Start
                     .Include("~/scripts/knockout.validation.js")
                     .Include("~/scripts/knockout.viewmodel.js")
                     .Include("~/scripts/toastr.js")
+                    .Include("~/scripts/modernizr-2.7.1.js")
                     .Include("~/scripts/foundation/foundation.js")
                     .IncludeDirectory("~/scripts/foundation", "*.js")
                     .Include("~/scripts/moment-with-langs.js")
