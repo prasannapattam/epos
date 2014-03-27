@@ -142,6 +142,7 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
     <Compile Include="Controllers\LookUpController.cs" />
+    <Compile Include="Controllers\NotesController.cs" />
     <Compile Include="Controllers\PatientController.cs" />
     <Compile Include="Controllers\PatientSearchController.cs" />
     <Compile Include="Controllers\PrintController.cs" />
@@ -202,8 +203,10 @@
     <Compile Include="Lib\Shared\WebUtil.cs" />
     <Compile Include="Models\AjaxModel.cs" />
     <Compile Include="Models\ExamDefaultModel.cs" />
+    <Compile Include="Models\ExamModel.cs" />
     <Compile Include="Models\LoginModel.cs" />
     <Compile Include="Models\LookUpModel.cs" />
+    <Compile Include="Models\NotesModel.cs" />
     <Compile Include="Models\PatientHistoryModel.cs" />
     <Compile Include="Models\PatientModel.cs" />
     <Compile Include="Models\PatientSearchResultModel.cs" />
