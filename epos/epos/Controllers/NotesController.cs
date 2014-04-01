@@ -6,6 +6,7 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
+using epos.Lib.Repository;
 
 namespace epos.Controllers
 {
@@ -19,6 +20,10 @@ namespace epos.Controllers
             try
             {
                 //get the last examid when no examid is passed
+                ExamModel exam = PosRepository.ExamGet(patientID, examID);
+                NotesModel notes = new NotesModel() { NotesType = PosConstants.NotesType.New };
+                if (exam.SaveID == 1)
+                    notes.NotesType = PosConstants.NotesType.Saved;
 
             }
             catch (Exception exp)
