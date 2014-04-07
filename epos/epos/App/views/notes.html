@@ -1,3 +1,57 @@
 ﻿<div>
-    Notes...
+    http://tech.pro/blog/1863/10-knockout-binding-handlers-i-don-t-want-to-live-without    
+    <fieldset>
+        <div class="row row-narrow">
+            <div class="small-4 columns col-narrow">
+                <div class="row full-width row-narrow">
+                    <label>&nbsp;Patient Name</label>
+                </div>
+                <div class="row full-width row-narrow">
+                    <div class="small-2 columns tight">
+                        <select data-bind="options: session.lookups.Greet, optionsText: 'FieldValue', optionsValue: 'FieldValue', optionsCaption: '', value: model.Greeting.Value"></select>
+                    </div>
+                    <div class="small-4 columns tight">
+                        <input type="text" placeholder="" data-bind="value: model.Allergies.Value, css: {focusctrl: model.Allergies.ColourType() === 1, correctctrl: model.Allergies.ColourType() === 2}, event: { focus: function() {$root.resetColour(model.Allergies)} }" />
+                    </div>
+                    <div class="small-2 columns left tight">
+                        <input type="text" placeholder="" data-bind="value: model.Allergies.ColourType" />
+                    </div>
+                    <div class="small-4 columns left tight">
+                        <input type="text" placeholder="" data-bind="value: model.Allergies.Value, color: model.Allergies.ColourType" />
+                        <input type="text" placeholder="" data-bind="value: model.Allergies.Value" />
+                        <input type="text" placeholder="" data-bind="notesvalue: model.Allergies" />
+                    </div>
+                </div>
+            </div>
+            <div class="small-1 columns left col-narrow">
+                <label>DOB</label>
+                <input type="text" placeholder="" data-bind="datepicker: model.DOB.Value" />
+            </div>
+            <div class="small-1 columns left col-narrow">
+                <label>Age</label>
+                <input type="text" placeholder="" data-bind="value: model.Allergies.ColourType" />
+            </div>
+            <div class="small-1 columns left col-narrow">
+                <label>Sex</label>
+                <input type="text" placeholder="" data-bind="value: model.Sex.Value" />
+            </div>
+            <div class="small-1 columns left col-narrow">
+                <label>Premature</label>
+                <select data-bind="value: model.PrematureBirthString">
+                    <option value="No">No</option>
+                    <option value="Yes">Yes</option>
+                </select>
+            </div>
+            <div class="small-1 columns left col-narrow">
+                <label>Date</label>
+                <input type="text" placeholder="" data-bind="datepicker: model.ExamDate.Value" />
+                
+            </div>
+            <div class="small-1 columns left col-narrow">
+                <label>Doctor</label>
+                <select data-bind="options: model.Doctors, optionsValue: 'Value' , optionsText:'Text', value: model.User.Value, optionsCaption: ''"></select>
+            </div>
+        </div>
+    </fieldset>
+
 </div>

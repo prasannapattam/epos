@@ -314,7 +314,11 @@ namespace epos.Models
         public Field hdnPageTitle { get; set; }
         public Field hdnTimeOut { get; set; }
 
+        public Field ExamDate { get; set; } 
         public PosConstants.NotesType NotesType { get; set; }
+
+        //dropdowns
+        public List<SelectListItem> Doctors { get; set; }
     }
 
     public class Field
@@ -323,23 +327,4 @@ namespace epos.Models
         public int ColourType { get; set; }
     }
 }
-/*
-public static IList<dynamic> GetExpandoFromXml(String file) { 
-  var persons = new List<dynamic>();
 
-  var doc = XDocument.Load(file);
-  var nodes = from node in doc.Root.Descendants("Person")
-              select node;
-  foreach (var n in nodes) {
-    dynamic person = new ExpandoObject();
-    foreach (var child in n.Descendants()) {
-      var p = person as IDictionary<String, object>);
-      p[child.Name] = child.Value.Trim();
-    }
-
-    persons.Add(person);
-  }
-
-  return persons;
-}
-*/

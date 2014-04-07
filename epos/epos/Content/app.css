@@ -488,3 +488,12 @@ select:disabled{
 .notes-button{
     width: 120px;
 }
+
+.focusctrl {
+    background-color: #FFEEAA !important;
+}
+
+.correctctrl {
+    background-color: Aqua !important;
+}
+

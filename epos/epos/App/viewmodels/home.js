@@ -122,7 +122,6 @@
         edit: edit,
         save: save,
         cancelEdit: cancelEdit,
-        notes: notes,
 
         //durandal events
         activate: activate,
@@ -303,9 +302,5 @@
             toastr.error('Please fix the validation errors');
             vm.model.errors.showAllMessages();
         }
-    }
-
-    function notes() {
-        router.navigate('notes');
     }
 });

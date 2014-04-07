@@ -77,6 +77,43 @@ define(['durandal/system', 'durandal/app', 'durandal/viewLocator', 'durandal/com
         return result;
     };
 
+
+    ko.bindingHandlers.color = {
+    init:function (element, valueAccessor, allBindingsAccessor, data, context) {
+        var value = valueAccessor();
+        var newValueAccessor = function () {
+            return {
+                focus: function () {
+                    if (value() === 1) {
+                        value(0);
+                    }
+                }
+            }
+        };
+
+
+        //call the real event binding's init function
+        ko.bindingHandlers.event.init(element, newValueAccessor, allBindingsAccessor, data, context);
+    },
+    update: function (element, valueAccessor, allBindingsAccessor, data) {
+            var value = valueAccessor();
+            ko.bindingHandlers.css.update(element, function () {
+                return { focusctrl: value() === 1, correctctrl: value() === 2 }
+            });
+        }
+    };
+
+    ko.bindingHandlers.notesvalue = {
+        init: function (element, valueAccessor, allBindingsAccessor, data) {
+            var field = valueAccessor();
+            ko.applyBindingsToNode(element, {
+                value: field.Value,
+                color: field.ColourType
+                //css: { focusctrl: field.ColourType() === 1, correctctrl: field.ColourType() === 2 }
+            });
+        }
+   };
+
     app.start().then(function () {
         toastr.options.positionClass = 'toast-bottom-right';
         toastr.options.backgroundpositionClass = 'toast-bottom-right';

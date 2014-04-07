@@ -1,4 +1,4 @@
-﻿define(['services/message'], function (message) {
+﻿define(['plugins/router', 'services/message'], function (router, message) {
 
     var title = "Patients";
     var addText = "Add Patient";
@@ -79,8 +79,17 @@
         });
     }
 
-    function navigateNotes(history) {
-        alert('This feature is not implemented yet');
+    function navigateNotes(item) {
+        var hash = '#notes/1/' + vm.model.PatientID();
+        if (item.ExamID !== undefined) {
+            if (item.CorrectExamID !== null) {
+                hash += '/' + item.CorrectExamID
+            }
+            else {
+                hash += '/' + item.ExamID
+            }
+        }
+        router.navigate(hash);
     }
 
 

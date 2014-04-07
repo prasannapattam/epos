@@ -23,7 +23,7 @@
                         { route: 'login', moduleId: 'login', title: 'Login' },
                         { route: 'queue', moduleId: 'queue', title: 'Print Queue' },
                         { route: 'default', moduleId: 'default', title: 'Defaults' },
-                        { route: 'notes', moduleId: 'notes', title: 'Exam Notes' },
+                        { route: 'notes/:notestype(/:patientid)(/:examid)', moduleId: 'notes', title: 'Exam Notes' },
                         { route: 'dropdown', moduleId: 'dropdown', title: 'Drop Downs' },
                         { route: 'autocorrect', moduleId: 'autocorrect', title: 'Auto Correct' },
                         { route: 'messagebox', moduleId: 'messagebox', title: 'messagebox' },

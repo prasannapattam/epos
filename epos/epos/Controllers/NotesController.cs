@@ -17,7 +17,8 @@ namespace epos.Controllers
     {
 
         //patientid = 1203
-        public AjaxModel<NotesModel> Get(int patientID, int? examID)
+        //http://localhost:49337/api/notes?patientID=1203&examID=
+        public AjaxModel<NotesModel> Get(int type, int patientID, int? examID)
         {
             AjaxModel<NotesModel> ajax = new AjaxModel<NotesModel>() { Success = true };
 
@@ -26,6 +27,7 @@ namespace epos.Controllers
                 //get the last examid when no examid is passed
                 ExamModel exam = PosRepository.ExamGet(patientID, examID);
                 NotesModel notes = GetNotes(exam);
+                notes.Doctors = PosRepository.DoctorsGet();
                 //getting the defaults -------------------------------
 
                 if (exam.ExamDate.Date == DateTime.Today.Date)
@@ -34,6 +36,7 @@ namespace epos.Controllers
                 if (exam.SaveID == 1)
                     notes.NotesType = PosConstants.NotesType.Saved;
 
+                ajax.Model = notes;
 
             }
             catch (Exception exp)
