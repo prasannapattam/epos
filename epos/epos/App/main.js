@@ -106,13 +106,23 @@ define(['durandal/system', 'durandal/app', 'durandal/viewLocator', 'durandal/com
     ko.bindingHandlers.notesvalue = {
         init: function (element, valueAccessor, allBindingsAccessor, data) {
             var field = valueAccessor();
+            field.focusctrl = ko.computed(function () { return field.ColourType() === 1 });
+            field.correctctrl = ko.computed(function () { return field.ColourType() === 2 });
             ko.applyBindingsToNode(element, {
                 value: field.Value,
-                color: field.ColourType
-                //css: { focusctrl: field.ColourType() === 1, correctctrl: field.ColourType() === 2 }
+                css: { focusctrl: field.focusctrl, correctctrl: field.correctctrl },
+                event: { 
+                    focus: function() { 
+                        if(field.ColourType() === 1){
+                            field.ColourType(0);
+                        }
+                    } 
+                }
             });
         }
-   };
+    };
+
+    // dropdown https://groups.google.com/forum/#!topic/knockoutjs/m61h1jURx4Y
 
     app.start().then(function () {
         toastr.options.positionClass = 'toast-bottom-right';
