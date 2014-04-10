@@ -10,6 +10,7 @@ using epos.Lib.Repository;
 using System.IO;
 using System.Xml;
 using System.Reflection;
+using System.Web.Mvc;
 
 namespace epos.Controllers
 {
@@ -26,7 +27,9 @@ namespace epos.Controllers
             {
                 //get the last examid when no examid is passed
                 ExamModel exam = PosRepository.ExamGet(patientID, examID);
-                NotesModel notes = GetNotes(exam);
+                List<SelectListItem> examLookUp = PosRepository.ExamLookUpGet();
+
+                NotesModel notes = GetNotes(exam, examLookUp);
                 notes.Doctors = PosRepository.DoctorsGet();
                 //getting the defaults -------------------------------
 
@@ -49,7 +52,7 @@ namespace epos.Controllers
             return ajax;
         }
 
-        private NotesModel GetNotes(ExamModel exam)
+        private NotesModel GetNotes(ExamModel exam, List<SelectListItem> examLookUp)
         {
             NotesModel notes = new NotesModel() { NotesType = PosConstants.NotesType.New };
 
@@ -90,7 +93,14 @@ namespace epos.Controllers
 
                             if(pi != null)
                             {
-                                value = new Field() { Value = fieldValue, ColourType = Convert.ToInt32(fieldAttr) };
+                                value = new Field() {Name = fieldName, Value = fieldValue, ColourType = Convert.ToInt32(fieldAttr) };
+                                //setting the loopup
+                                var lookupItem = examLookUp.FirstOrDefault(m => m.Text == fieldName);
+                                if(lookupItem != null)
+                                {
+                                    value.LookUpFieldName = lookupItem.Value;
+                                }
+
                                 pi.SetValue(notes, value);
                             }
 

@@ -323,8 +323,10 @@ namespace epos.Models
 
     public class Field
     {
+        public string Name { get; set; }
         public string Value { get; set; }
         public int ColourType { get; set; }
+        public string LookUpFieldName { get; set; }
     }
 }
 

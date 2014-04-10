@@ -77,7 +77,8 @@ define(['durandal/system', 'durandal/app', 'durandal/viewLocator', 'durandal/com
         return result;
     };
 
-
+    /*
+    ------Keeping this code for future reference-----------------
     ko.bindingHandlers.color = {
     init:function (element, valueAccessor, allBindingsAccessor, data, context) {
         var value = valueAccessor();
@@ -102,6 +103,7 @@ define(['durandal/system', 'durandal/app', 'durandal/viewLocator', 'durandal/com
             });
         }
     };
+    */
 
     ko.bindingHandlers.notesvalue = {
         init: function (element, valueAccessor, allBindingsAccessor, data) {
@@ -119,6 +121,42 @@ define(['durandal/system', 'durandal/app', 'durandal/viewLocator', 'durandal/com
                     } 
                 }
             });
+        }
+    };
+
+    ko.bindingHandlers.notesselect = {
+        init: function (element, valueAccessor, allBindingsAccessor, data) {
+            var field = valueAccessor();
+            field.focusctrl = ko.computed(function () { return field.ColourType() === 1 });
+            field.correctctrl = ko.computed(function () { return field.ColourType() === 2 });
+
+            ko.applyBindingsToNode(element, {
+                options: session.lookups[field.LookUpFieldName()],
+                optionsValue: 'FieldDescription',
+                optionsText: 'FieldValue',
+                optionsCaption: '',
+                value: field.Value,
+                css: { focusctrl: field.focusctrl, correctctrl: field.correctctrl },
+                event: {
+                    focus: function () {
+                        if (field.ColourType() === 1) {
+                            field.ColourType(0);
+                        }
+                    }
+                }
+            });
+
+            //ko.applyBindingsToNode(element, {
+            //    value: field.Value,
+            //    css: { focusctrl: field.focusctrl, correctctrl: field.correctctrl },
+            //    event: {
+            //        focus: function () {
+            //            if (field.ColourType() === 1) {
+            //                field.ColourType(0);
+            //            }
+            //        }
+            //    }
+            //});
         }
     };
 

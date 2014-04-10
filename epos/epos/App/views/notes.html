@@ -8,7 +8,7 @@
                 </div>
                 <div class="row full-width row-narrow">
                     <div class="small-2 columns tight">
-                        <select data-bind="options: session.lookups.Greet, optionsText: 'FieldValue', optionsValue: 'FieldValue', optionsCaption: '', value: model.Greeting.Value"></select>
+                        <select data-bind="options: session.lookups.Greet, optionsText: 'FieldValue', optionsValue: 'FieldDescription', optionsCaption: '', value: model.Greeting.Value"></select>
                     </div>
                     <div class="small-4 columns tight">
                         <input type="text" placeholder="" data-bind="value: model.Allergies.Value, css: {focusctrl: model.Allergies.ColourType() === 1, correctctrl: model.Allergies.ColourType() === 2}, event: { focus: function() {$root.resetColour(model.Allergies)} }" />
@@ -17,8 +17,6 @@
                         <input type="text" placeholder="" data-bind="value: model.Allergies.ColourType" />
                     </div>
                     <div class="small-4 columns left tight">
-                        <input type="text" placeholder="" data-bind="value: model.Allergies.Value, color: model.Allergies.ColourType" />
-                        <input type="text" placeholder="" data-bind="value: model.Allergies.Value" />
                         <input type="text" placeholder="" data-bind="notesvalue: model.Allergies" />
                     </div>
                 </div>
@@ -53,5 +51,7 @@
             </div>
         </div>
     </fieldset>
+    <select data-bind="options: session.lookups.Mentation, optionsText: 'FieldValue', optionsValue: 'FieldDescription', optionsCaption: '', value: model.Mentation1.Value"></select>
+    <select data-bind="notesselect: model.Mentation1"></select>
 
 </div>
