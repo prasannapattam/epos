@@ -4,9 +4,11 @@
 
     var vm = {
         model: model,
+        resetColour: resetColour,
         activate: activate,
-        resetColour: resetColour
-    };
+        attached: attached,
+        compositionComplete: compositionComplete
+};
 
     return vm;
 
@@ -21,6 +23,25 @@
             return data;
         });
     };
+
+    function attached() {
+//        alert('attached');
+    }
+    function compositionComplete() {
+
+        //var firstLocation = $("div.firstscroll").offset().top;
+        //var secondLocation = $("div.secondscroll").offset().top;
+        //var thirdLocation = $("div.thirdscroll").offset().top;
+
+        //$(window).scroll(function () {
+        //    var winScroll = $(this).scrollTop(); // current scroll of window
+
+        //    //console.log(winScroll + ' - ' + firstLocation + ' - ' + secondLocation + ' - ' + thirdLocation  )
+
+        //});
+        return true;
+    }
+
 
     function addComputedProperties() {
         vm.model.PrematureBirthString = ko.computed({

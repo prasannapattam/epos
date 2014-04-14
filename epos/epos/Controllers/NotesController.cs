@@ -28,16 +28,19 @@ namespace epos.Controllers
                 //get the last examid when no examid is passed
                 ExamModel exam = PosRepository.ExamGet(patientID, examID);
                 List<SelectListItem> examLookUp = PosRepository.ExamLookUpGet();
-
-                NotesModel notes = GetNotes(exam, examLookUp);
-                notes.Doctors = PosRepository.DoctorsGet();
-                //getting the defaults -------------------------------
-
+               
+                //setting the notes type
+                PosConstants.NotesType notesType = PosConstants.NotesType.New;
                 if (exam.ExamDate.Date == DateTime.Today.Date)
-                    notes.NotesType = PosConstants.NotesType.Correct;
+                    notesType = PosConstants.NotesType.Correct;
 
                 if (exam.SaveID == 1)
-                    notes.NotesType = PosConstants.NotesType.Saved;
+                    notesType = PosConstants.NotesType.Saved;
+
+
+                NotesModel notes = GetNotes(exam, examLookUp, notesType);
+                notes.Doctors = PosRepository.DoctorsGet();
+                //getting the defaults -------------------------------
 
                 ajax.Model = notes;
 
@@ -52,9 +55,9 @@ namespace epos.Controllers
             return ajax;
         }
 
-        private NotesModel GetNotes(ExamModel exam, List<SelectListItem> examLookUp)
+        private NotesModel GetNotes(ExamModel exam, List<SelectListItem> examLookUp, PosConstants.NotesType notesType)
         {
-            NotesModel notes = new NotesModel() { NotesType = PosConstants.NotesType.New };
+            NotesModel notes = new NotesModel() { NotesType = notesType };
 
             PropertyInfo[] notesFields = notes.GetType().GetProperties();
             Field value;
@@ -94,8 +97,14 @@ namespace epos.Controllers
                             if(pi != null)
                             {
                                 value = new Field() {Name = fieldName, Value = fieldValue, ColourType = Convert.ToInt32(fieldAttr) };
+                                //setting the colour type
+                                if(notesType == PosConstants.NotesType.New)
+                                {
+                                    if (fieldValue != "" && fieldValue != "OU")
+                                        value.ColourType = (int) PosConstants.ColourType.New;
+                                }
                                 //setting the loopup
-                                var lookupItem = examLookUp.FirstOrDefault(m => m.Text == fieldName);
+                                var lookupItem = examLookUp.FirstOrDefault(m => m.Text.Trim() == fieldName.Trim());
                                 if(lookupItem != null)
                                 {
                                     value.LookUpFieldName = lookupItem.Value;

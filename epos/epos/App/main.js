@@ -130,12 +130,37 @@ define(['durandal/system', 'durandal/app', 'durandal/viewLocator', 'durandal/com
             field.focusctrl = ko.computed(function () { return field.ColourType() === 1 });
             field.correctctrl = ko.computed(function () { return field.ColourType() === 2 });
 
+            var lookupFieldName = field.LookUpFieldName();
+            if (lookupFieldName !== null && lookupFieldName !== undefined) {
+
+                ko.applyBindingsToNode(element, {
+                    options: session.lookups[field.LookUpFieldName()],
+                    optionsValue: 'FieldDescription',
+                    optionsText: 'FieldValue',
+                    optionsCaption: '',
+                    value: field.Value,
+                    css: { focusctrl: field.focusctrl, correctctrl: field.correctctrl },
+                    event: {
+                        focus: function () {
+                            if (field.ColourType() === 1) {
+                                field.ColourType(0);
+                            }
+                        }
+                    }
+                });
+            }
+        }
+    };
+
+    ko.bindingHandlers.notesdatepicker = {
+        init: function (element, valueAccessor, allBindingsAccessor, data) {
+            var field = valueAccessor();
+            if (field.Value === undefined)
+                return;
+            field.focusctrl = ko.computed(function () { return field.ColourType() === 1 });
+            field.correctctrl = ko.computed(function () { return field.ColourType() === 2 });
             ko.applyBindingsToNode(element, {
-                options: session.lookups[field.LookUpFieldName()],
-                optionsValue: 'FieldDescription',
-                optionsText: 'FieldValue',
-                optionsCaption: '',
-                value: field.Value,
+                datepicker: field.Value,
                 css: { focusctrl: field.focusctrl, correctctrl: field.correctctrl },
                 event: {
                     focus: function () {
@@ -145,22 +170,9 @@ define(['durandal/system', 'durandal/app', 'durandal/viewLocator', 'durandal/com
                     }
                 }
             });
-
-            //ko.applyBindingsToNode(element, {
-            //    value: field.Value,
-            //    css: { focusctrl: field.focusctrl, correctctrl: field.correctctrl },
-            //    event: {
-            //        focus: function () {
-            //            if (field.ColourType() === 1) {
-            //                field.ColourType(0);
-            //            }
-            //        }
-            //    }
-            //});
         }
     };
 
-    // dropdown https://groups.google.com/forum/#!topic/knockoutjs/m61h1jURx4Y
 
     app.start().then(function () {
         toastr.options.positionClass = 'toast-bottom-right';
