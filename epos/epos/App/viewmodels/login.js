@@ -21,7 +21,7 @@
 
 
     function activate() {
-        session.profile.isAutenticated(false);
+        session.profile.isAuthenticated(false);
         navigation.clear();
         navigation.setHomeTab(vm.title, '#login', true);
         vm.model.UserName('');

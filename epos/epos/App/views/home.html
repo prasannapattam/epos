@@ -25,7 +25,6 @@
                     <a href="#" class="button tiny selected notes-button" data-bind="click: module.navigateNotes"><i class="button-icon fi-clipboard-notes"></i><span data-bind="text: notesText"></span></a>
                 </div>
                 <h4 data-bind="text: moduleTitle"></h4>
-                <div data-bind="template: { name: summaryTemplate, data: module }"></div>
             </div>
             <div data-bind="css: {display_none: detailHideInd }">
                 <table class="full-width">
@@ -46,6 +45,8 @@
                     </tbody>
                 </table>
             </div>
+            <div data-bind="css: {display_none: moduleHideInd }, template: { name: summaryTemplate, data: module }"></div>
+
         </div>
     </div>
 </div>

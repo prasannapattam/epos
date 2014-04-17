@@ -38,7 +38,7 @@
 
         //setting up the guardRoute
         router.guardRoute = function (instance, instruction) {
-            if (session.profile.isAutenticated() === false && instruction.config.route !== "login") {
+            if (session.profile.isAuthenticated() === false && instruction.config.route !== "login") {
                 return 'login';
             }
 

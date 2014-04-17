@@ -4,7 +4,7 @@
     var lastName = ko.observable();
     var userName = ko.observable();
     var photoUrl = ko.observable();
-    var isAutenticated = ko.observable(true);
+    var isAuthenticated = ko.observable(true);
 
 
     var vm = {
@@ -13,7 +13,7 @@
         lastName: lastName,
         userName: userName,
         photoUrl: photoUrl,
-        isAutenticated: isAutenticated,
+        isAuthenticated: isAuthenticated,
         activate: activate,
         populate: populate,
         logout: logout
@@ -36,12 +36,12 @@
         else {
             this.photoUrl(utility.virtualDirectory + '/Data/' + data.PhotoUrl + '.jpg');
         }
-        this.isAutenticated(true);
+        this.isAuthenticated(true);
     };
 
     function logout() {
         this.photoUrl(undefined);
-        this.isAutenticated(false);
+        this.isAuthenticated(false);
     };
 });
 
