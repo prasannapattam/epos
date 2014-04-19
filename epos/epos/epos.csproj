@@ -171,19 +171,19 @@
       <DependentUpon>Pos.tt</DependentUpon>
     </Compile>
     <Compile Include="Lib\Repository\Pos.Context.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
       <DependentUpon>Pos.Context.tt</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
     </Compile>
     <Compile Include="Lib\Repository\Pos.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
       <DependentUpon>Pos.tt</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
     </Compile>
     <Compile Include="Lib\Repository\Pos.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
       <DependentUpon>Pos.edmx</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
     </Compile>
     <Compile Include="Lib\Repository\PosRepository.cs" />
     <Compile Include="Lib\Repository\PrintQueue.cs">
@@ -260,7 +260,21 @@
     <Content Include="Content\normalize.css" />
     <Content Include="Content\toastr.css" />
     <Content Include="Data\NoPhoto.jpg" />
+    <Content Include="Data\prasanna.jpg" />
     <Content Include="Global.asax" />
+    <Content Include="Lib\Repository\Pos.Context.tt">
+      <DependentUpon>Pos.edmx</DependentUpon>
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>Pos.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="Lib\Repository\Pos.edmx.diagram">
+      <DependentUpon>Pos.edmx</DependentUpon>
+    </Content>
+    <Content Include="Lib\Repository\Pos.tt">
+      <DependentUpon>Pos.edmx</DependentUpon>
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>Pos.cs</LastGenOutput>
+    </Content>
     <Content Include="Scripts\durandal\activator.js" />
     <Content Include="Scripts\durandal\app.js" />
     <Content Include="Scripts\durandal\binder.js" />
@@ -328,31 +342,16 @@
     <Content Include="Views\Home\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <EntityDeploy Include="Lib\Repository\Pos.edmx">
-      <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>Pos.Designer.cs</LastGenOutput>
-    </EntityDeploy>
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Lib\Repository\Pos.Context.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>Pos.edmx</DependentUpon>
-      <LastGenOutput>Pos.Context.cs</LastGenOutput>
-    </Content>
-    <Content Include="Lib\Repository\Pos.edmx.diagram">
-      <DependentUpon>Pos.edmx</DependentUpon>
-    </Content>
-    <Content Include="Lib\Repository\Pos.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>Pos.edmx</DependentUpon>
-      <LastGenOutput>Pos.cs</LastGenOutput>
-    </Content>
-  </ItemGroup>
-  <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="gitpush.bat" />
+  </ItemGroup>
+  <ItemGroup>
+    <EntityDeploy Include="Lib\Repository\Pos.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>Pos.Designer.cs</LastGenOutput>
+    </EntityDeploy>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

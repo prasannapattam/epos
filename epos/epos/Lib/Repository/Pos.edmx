@@ -1,0 +1,412 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="PosModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'H:\PRASANNA\MIND\CODE\PRASANNA\EXAMPATIENT\EXAMPATIENT\APP_DATA\EXAMPATIENT.MDF.dbo.AutoCorrect' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="AutoCorrect">
+          <Key>
+            <PropertyRef Name="Name" />
+            <PropertyRef Name="Value" />
+          </Key>
+          <Property Name="Name" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Value" Type="varchar" MaxLength="500" Nullable="false" />
+          <Property Name="UserName" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="Exam">
+          <Key>
+            <PropertyRef Name="ExamID" />
+          </Key>
+          <Property Name="ExamID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="PatientID" Type="int" Nullable="false" />
+          <Property Name="ExamText" Type="varchar(max)" Nullable="false" />
+          <Property Name="ExamDate" Type="date" Nullable="false" />
+          <Property Name="ExamCorrectDate" Type="date" />
+          <Property Name="CorrectExamID" Type="int" />
+          <Property Name="SavedInd" Type="int" />
+          <Property Name="LastUpdatedDate" Type="datetime" />
+          <Property Name="UserName" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="ExamDefault">
+          <Key>
+            <PropertyRef Name="ExamDefaultID" />
+          </Key>
+          <Property Name="ExamDefaultID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="DefaultName" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="AgeStart" Type="int" Nullable="false" />
+          <Property Name="AgeEnd" Type="int" Nullable="false" />
+          <Property Name="PrematureBirth" Type="bit" Nullable="false" />
+          <Property Name="DoctorUserID" Type="int" Nullable="false" />
+          <Property Name="ExamText" Type="varchar(max)" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ExamLookUp">
+          <Key>
+            <PropertyRef Name="ExamLookUpID" />
+          </Key>
+          <Property Name="ExamLookUpID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ControlName" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="FieldName" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="ExamChildDefault" Type="varchar" MaxLength="500" />
+          <Property Name="ExamInfantDefault" Type="varchar" MaxLength="500" />
+          <Property Name="ExamAdultDefault" Type="varchar" MaxLength="500" />
+          <Property Name="ExamROPDefault" Type="varchar" MaxLength="500" />
+          <Property Name="FieldDescription" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="LookUp">
+          <Key>
+            <PropertyRef Name="LookupID" />
+          </Key>
+          <Property Name="LookupID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="FieldName" Type="varchar" MaxLength="50" />
+          <Property Name="FieldValue" Type="varchar" MaxLength="500" />
+          <Property Name="SortOrder" Type="int" />
+          <Property Name="FieldDescription" Type="varchar" MaxLength="500" />
+        </EntityType>
+        <EntityType Name="Patient">
+          <Key>
+            <PropertyRef Name="PatientID" />
+          </Key>
+          <Property Name="PatientID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="PatientNumber" Type="varchar" MaxLength="50" />
+          <Property Name="FirstName" Type="varchar" MaxLength="50" />
+          <Property Name="MiddleName" Type="varchar" MaxLength="50" />
+          <Property Name="LastName" Type="varchar" MaxLength="50" />
+          <Property Name="NickName" Type="varchar" MaxLength="50" />
+          <Property Name="DateOfBirth" Type="date" />
+          <Property Name="Sex" Type="varchar" MaxLength="50" />
+          <Property Name="Occupation" Type="varchar" MaxLength="50" />
+          <Property Name="HxFrom" Type="varchar" MaxLength="50" />
+          <Property Name="ReferredFrom" Type="varchar" MaxLength="50" />
+          <Property Name="ReferredDoctor" Type="varchar" MaxLength="50" />
+          <Property Name="Allergies" Type="varchar" MaxLength="50" />
+          <Property Name="Medications" Type="varchar" MaxLength="500" />
+          <Property Name="PrematureBirth" Type="bit" />
+          <Property Name="Greeting" Type="varchar" MaxLength="50" />
+          <Property Name="LastExamDate" Type="datetime" />
+        </EntityType>
+        <EntityType Name="PrintQueue">
+          <Key>
+            <PropertyRef Name="PrintQueueID" />
+          </Key>
+          <Property Name="PrintQueueID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ExamID" Type="int" Nullable="false" />
+          <Property Name="UserName" Type="varchar" MaxLength="50" />
+          <Property Name="PrintExamNote" Type="bit" />
+        </EntityType>
+        <EntityType Name="Schedule">
+          <Key>
+            <PropertyRef Name="ScheduleID" />
+          </Key>
+          <Property Name="ScheduleID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="PatientID" Type="int" Nullable="false" />
+          <Property Name="ScheduleDate" Type="datetime" Nullable="false" />
+          <Property Name="ExamID" Type="int" />
+          <Property Name="Status" Type="varchar" MaxLength="3" />
+          <Property Name="DoctorUserName" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="UserID" />
+          </Key>
+          <Property Name="UserID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="FirstName" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="LastName" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="UserName" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Password" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="PhotoUrl" Type="varchar" MaxLength="100" />
+        </EntityType>
+        <EntityContainer Name="PosModelStoreContainer">
+          <EntitySet Name="Exam" EntityType="Self.Exam" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ExamDefault" EntityType="Self.ExamDefault" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ExamLookUp" EntityType="Self.ExamLookUp" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="LookUp" EntityType="Self.LookUp" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Patient" EntityType="Self.Patient" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PrintQueue" EntityType="Self.PrintQueue" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Schedule" EntityType="Self.Schedule" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="User" EntityType="Self.User" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="AutoCorrect" EntityType="Self.AutoCorrect" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [AutoCorrect].[Name] AS [Name], 
+    [AutoCorrect].[Value] AS [Value], 
+    [AutoCorrect].[UserName] AS [UserName]
+    FROM [dbo].[AutoCorrect] AS [AutoCorrect]</DefiningQuery>
+          </EntitySet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="PosModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Exam">
+          <Key>
+            <PropertyRef Name="ExamID" />
+          </Key>
+          <Property Name="ExamID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="PatientID" Type="Int32" Nullable="false" />
+          <Property Name="ExamText" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="ExamDate" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="ExamCorrectDate" Type="DateTime" Precision="0" />
+          <Property Name="CorrectExamID" Type="Int32" />
+          <Property Name="SavedInd" Type="Int32" />
+          <Property Name="LastUpdatedDate" Type="DateTime" Precision="3" />
+          <Property Name="UserName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="ExamDefault">
+          <Key>
+            <PropertyRef Name="ExamDefaultID" />
+          </Key>
+          <Property Name="ExamDefaultID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="DefaultName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="AgeStart" Type="Int32" Nullable="false" />
+          <Property Name="AgeEnd" Type="Int32" Nullable="false" />
+          <Property Name="PrematureBirth" Type="Boolean" Nullable="false" />
+          <Property Name="DoctorUserID" Type="Int32" Nullable="false" />
+          <Property Name="ExamText" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ExamLookUp">
+          <Key>
+            <PropertyRef Name="ExamLookUpID" />
+          </Key>
+          <Property Name="ExamLookUpID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ControlName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="FieldName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="ExamChildDefault" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="ExamInfantDefault" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="ExamAdultDefault" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="ExamROPDefault" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="FieldDescription" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="LookUp">
+          <Key>
+            <PropertyRef Name="LookupID" />
+          </Key>
+          <Property Name="LookupID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="FieldName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="FieldValue" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="SortOrder" Type="Int32" />
+          <Property Name="FieldDescription" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="Patient">
+          <Key>
+            <PropertyRef Name="PatientID" />
+          </Key>
+          <Property Name="PatientID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="PatientNumber" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="FirstName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="MiddleName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="LastName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="NickName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="DateOfBirth" Type="DateTime" Precision="0" />
+          <Property Name="Sex" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Occupation" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="HxFrom" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="ReferredFrom" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="ReferredDoctor" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Allergies" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Medications" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="PrematureBirth" Type="Boolean" />
+          <Property Name="Greeting" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="LastExamDate" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityType Name="PrintQueue">
+          <Key>
+            <PropertyRef Name="PrintQueueID" />
+          </Key>
+          <Property Name="PrintQueueID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ExamID" Type="Int32" Nullable="false" />
+          <Property Name="UserName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="PrintExamNote" Type="Boolean" />
+        </EntityType>
+        <EntityType Name="Schedule">
+          <Key>
+            <PropertyRef Name="ScheduleID" />
+          </Key>
+          <Property Name="ScheduleID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="PatientID" Type="Int32" Nullable="false" />
+          <Property Name="ScheduleDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="ExamID" Type="Int32" />
+          <Property Name="Status" Type="String" MaxLength="3" FixedLength="false" Unicode="false" />
+          <Property Name="DoctorUserName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="UserID" />
+          </Key>
+          <Property Name="UserID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="FirstName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="LastName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="UserName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Password" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="PhotoUrl" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="AutoCorrect">
+          <Key>
+            <PropertyRef Name="Name" />
+            <PropertyRef Name="Value" />
+          </Key>
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Value" Type="String" MaxLength="500" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="UserName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityContainer Name="PosEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Exams" EntityType="Self.Exam" />
+          <EntitySet Name="ExamDefaults" EntityType="Self.ExamDefault" />
+          <EntitySet Name="ExamLookUps" EntityType="Self.ExamLookUp" />
+          <EntitySet Name="LookUps" EntityType="Self.LookUp" />
+          <EntitySet Name="Patients" EntityType="Self.Patient" />
+          <EntitySet Name="PrintQueues" EntityType="Self.PrintQueue" />
+          <EntitySet Name="Schedules" EntityType="Self.Schedule" />
+          <EntitySet Name="Users" EntityType="Self.User" />
+          <EntitySet Name="AutoCorrects" EntityType="Self.AutoCorrect" />
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="PosModelStoreContainer" CdmEntityContainer="PosEntities">
+          <EntitySetMapping Name="Exams">
+            <EntityTypeMapping TypeName="PosModel.Exam">
+              <MappingFragment StoreEntitySet="Exam">
+                <ScalarProperty Name="ExamID" ColumnName="ExamID" />
+                <ScalarProperty Name="PatientID" ColumnName="PatientID" />
+                <ScalarProperty Name="ExamText" ColumnName="ExamText" />
+                <ScalarProperty Name="ExamDate" ColumnName="ExamDate" />
+                <ScalarProperty Name="ExamCorrectDate" ColumnName="ExamCorrectDate" />
+                <ScalarProperty Name="CorrectExamID" ColumnName="CorrectExamID" />
+                <ScalarProperty Name="SavedInd" ColumnName="SavedInd" />
+                <ScalarProperty Name="LastUpdatedDate" ColumnName="LastUpdatedDate" />
+                <ScalarProperty Name="UserName" ColumnName="UserName" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ExamDefaults">
+            <EntityTypeMapping TypeName="PosModel.ExamDefault">
+              <MappingFragment StoreEntitySet="ExamDefault">
+                <ScalarProperty Name="ExamDefaultID" ColumnName="ExamDefaultID" />
+                <ScalarProperty Name="DefaultName" ColumnName="DefaultName" />
+                <ScalarProperty Name="AgeStart" ColumnName="AgeStart" />
+                <ScalarProperty Name="AgeEnd" ColumnName="AgeEnd" />
+                <ScalarProperty Name="PrematureBirth" ColumnName="PrematureBirth" />
+                <ScalarProperty Name="DoctorUserID" ColumnName="DoctorUserID" />
+                <ScalarProperty Name="ExamText" ColumnName="ExamText" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ExamLookUps">
+            <EntityTypeMapping TypeName="PosModel.ExamLookUp">
+              <MappingFragment StoreEntitySet="ExamLookUp">
+                <ScalarProperty Name="ExamLookUpID" ColumnName="ExamLookUpID" />
+                <ScalarProperty Name="ControlName" ColumnName="ControlName" />
+                <ScalarProperty Name="FieldName" ColumnName="FieldName" />
+                <ScalarProperty Name="ExamChildDefault" ColumnName="ExamChildDefault" />
+                <ScalarProperty Name="ExamInfantDefault" ColumnName="ExamInfantDefault" />
+                <ScalarProperty Name="ExamAdultDefault" ColumnName="ExamAdultDefault" />
+                <ScalarProperty Name="ExamROPDefault" ColumnName="ExamROPDefault" />
+                <ScalarProperty Name="FieldDescription" ColumnName="FieldDescription" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="LookUps">
+            <EntityTypeMapping TypeName="PosModel.LookUp">
+              <MappingFragment StoreEntitySet="LookUp">
+                <ScalarProperty Name="LookupID" ColumnName="LookupID" />
+                <ScalarProperty Name="FieldName" ColumnName="FieldName" />
+                <ScalarProperty Name="FieldValue" ColumnName="FieldValue" />
+                <ScalarProperty Name="SortOrder" ColumnName="SortOrder" />
+                <ScalarProperty Name="FieldDescription" ColumnName="FieldDescription" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Patients">
+            <EntityTypeMapping TypeName="PosModel.Patient">
+              <MappingFragment StoreEntitySet="Patient">
+                <ScalarProperty Name="PatientID" ColumnName="PatientID" />
+                <ScalarProperty Name="PatientNumber" ColumnName="PatientNumber" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="MiddleName" ColumnName="MiddleName" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="NickName" ColumnName="NickName" />
+                <ScalarProperty Name="DateOfBirth" ColumnName="DateOfBirth" />
+                <ScalarProperty Name="Sex" ColumnName="Sex" />
+                <ScalarProperty Name="Occupation" ColumnName="Occupation" />
+                <ScalarProperty Name="HxFrom" ColumnName="HxFrom" />
+                <ScalarProperty Name="ReferredFrom" ColumnName="ReferredFrom" />
+                <ScalarProperty Name="ReferredDoctor" ColumnName="ReferredDoctor" />
+                <ScalarProperty Name="Allergies" ColumnName="Allergies" />
+                <ScalarProperty Name="Medications" ColumnName="Medications" />
+                <ScalarProperty Name="PrematureBirth" ColumnName="PrematureBirth" />
+                <ScalarProperty Name="Greeting" ColumnName="Greeting" />
+                <ScalarProperty Name="LastExamDate" ColumnName="LastExamDate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PrintQueues">
+            <EntityTypeMapping TypeName="PosModel.PrintQueue">
+              <MappingFragment StoreEntitySet="PrintQueue">
+                <ScalarProperty Name="PrintQueueID" ColumnName="PrintQueueID" />
+                <ScalarProperty Name="ExamID" ColumnName="ExamID" />
+                <ScalarProperty Name="UserName" ColumnName="UserName" />
+                <ScalarProperty Name="PrintExamNote" ColumnName="PrintExamNote" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Schedules">
+            <EntityTypeMapping TypeName="PosModel.Schedule">
+              <MappingFragment StoreEntitySet="Schedule">
+                <ScalarProperty Name="ScheduleID" ColumnName="ScheduleID" />
+                <ScalarProperty Name="PatientID" ColumnName="PatientID" />
+                <ScalarProperty Name="ScheduleDate" ColumnName="ScheduleDate" />
+                <ScalarProperty Name="ExamID" ColumnName="ExamID" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="DoctorUserName" ColumnName="DoctorUserName" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Users">
+            <EntityTypeMapping TypeName="PosModel.User">
+              <MappingFragment StoreEntitySet="User">
+                <ScalarProperty Name="PhotoUrl" ColumnName="PhotoUrl" />
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="UserName" ColumnName="UserName" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="AutoCorrects">
+            <EntityTypeMapping TypeName="PosModel.AutoCorrect">
+              <MappingFragment StoreEntitySet="AutoCorrect">
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Value" ColumnName="Value" />
+                <ScalarProperty Name="UserName" ColumnName="UserName" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

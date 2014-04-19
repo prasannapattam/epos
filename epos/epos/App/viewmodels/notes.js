@@ -6,6 +6,7 @@
         model: model,
         resetColour: resetColour,
         activate: activate,
+        canReuseForRoute: canReuseForRoute,
         attached: attached,
         compositionComplete: compositionComplete
 };
@@ -23,6 +24,11 @@
             return data;
         });
     };
+
+    function canReuseForRoute() {
+        return false;
+    }
+
 
     function attached() {
 //        alert('attached');
