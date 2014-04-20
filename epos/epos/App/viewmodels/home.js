@@ -1,4 +1,4 @@
-﻿define(['plugins/router', 'services/patient', 'services/user'], function (router, patient, user) {
+﻿define(['plugins/router', 'services/patient', 'services/user', 'services/constants'], function (router, patient, user, constants) {
 
     //patient default valules
     var patientSearchTemplate = 'patient-search-template';
@@ -25,7 +25,7 @@
     var notesText = ko.observable();
     var criteria = ko.observable();
     var lastCriteria = '';
-    var viewActivate = false;
+    var viewActivate = ko.observable(false);
     var resultHeader = ko.computed(function () {
         if (criteria() == '')
             return 'Recent ' + title();
@@ -41,10 +41,18 @@
         if (criteria() !== undefined) {
             vm.module.getSearchResults(criteria()).then(function (data) {
                 if (data.Success === true) {
+                    //results.removeAll();
+                    if (vm.moduleName() === constants.enum.module.patient) {
+                        vm.searchTemplate(patientSearchTemplate);
+                    }
+                    else {
+                        vm.searchTemplate(userSearchTemplate);
+                    }
+
                     results(ko.viewmodel.fromModel(data.Model)());
                     vm.lastCriteria = criteria();
-                    if (vm.viewActivate === true) {
-                        vm.viewActivate = false;
+                    if (vm.viewActivate() === true) {
+                        vm.viewActivate(false);
                         getSelected();
                     }
                     else {
@@ -79,7 +87,6 @@
         else
             return true;
     });
-
 
     var vm = {
         //variables to hold module details
@@ -131,26 +138,26 @@
     return vm;
 
     function canReuseForRoute() {
-        return true;
+        return false;
     }
 
     function activate(searchModule, searchID, searchCriteria) {
-        vm.viewActivate = true;
+        vm.viewActivate(true);
 
         if (searchModule === undefined || searchModule === null || searchModule === '')
-            searchModule = 'patient';
+            searchModule = constants.enum.module.patient;
 
-        if (searchModule !== 'user')
-            searchModule = 'patient';
+        if (searchModule !== constants.enum.module.user)
+            searchModule = constants.enum.module.patient;
 
         //setting the default values based on the module
-        if (searchModule === 'patient') {
+        if (searchModule === constants.enum.module.patient) {
             vm.module = patient;
             vm.model = patient.model;
             vm.title(patient.title);
             vm.addText(patient.addText);
             vm.notesText(patient.notesText);
-            vm.searchTemplate(patientSearchTemplate);
+            //vm.searchTemplate(patientSearchTemplate);
             vm.summaryTemplate(patientHistoryTemplate);
             vm.detailTemplate(patientDetailTemplate);
         }
@@ -160,7 +167,7 @@
             vm.title(user.title);
             vm.addText(user.addText);
             vm.notesText(user.notesText);
-            vm.searchTemplate(userSearchTemplate);
+            //vm.searchTemplate(userSearchTemplate);
             vm.summaryTemplate(userDefaultTemplate);
             vm.detailTemplate(userDetailTemplate);
         }

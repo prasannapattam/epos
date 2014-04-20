@@ -17,8 +17,6 @@ namespace epos.Controllers
     public class NotesController : ApiController
     {
 
-        //patientid = 1203
-        //http://localhost:49337/api/notes?patientID=1203&examID=
         public AjaxModel<NotesModel> Get(int type, int patientID, int? examID)
         {
             AjaxModel<NotesModel> ajax = new AjaxModel<NotesModel>() { Success = true };
@@ -36,11 +34,29 @@ namespace epos.Controllers
 
                 if (exam.SaveID == 1)
                     notesType = PosConstants.NotesType.Saved;
-
+                else if (exam.ExamID > 0)
+                {
+                    notesType = PosConstants.NotesType.Correct;
+                }
 
                 NotesModel notes = GetNotes(exam, examLookUp, notesType);
                 notes.Doctors = PosRepository.DoctorsGet();
-                //getting the defaults -------------------------------
+
+                if(exam.ExamID > 0)
+                {
+                    notes.ExamDate = new Field() { Name = "ExamDate", Value = exam.ExamDate.ToShortDateString() };
+                }
+                //setting ExamDate & Correct Date
+                if(notesType == PosConstants.NotesType.Correct && exam.CorrectExamID != null)
+                {
+                    notes.ExamCorrectDate = new Field() { Name = "ExamCorrectDate", Value = exam.ExamCorrectDate.Value.ToShortDateString() };
+                }
+                if(notesType == PosConstants.NotesType.Saved)
+                {
+                    notes.ExamSaveDate = new Field() { Name = "ExamSaveDate", Value = exam.LastUpdatedDate.ToString() };
+                }
+
+                notes.PatientName = new Field() { Name = "PatientName", Value = notes.FirstName.Value + ' ' + notes.LastName.Value };
 
                 ajax.Model = notes;
 
@@ -67,8 +83,6 @@ namespace epos.Controllers
             XmlReaderSettings settings = new XmlReaderSettings();
             settings.CheckCharacters = false;
             XmlReader reader = XmlReader.Create(stringReader, settings);
-            //XmlTextReader reader = new XmlTextReader(stringReader);
-            //reader.WhitespaceHandling = WhitespaceHandling.None;
 
             string fieldName = "";
             string fieldValue = "";

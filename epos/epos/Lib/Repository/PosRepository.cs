@@ -361,7 +361,10 @@ namespace epos.Lib.Repository
                                         ExamID = exam.ExamID,
                                         ExamText = exam.ExamText,
                                         ExamDate = exam.ExamDate,
-                                        SaveID = exam.SavedInd.Value
+                                        SaveID = exam.SavedInd.Value,
+                                        CorrectExamID = exam.CorrectExamID,
+                                        ExamCorrectDate = exam.ExamCorrectDate,
+                                        LastUpdatedDate = exam.LastUpdatedDate.Value
                                     };
 
                     model = examQuery.FirstOrDefault();
@@ -374,10 +377,11 @@ namespace epos.Lib.Repository
                                     orderby exam.SavedInd descending, exam.ExamDate descending, exam.ExamID descending
                                     select new ExamModel
                                     {
-                                        ExamID = exam.ExamID,
+                                        ExamID = 0,
                                         ExamText = exam.ExamText,
                                         ExamDate = exam.ExamDate,
-                                        SaveID = exam.SavedInd.Value
+                                        SaveID = exam.SavedInd.Value,
+                                        LastUpdatedDate = exam.LastUpdatedDate.Value
                                     };
 
                     model = examQuery.Take(1).FirstOrDefault();

@@ -314,8 +314,11 @@ namespace epos.Models
         public Field hdnPageTitle { get; set; }
         public Field hdnTimeOut { get; set; }
 
-        public Field ExamDate { get; set; } 
+        public Field ExamDate { get; set; }
+        public Field ExamCorrectDate { get; set; }
+        public Field ExamSaveDate { get; set; }
         public PosConstants.NotesType NotesType { get; set; }
+        public Field PatientName { get; set; }
 
         //dropdowns
         public List<SelectListItem> Doctors { get; set; }

@@ -82,12 +82,7 @@
     function navigateNotes(item) {
         var hash = '#notes/1/' + vm.model.PatientID();
         if (item.ExamID !== undefined) {
-            if (item.CorrectExamID !== null) {
-                hash += '/' + item.CorrectExamID
-            }
-            else {
-                hash += '/' + item.ExamID
-            }
+            hash += '/' + item.ExamID
         }
         router.navigate(hash);
     }

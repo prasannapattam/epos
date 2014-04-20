@@ -83,7 +83,7 @@
                     <span data-bind="css: {display_none : CorrectExamID === null}, text: '(Corrected on ' + moment(ExamCorrectDate).format('L') + ')'"></span>
                     <span data-bind="css: {display_none : SavedInd != 1}, text: '(Saved on ' + moment(LastUpdatedDate).format('L h:mm:ss a') + ')'"></span>
                 </td>
-                <td align="right">
+                <td class="text-right">
                     <a href="#" title="Correct" class="grid-icon" data-bind="click: $parent.navigateNotes"><i class="fi-clipboard-pencil"></i></a>
                     <a title="Letter" class="grid-icon" data-bind="attr: { href: utility.virtualDirectory + '/api/print/' + ExamID + '/1' }"><i class="fi-mail"></i></a>
                     <a title="Print" class="grid-icon" data-bind="attr: { href: utility.virtualDirectory + '/api/print/' + ExamID + '/2' }"><i class=" fi-print"></i></a>

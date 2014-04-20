@@ -584,3 +584,30 @@ select:disabled{
 hr{
     border-color: black;
 }
+
+.notes-header{
+    z-index: 99;
+}
+
+.notes-menu{
+    display: inline-block;
+    line-height: 1.125rem;
+    font-size: 0.875rem; 
+    background-color: #e9e9e9;
+    background-image: url('images/texture.png');
+    text-align:center;
+}
+
+.notes-menu-selected{
+    background-color: rgb(199, 199, 161) !important;
+    background-image: none;
+}
+
+.title{
+    background-color: black;
+    color: white;
+    display: inline-block;
+    line-height: 1.125rem;
+    font-size: 0.875rem;
+    padding: 0.1625rem 0.1325rem;
+}

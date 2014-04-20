@@ -1,7 +1,46 @@
 ﻿<div>
     <!--http://tech.pro/blog/1863/10-knockout-binding-handlers-i-don-t-want-to-live-without-->   
-
-    <h5>Patient Information</h5>   
+    <div class="full-width notes-header">
+        <div class="row row-narrow title">
+            <div class="small-8 columns col-narrow" data-bind = "text: model.HeaderText"></div>
+            <div class="small-4 columns col-narrow text-right">
+                    <a href="#" class="button tiny selected" data-bind=""><i class="button-icon fi-pencil"></i>Edit</a>
+                    <a href="#" class="button tiny selected" data-bind=""><i class="button-icon fi-check"></i>Save</a>
+                    <a href="#" class="button tiny selected" data-bind=""><i class="button-icon fi-x"></i>Cancel</a>
+            </div>
+        </div>
+        <div class="row row-narrow notes-menu">
+            <div id="patinet-info-menu" class="small-2 columns col-narrow notes-menu notes-menu-selected"><a data-bind="click: function () { scrollToHeader('patinet-info-header') }">Patient Information</a></div>
+            <div id="cc-history-menu" class="small-2 columns col-narrow notes-menu"><a data-bind="click: function () { scrollToHeader('cc-history-header') }">CC/History</a></div>
+            <div id="acuity-menu" class="small-2 columns col-narrow notes-menu"><a data-bind="click: function () { scrollToHeader('acuity-header') }">Acuity</a></div>
+            <div id="ocular-mot-menu" class="small-2 columns col-narrow notes-menu"><a data-bind="click: function () { scrollToHeader('ocular-mot-header') }">Ocular Motility</a></div>
+            <div id="ant-seg-menu" class="small-2 columns col-narrow notes-menu"><a data-bind="click: function () { scrollToHeader('ant-seg-header') }">Anterior Segment</a></div>
+            <div id="summary-menu" class="small-2 columns col-narrow notes-menu"><a data-bind="click: function () { scrollToHeader('summary-header') }">Summary</a></div>
+        </div>
+<!--    <table class="full-width" style="">
+        <thead>
+            <tr>
+                <th colspan="3">Notes taken on 04/17/2012 (Corrected on 09/13/2013)</th>
+                <th colspan="3" class="button-bar">
+                    <a href="#" class="button tiny selected" data-bind=""><i class="button-icon fi-pencil"></i>Edit</a>
+                    <a href="#" class="button tiny selected" data-bind=""><i class="button-icon fi-check"></i>Save</a>
+                    <a href="#" class="button tiny selected" data-bind=""><i class="button-icon fi-x"></i>Cancel</a>
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Patient Information</td>
+                <td>CC/History</td>
+                <td style="background-color: rgb(199, 199, 161);">Acuity</td>
+                <td>Ocular Motility</td>
+                <td>Anterior Segment</td>
+                <td>Summary</td>
+            </tr>
+        </tbody>
+    </table>-->
+    </div>
+    <h5 id="patinet-info-header">Patient Information</h5>   
     <fieldset>
     <div class="row row-narrow">
         <div class="tiny-16 columns">&nbsp;</div>
@@ -93,7 +132,7 @@
         </div>
     </div>
     </fieldset>  
-    <h5>CC/History</h5>
+    <h5 id="cc-history-header">CC/History</h5>
     <fieldset>
         <div class="row row-narrow">
             <div class="small-6 columns col-narrow">
@@ -298,7 +337,7 @@
         </div>
     </div>
     </fieldset>
-    <h5>Acuity</h5>
+    <h5 id="acuity-header">Acuity</h5>
     <fieldset>
     <div class="row row-narrow">
         <div class="small-4 columns col-narrow">
@@ -720,7 +759,7 @@
             </div>
         </fieldset>
     </div> 
-    <h5>Ocular Motility</h5>
+    <h5 id="ocular-mot-header">Ocular Motility</h5>
     <fieldset>
         <div class="row row-narrow">
             <div class="small-2 columns col-narrow">
@@ -986,7 +1025,7 @@
             </div>
         </div>
     </fieldset>
-    <h5>Anterior Segment examination</h5>
+    <h5 id="ant-seg-header">Anterior Segment</h5>
     <fieldset>
         <div class="row row-narrow">
             <div class="small-12 columns col-narrow">
@@ -1196,7 +1235,7 @@
         </div>
     </fieldset>
 
-    <h5>Summary</h5>     
+    <h5 id="summary-header">Summary</h5>     
     <fieldset>
         <div class="row row-narrow">
             <div class="small-12 columns col-narrow">

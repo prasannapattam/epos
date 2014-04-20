@@ -1,10 +1,11 @@
-﻿define(['plugins/router'], function (router) {
+﻿define(['plugins/router', 'services/constants'], function (router, constants) {
 
     var model;
 
     var vm = {
         model: model,
         resetColour: resetColour,
+        scrollToHeader: scrollToHeader,
         activate: activate,
         canReuseForRoute: canReuseForRoute,
         attached: attached,
@@ -34,25 +35,95 @@
 //        alert('attached');
     }
     function compositionComplete() {
+        var notesHeaderDefaultOffset = $("div.notes-header").offset().top;
+        var patinetinfoOffset = $("#patinet-info-header").offset().top;
+        var cchistoryOffset = $("#cc-history-header").offset().top;
+        var acuityOffset = $("#acuity-header").offset().top;
+        var ocularmotOffset = $("#ocular-mot-header").offset().top;
+        var antsegOffset = $("#ant-seg-header").offset().top;
+        var summaryOffset = $("#summary-header").offset().top;
+        var currentOffset = patinetinfoOffset;
 
-        //var firstLocation = $("div.firstscroll").offset().top;
-        //var secondLocation = $("div.secondscroll").offset().top;
-        //var thirdLocation = $("div.thirdscroll").offset().top;
+        $(window).scroll(function () {
+            var winScroll = $(this).scrollTop(); // current scroll of window
+            //if (winScroll > notesHeaderScrollTop)
+            var notesHeaderoffset = notesHeaderDefaultOffset;
+            if (winScroll > notesHeaderDefaultOffset) {
+                notesHeaderoffset = winScroll
+            }
+            $("div.notes-header").offset({ top: notesHeaderoffset });
 
-        //$(window).scroll(function () {
-        //    var winScroll = $(this).scrollTop(); // current scroll of window
+            //calculating the menu offset
+            var newOffset = patinetinfoOffset;
+            var notesHeight = $("div.notes-header").height();
+            var winOffset = winScroll + notesHeight + 1;
+            if (winOffset >= 0 && winOffset < cchistoryOffset && currentOffset != patinetinfoOffset) {
+                $(".notes-menu").removeClass('notes-menu-selected');
+                $("#patinet-info-menu").addClass('notes-menu-selected');
+                currentOffset = patinetinfoOffset;
+            }
+            else if (winOffset >= cchistoryOffset && winOffset < acuityOffset && currentOffset != cchistoryOffset) {
+                $(".notes-menu").removeClass('notes-menu-selected');
+                $("#cc-history-menu").addClass('notes-menu-selected');
+                currentOffset = cchistoryOffset;
+            }
+            else if (winOffset >= acuityOffset && winOffset < ocularmotOffset && currentOffset != acuityOffset) {
+                $(".notes-menu").removeClass('notes-menu-selected');
+                $("#acuity-menu").addClass('notes-menu-selected');
+                currentOffset = acuityOffset;
+            }
+            else if (winOffset >= ocularmotOffset && winOffset < antsegOffset && currentOffset != ocularmotOffset) {
+                $(".notes-menu").removeClass('notes-menu-selected');
+                $("#ocular-mot-menu").addClass('notes-menu-selected');
+                currentOffset = ocularmotOffset;
+            }
+            else if (winOffset >= antsegOffset && winOffset < summaryOffset && currentOffset != antsegOffset) {
+                $(".notes-menu").removeClass('notes-menu-selected');
+                $("#ant-seg-menu").addClass('notes-menu-selected');
+                currentOffset = antsegOffset;
+            }
+            else if (winOffset >= summaryOffset && currentOffset != summaryOffset) {
+                $(".notes-menu").removeClass('notes-menu-selected');
+                $("#summary-menu").addClass('notes-menu-selected');
+                currentOffset = summaryOffset;
+            }
+        });
 
-        //    //console.log(winScroll + ' - ' + firstLocation + ' - ' + secondLocation + ' - ' + thirdLocation  )
-
-        //});
         return true;
     }
 
-
+    function scrollToHeader(tag) {
+        //alert(tag);
+        //document.getElementById(tag).scrollIntoView(true);
+        var scrollPosition = $("#" + tag).offset().top;
+        var notesHeight = $("div.notes-header").height();
+        $(window).scrollTop(scrollPosition - notesHeight);
+    }
+    
     function addComputedProperties() {
         vm.model.PrematureBirthString = ko.computed({
             read: function () { return (this.Premature.Value() ? "Yes" : "No") },
             write: function (value) { this.Premature.Value(value == "Yes" ? true : false); }
+        }, vm.model);
+
+        vm.model.HeaderText = ko.computed(function () {
+            var headerText = this.PatientName.Value();
+            var ExamDate = ko.unwrap(vm.model.ExamDate);
+            var ExamSaveDate = ko.unwrap(vm.model.ExamSaveDate);
+            var ExamCorrectDate = ko.unwrap(vm.model.ExamCorrectDate);
+            if (ExamSaveDate !== null) {
+                headerText += ' - Notes saved on ' + ExamSaveDate.Value()
+            } 
+            else if(ExamCorrectDate !== null){
+                headerText += ' - Notes taken on ' + ExamDate.Value() + ' (Corrected on ' + ExamCorrectDate.Value() + ')';
+            } 
+            else if (ExamDate !== null) {
+                headerText += ' -  Notes taken on ' + ExamDate.Value();
+            }
+            else {
+                headerText += ' - New notes'
+            }
+            return headerText;
         }, vm.model);
 
     }

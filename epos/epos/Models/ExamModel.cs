@@ -12,5 +12,8 @@ namespace epos.Models
         public string ExamText { get; set; }
         public int SaveID { get; set; }
         public DateTime ExamDate { get; set; }
+        public int? CorrectExamID { get; set; }
+        public DateTime? ExamCorrectDate { get; set; }
+        public DateTime LastUpdatedDate { get; set; }
     }
 }
