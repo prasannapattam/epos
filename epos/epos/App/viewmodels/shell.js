@@ -1,4 +1,4 @@
-﻿define(['plugins/router', 'services/navigation', 'services/session', 'services/utility'], function (router, navigation, session, utility) {
+﻿define(['plugins/router', 'services/navigation', 'services/session', 'services/utility', 'services/constants'], function (router, navigation, session, utility, constants) {
     return {
         activate: activate,
         router: router,
@@ -48,6 +48,7 @@
         //global variables
         window.session = session;
         window.utility = utility;
+        window.constants = constants;
         window.navigation = navigation;
 
         if (location.href.indexOf('#') !== -1)

@@ -4,9 +4,10 @@
         <div class="row row-narrow title">
             <div class="small-8 columns col-narrow" data-bind = "text: model.HeaderText"></div>
             <div class="small-4 columns col-narrow text-right">
-                    <a href="#" class="button tiny selected" data-bind=""><i class="button-icon fi-pencil"></i>Edit</a>
-                    <a href="#" class="button tiny selected" data-bind=""><i class="button-icon fi-check"></i>Save</a>
-                    <a href="#" class="button tiny selected" data-bind=""><i class="button-icon fi-x"></i>Cancel</a>
+                    <a href="#" class="button tiny selected" data-bind="click: save, css: { display_none: model.NotesType() !== constants.enum.notesType.New && model.NotesType() !== constants.enum.notesType.Saved }"><i class="button-icon fi-check"></i>Save</a>
+                    <a href="#" class="button tiny selected" data-bind="click: correct, css: { display_none: model.NotesType() !== constants.enum.notesType.Correct }"><i class="button-icon fi-clipboard-pencil"></i>Correct</a>
+                    <a href="#" class="button tiny selected" data-bind="click: signOff, css: { display_none: model.NotesType() !== constants.enum.notesType.New && model.NotesType() !== constants.enum.notesType.Saved }"><i class="button-icon fi-clipboard-notes"></i>Sign off</a>
+                    <a href="#" class="button tiny selected" data-bind="click: cancel"><i class="button-icon fi-x"></i>Cancel</a>
             </div>
         </div>
         <div class="row row-narrow notes-menu">
@@ -40,6 +41,7 @@
         </tbody>
     </table>-->
     </div>
+        
     <h5 id="patinet-info-header">Patient Information</h5>   
     <fieldset>
     <div class="row row-narrow">
@@ -83,10 +85,7 @@
         </div>
         <div class="tiny-3 columns left col-narrow">
             <label>Premature</label>
-            <select data-bind="value: model.PrematureBirthString">
-                <option value="No">No</option>
-                <option value="Yes">Yes</option>
-            </select>
+            <select data-bind="notesselect: model.PrematureBirth"></select>
         </div>
         <div class="tiny-4 columns left col-narrow">
             <label>Date</label>

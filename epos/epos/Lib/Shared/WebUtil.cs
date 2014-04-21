@@ -16,47 +16,6 @@ namespace epos.Lib.Shared
     /// </summary>
     public static class WebUtil
     {
-        public static void BindLookupDropDown(DropDownList ddl, DataTable dataSource, string name)
-        {
-            dataSource.DefaultView.RowFilter = "FieldName='" + name + "'";
-            dataSource.DefaultView.Sort = "SortOrder, FieldValue";
-
-            ddl.DataSource = dataSource.DefaultView;
-            ddl.DataTextField = "FieldValue";
-            ddl.DataValueField = "FieldValue";
-            ddl.DataBind();
-            ddl.Items.Insert(0, "");
-        }
-
-        public static void BindLookupDropDown(DropDownList ddl, SqlDataReader dataSource, string dataTextField, string dataValueField)
-        {
-            ddl.DataSource = dataSource;
-            ddl.DataTextField = dataTextField;
-            ddl.DataValueField = dataValueField;
-            ddl.DataBind();
-            ddl.Items.Insert(0, "");
-        }
-        public static void SelectDropDownTextBox(DropDownList ddl, TextBox tb, string value)
-        {
-            WebUtil.SelectDropDownValue(ddl, value);
-            if (ddl.SelectedIndex == 0 || ddl.SelectedIndex == -1)
-                tb.Text = value;
-            else
-                tb.Text = "";
-        }
-
-        public static void SelectDropDownValue(DropDownList ddl, string value)
-        {
-            if (value == "")
-                return;
-            ListItem li = ddl.Items.FindByValue(value);
-            if (li != null)
-            {
-                ddl.ClearSelection();
-                li.Selected = true;
-            }
-        }
-
         public static Dictionary<string, string> GetDictionary(string xml, bool removeDupsSuffix)
         {
             Dictionary<string, string> dict = new Dictionary<string, string>();
@@ -109,19 +68,6 @@ namespace epos.Lib.Shared
             return dict;
         }
 
-        public static void BindDoctorDropDown(DropDownList ddlDoctor, string selectedDoctor)
-        {
-            string cmdText = "SELECT FirstName + ' ' + LastName as DoctorName, UserName FROM [User]";
-
-            SqlDataReader drUser = DBUtil.ExecuteReader(cmdText);
-
-            WebUtil.BindLookupDropDown(ddlDoctor, drUser, "DoctorName", "UserName");
-
-            WebUtil.SelectDropDownValue(ddlDoctor, selectedDoctor);
-
-            drUser.Close();
-            drUser.Dispose();
-        }
 
     }
 }

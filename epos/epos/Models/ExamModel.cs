@@ -10,10 +10,12 @@ namespace epos.Models
     {
         public int ExamID { get; set; }
         public string ExamText { get; set; }
-        public int SaveID { get; set; }
+        public int SaveInd { get; set; }
         public DateTime ExamDate { get; set; }
         public int? CorrectExamID { get; set; }
         public DateTime? ExamCorrectDate { get; set; }
         public DateTime LastUpdatedDate { get; set; }
+        public int PatientID { get; set; }
+        public string UserName { get; set; }
     }
 }

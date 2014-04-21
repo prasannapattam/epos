@@ -1,4 +1,4 @@
-﻿define(['plugins/router', 'services/constants'], function (router, constants) {
+﻿define(['plugins/router'], function (router) {
 
     var model;
 
@@ -9,7 +9,11 @@
         activate: activate,
         canReuseForRoute: canReuseForRoute,
         attached: attached,
-        compositionComplete: compositionComplete
+        compositionComplete: compositionComplete,
+        signOff: signOff,
+        correct: correct,
+        save: save,
+        cancel: cancel
 };
 
     return vm;
@@ -101,13 +105,9 @@
     }
     
     function addComputedProperties() {
-        vm.model.PrematureBirthString = ko.computed({
-            read: function () { return (this.Premature.Value() ? "Yes" : "No") },
-            write: function (value) { this.Premature.Value(value == "Yes" ? true : false); }
-        }, vm.model);
-
         vm.model.HeaderText = ko.computed(function () {
             var headerText = this.PatientName.Value();
+            var ExamID = ko.unwrap(vm.model.hdnExamID);
             var ExamDate = ko.unwrap(vm.model.ExamDate);
             var ExamSaveDate = ko.unwrap(vm.model.ExamSaveDate);
             var ExamCorrectDate = ko.unwrap(vm.model.ExamCorrectDate);
@@ -117,7 +117,7 @@
             else if(ExamCorrectDate !== null){
                 headerText += ' - Notes taken on ' + ExamDate.Value() + ' (Corrected on ' + ExamCorrectDate.Value() + ')';
             } 
-            else if (ExamDate !== null) {
+            else if (ExamID !== null) {
                 headerText += ' -  Notes taken on ' + ExamDate.Value();
             }
             else {
@@ -126,6 +126,10 @@
             return headerText;
         }, vm.model);
 
+    }
+
+    function deleteComputedProperties() {
+        delete vm.model.HeaderText;
     }
 
     function resetColour(item) {
@@ -138,4 +142,38 @@
         }
     }
 
+    function cancel() {
+        router.navigateBack();
+    }
+
+    function signOff() {
+        saveNotes(constants.enum.notesSaveType.SignOff);
+    }
+
+    function correct() {
+        saveNotes(constants.enum.notesSaveType.Correct);
+    }
+
+    function save() {
+        saveNotes(constants.enum.notesSaveType.Save);
+    }
+
+    function saveNotes(saveType) {
+        deleteComputedProperties();
+        return utility.httpPost('api/notes?type=' + saveType.toString(), vm.model).then(function (data) {
+            if (data.Success === true) {
+                toastr.info(data.Message);
+                router.navigateBack();
+            }
+            return data;
+        });
+    }
 });
+
+
+//for (var key in obj) {
+//    if(ko.isComputed(obj[key]))
+//    {
+//        delete obj[key];
+//    }
+//}

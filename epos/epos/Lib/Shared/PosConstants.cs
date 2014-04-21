@@ -23,5 +23,12 @@ namespace epos.Lib.Shared
             New = 1,
             Correct = 2
         }
+
+        public enum NotesSaveType
+        {
+            Save = 1,
+            SignOff = 2,
+            Correct = 3
+        }
     }
 }

@@ -347,6 +347,29 @@ namespace epos.Lib.Repository
             }
         }
 
+        public static void PrintQueueRemove(int examID)
+        {
+            using(var db = new PosEntities())
+            {
+                var queueItems = (from queue in db.PrintQueues where queue.ExamID == examID select queue).ToList();
+                foreach(var item in queueItems)
+                {
+                    db.PrintQueues.Remove(item);
+                }
+                db.SaveChanges();
+            }
+        }
+
+        public static void PrintQueueAdd(PrintQueueItem item)
+        {
+            using(var db = new PosEntities())
+            {
+                PrintQueue queue = new PrintQueue() { ExamID = item.ExamID, UserName = item.UserName, PrintExamNote = item.PrintExamNote };
+                db.PrintQueues.Add(queue);
+                db.SaveChanges();
+            }
+        }
+
         public static ExamModel ExamGet(int patientID, int? examID)
         {
             using(var db = new PosEntities())
@@ -361,7 +384,7 @@ namespace epos.Lib.Repository
                                         ExamID = exam.ExamID,
                                         ExamText = exam.ExamText,
                                         ExamDate = exam.ExamDate,
-                                        SaveID = exam.SavedInd.Value,
+                                        SaveInd = exam.SavedInd.Value,
                                         CorrectExamID = exam.CorrectExamID,
                                         ExamCorrectDate = exam.ExamCorrectDate,
                                         LastUpdatedDate = exam.LastUpdatedDate.Value
@@ -377,10 +400,10 @@ namespace epos.Lib.Repository
                                     orderby exam.SavedInd descending, exam.ExamDate descending, exam.ExamID descending
                                     select new ExamModel
                                     {
-                                        ExamID = 0,
+                                        ExamID = exam.ExamID,
                                         ExamText = exam.ExamText,
                                         ExamDate = exam.ExamDate,
-                                        SaveID = exam.SavedInd.Value,
+                                        SaveInd = exam.SavedInd.Value,
                                         LastUpdatedDate = exam.LastUpdatedDate.Value
                                     };
 
@@ -390,6 +413,37 @@ namespace epos.Lib.Repository
                 return model;
             }
         }
+
+        public static void ExamSave(ExamModel exam)
+        {
+            using (var db = new PosEntities())
+            {
+                Exam dbExam;
+                if (exam.ExamID > 0)
+                {
+                    dbExam = (from e in db.Exams where e.ExamID == exam.ExamID select e).First();
+                }
+                else
+                {
+                    dbExam = new Exam();
+                    db.Exams.Add(dbExam);
+                }
+
+                dbExam.ExamText = exam.ExamText;
+                dbExam.ExamDate = exam.ExamDate;
+                dbExam.PatientID = exam.PatientID;
+                dbExam.UserName = exam.UserName;
+                dbExam.SavedInd = exam.SaveInd;
+                dbExam.LastUpdatedDate = DateTime.Now;
+                dbExam.ExamCorrectDate = exam.ExamCorrectDate;
+                dbExam.CorrectExamID = exam.CorrectExamID;
+
+                db.SaveChanges();
+                exam.ExamID = dbExam.ExamID;
+            }
+
+        }
+
     }
 }
 

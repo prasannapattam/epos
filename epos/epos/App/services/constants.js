@@ -20,5 +20,11 @@
         Correct: 1
     };
 
+    this.enum.notesSaveType = {
+        Save: 1,
+        SignOff: 2,
+        Correct: 3
+    };
+
     return this;
 });

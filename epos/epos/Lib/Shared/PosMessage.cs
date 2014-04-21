@@ -26,6 +26,10 @@ namespace epos.Lib.Shared
         public const string PrintQueueDeleteSuccessful = "Removed queue item";
         public const string PrintQueueDeleteError = "Error in removing queue item, please try again";
 
+        //Notes
+        public const string NotesSaveSuccessful = "Notes saved successfully";
+        public const string NotesCorrectSuccessful = "Notes corrected successfully";
+        public const string NotesSignOffSuccessful = "Notes SignOff successfully";
 
         public const string LookUpGetError = "Unable to retrieve Drop Down data";
 
