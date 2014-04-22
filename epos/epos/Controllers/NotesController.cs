@@ -17,7 +17,7 @@ namespace epos.Controllers
     public class NotesController : ApiController
     {
 
-        public AjaxModel<NotesModel> Get(int type, int patientID, int? examID)
+        public AjaxModel<NotesModel> Get(int patientID, int? examID)
         {
             AjaxModel<NotesModel> ajax = new AjaxModel<NotesModel>() { Success = true };
 
@@ -25,7 +25,6 @@ namespace epos.Controllers
             {
                 //get the last examid or the passed in exam id
                 ExamModel exam = PosRepository.ExamGet(patientID, examID);
-                List<SelectListItem> examLookUp = PosRepository.ExamLookUpGet();
                
                 //setting the notes type
                 PosConstants.NotesType notesType = PosConstants.NotesType.New;
@@ -41,8 +40,7 @@ namespace epos.Controllers
                     notesType = PosConstants.NotesType.Correct;
                 }
 
-                NotesModel notes = GetNotes(exam, examLookUp, notesType);
-                notes.Doctors = PosRepository.DoctorsGet();
+                NotesModel notes = WebUtil.GetNotes(exam.ExamText, notesType);
 
                 notes.hdnPatientID = new Field() { Name = "hdnPatientID", Value = patientID.ToString() };
                 if(exam.ExamID > 0)
@@ -88,77 +86,6 @@ namespace epos.Controllers
             return ajax;
         }
 
-        private NotesModel GetNotes(ExamModel exam, List<SelectListItem> examLookUp, PosConstants.NotesType notesType)
-        {
-            NotesModel notes = new NotesModel() { NotesType = notesType };
-
-            PropertyInfo[] notesFields = notes.GetType().GetProperties();
-            Field value;
-            
-            //looping through the xml and setting the Notes
-            StringReader stringReader = new StringReader(exam.ExamText);
-            XmlReaderSettings settings = new XmlReaderSettings();
-            settings.CheckCharacters = false;
-            XmlReader reader = XmlReader.Create(stringReader, settings);
-
-            string fieldName = "";
-            string fieldValue = "";
-            string fieldAttr = "";
-            while (reader.Read())
-            {
-                switch (reader.NodeType)
-                {
-                    case XmlNodeType.Element:
-                        fieldName = reader.Name;
-                        fieldAttr = reader.GetAttribute("CustomColourType");
-                        break;
-                    case XmlNodeType.Text:
-                        fieldValue = reader.Value;
-                        break;
-                    case XmlNodeType.CDATA:
-                        fieldValue = reader.Value;
-                        break;
-                    case XmlNodeType.EndElement:
-                        if(fieldName != "")
-                        {
-                            //SetControlValue(fieldName, fieldValue, fieldAttr);
-
-                            PropertyInfo pi = notesFields.FirstOrDefault(p => p.Name == fieldName);
-
-                            if(pi != null)
-                            {
-                                value = new Field() {Name = fieldName, Value = fieldValue, ColourType = Convert.ToInt32(fieldAttr) };
-                                //setting the colour type
-                                if(notesType == PosConstants.NotesType.New)
-                                {
-                                    if (fieldValue != "" && fieldValue != "OU")
-                                        value.ColourType = (int) PosConstants.ColourType.New;
-                                }
-                                //setting the loopup
-                                var lookupItem = examLookUp.FirstOrDefault(m => m.Text.Trim() == fieldName.Trim());
-                                if(lookupItem != null)
-                                {
-                                    value.LookUpFieldName = lookupItem.Value;
-                                }
-
-                                pi.SetValue(notes, value);
-                            }
-
-                            fieldName = "";
-                            fieldValue = "";
-                            fieldAttr = "";
-                        }
-                        break;
-                }
-            }
-
-            reader.Close();
-            stringReader.Close();
-            stringReader.Dispose();
-
-            return notes;
-        }
-
         public AjaxModel<string> Post([FromUri] int type, [FromBody] NotesModel model)
         {
             PosConstants.NotesSaveType saveType = (PosConstants.NotesSaveType) type;
@@ -181,12 +108,12 @@ namespace epos.Controllers
                 {
                     case PosConstants.NotesSaveType.Save:
                         message = PosMessage.NotesSaveSuccessful;
-                        exam.ExamText = GetXml(model, false, null);
+                        exam.ExamText = WebUtil.GetXml(model, false, null);
                         exam.SaveInd = 1;
                         break;
                     case PosConstants.NotesSaveType.SignOff:
                         message = PosMessage.NotesSignOffSuccessful;
-                        exam.ExamText = GetXml(model, true, null);
+                        exam.ExamText = WebUtil.GetXml(model, true, null);
                         break;
                     case PosConstants.NotesSaveType.Correct:
                         message = PosMessage.NotesCorrectSuccessful;
@@ -195,7 +122,7 @@ namespace epos.Controllers
                         //getting the original exam
                         ExamModel orginalExam = PosRepository.ExamGet(exam.PatientID, exam.CorrectExamID);
                         Dictionary<string, string> dict = WebUtil.GetDictionary(orginalExam.ExamText, false);
-                        exam.ExamText = GetXml(model, true, dict);
+                        exam.ExamText = WebUtil.GetXml(model, true, dict);
                         break;
                     default:
                         message = String.Empty;
@@ -224,64 +151,6 @@ namespace epos.Controllers
 
             return ajax;
         }
-
-        private string GetXml(NotesModel notes, bool acceptDefaults, Dictionary<string, string> dict)
-        {
-            dict = (dict == null) ? new Dictionary<string, string>() : dict;
-
-            StringWriter stringWriter = new StringWriter();
-            XmlWriterSettings settings = new XmlWriterSettings();
-            settings.CheckCharacters = false;
-            XmlWriter xmlWriter = XmlWriter.Create(stringWriter, settings);
-
-            xmlWriter.WriteProcessingInstruction("xml", "version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"");
-            xmlWriter.WriteStartElement("patient");
-
-            //getting the properties from the model
-            PropertyInfo[] notesFields = notes.GetType().GetProperties();
-            Field field;
-
-            foreach(var pi in notesFields)
-            {
-                if(pi.PropertyType == typeof(Field))
-                {
-                    field = (Field)pi.GetValue(notes);
-
-                    if(field == null)
-                    {
-                        field = new Field() { Name = pi.Name, Value = String.Empty, ColourType = (int)PosConstants.ColourType.Normal };
-                    }
-
-                    if (field.Value == null)
-                        field.Value = String.Empty;
-
-                    if (dict.ContainsKey(field.Name) && dict[field.Name] != field.Value.Trim())
-                    {
-                        field.ColourType = (int)PosConstants.ColourType.Correct;
-                    }
-                    else if (acceptDefaults)
-                    {
-                        field.ColourType = (int)PosConstants.ColourType.Normal;
-                    }
-
-                    xmlWriter.WriteStartElement(field.Name);
-                    xmlWriter.WriteAttributeString("CustomColourType", field.ColourType.ToString());
-                    xmlWriter.WriteCData(field.Value.Trim());
-                    xmlWriter.WriteEndElement();
-
-                }
-                
-            }
-
-            xmlWriter.WriteEndElement();
-            xmlWriter.Flush();
-            xmlWriter.Close();
-            stringWriter.Flush();
-            string xml = stringWriter.ToString();
-            stringWriter.Dispose();
-            return xml;
-        }
-
     
     }
 

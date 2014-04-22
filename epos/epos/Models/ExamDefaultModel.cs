@@ -14,5 +14,7 @@ namespace epos.Models
         public bool PrematureBirth { get; set; }
         public int DoctorUserID { get; set; }
         public string ExamText { get; set; }
+        public string DoctorUserName { get; set; }
+        public string DoctorName { get; set; }
     }
 }

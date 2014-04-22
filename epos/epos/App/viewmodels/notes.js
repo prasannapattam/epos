@@ -13,21 +13,36 @@
         signOff: signOff,
         correct: correct,
         save: save,
+        defaultSave: defaultSave,
         cancel: cancel
 };
 
     return vm;
 
-    function activate(notestype, patientid, examid) {
-        var getdata = { "type": notestype, "patientid": patientid, "examid": examid };
-        return utility.httpGet('api/notes', getdata).then(function (data) {
-            if (data.Success === true) {
-                vm.model = ko.viewmodel.fromModel(data.Model);
-                addComputedProperties();
-            }
+    function activate(notestype, id, examid) {
+        if (parseInt(notestype) === constants.enum.notesType.Default) {
+            var getdata = { "doctorUserID": id, "examDefaultID": examid };
+            return utility.httpGet('api/examdefault', getdata).then(function (data) {
+                if (data.Success === true) {
+                    vm.model = ko.viewmodel.fromModel(data.Model);
+                    addComputedProperties();
+                }
 
-            return data;
-        });
+                return data;
+            });
+        }
+        else {
+            var getdata = { "patientid": id, "examid": examid };
+            return utility.httpGet('api/notes', getdata).then(function (data) {
+                if (data.Success === true) {
+                    vm.model = ko.viewmodel.fromModel(data.Model);
+                    addComputedProperties();
+                }
+
+                return data;
+            });
+        }
+
     };
 
     function canReuseForRoute() {
@@ -40,13 +55,14 @@
     }
     function compositionComplete() {
         var notesHeaderDefaultOffset = $("div.notes-header").offset().top;
-        var patinetinfoOffset = $("#patinet-info-header").offset().top;
+        var patientinfoOffset = $("#info-header").offset().top;
         var cchistoryOffset = $("#cc-history-header").offset().top;
         var acuityOffset = $("#acuity-header").offset().top;
         var ocularmotOffset = $("#ocular-mot-header").offset().top;
         var antsegOffset = $("#ant-seg-header").offset().top;
         var summaryOffset = $("#summary-header").offset().top;
-        var currentOffset = patinetinfoOffset;
+        var currentOffset = patientinfoOffset;
+        $(window).scrollTop(0);
 
         $(window).scroll(function () {
             var winScroll = $(this).scrollTop(); // current scroll of window
@@ -58,13 +74,13 @@
             $("div.notes-header").offset({ top: notesHeaderoffset });
 
             //calculating the menu offset
-            var newOffset = patinetinfoOffset;
+            var newOffset = patientinfoOffset;
             var notesHeight = $("div.notes-header").height();
             var winOffset = winScroll + notesHeight + 1;
-            if (winOffset >= 0 && winOffset < cchistoryOffset && currentOffset != patinetinfoOffset) {
+            if (winOffset >= 0 && winOffset < cchistoryOffset && currentOffset != patientinfoOffset) {
                 $(".notes-menu").removeClass('notes-menu-selected');
-                $("#patinet-info-menu").addClass('notes-menu-selected');
-                currentOffset = patinetinfoOffset;
+                $("#patient-info-menu").addClass('notes-menu-selected');
+                currentOffset = patientinfoOffset;
             }
             else if (winOffset >= cchistoryOffset && winOffset < acuityOffset && currentOffset != cchistoryOffset) {
                 $(".notes-menu").removeClass('notes-menu-selected');
@@ -106,22 +122,30 @@
     
     function addComputedProperties() {
         vm.model.HeaderText = ko.computed(function () {
-            var headerText = this.PatientName.Value();
-            var ExamID = ko.unwrap(vm.model.hdnExamID);
-            var ExamDate = ko.unwrap(vm.model.ExamDate);
-            var ExamSaveDate = ko.unwrap(vm.model.ExamSaveDate);
-            var ExamCorrectDate = ko.unwrap(vm.model.ExamCorrectDate);
-            if (ExamSaveDate !== null) {
-                headerText += ' - Notes saved on ' + ExamSaveDate.Value()
-            } 
-            else if(ExamCorrectDate !== null){
-                headerText += ' - Notes taken on ' + ExamDate.Value() + ' (Corrected on ' + ExamCorrectDate.Value() + ')';
-            } 
-            else if (ExamID !== null) {
-                headerText += ' -  Notes taken on ' + ExamDate.Value();
+            var notestype = ko.unwrap(vm.model.NotesType);
+
+            var headerText;
+            if (notestype === constants.enum.notesType.Default) {
+                headerText = this.DoctorName.Value() + ' - Notes Default';
             }
             else {
-                headerText += ' - New notes'
+                headerText = this.PatientName.Value();
+                var ExamID = ko.unwrap(vm.model.hdnExamID);
+                var ExamDate = ko.unwrap(vm.model.ExamDate);
+                var ExamSaveDate = ko.unwrap(vm.model.ExamSaveDate);
+                var ExamCorrectDate = ko.unwrap(vm.model.ExamCorrectDate);
+                if (ExamSaveDate !== null) {
+                    headerText += ' - Notes saved on ' + ExamSaveDate.Value()
+                }
+                else if (ExamCorrectDate !== null) {
+                    headerText += ' - Notes taken on ' + ExamDate.Value() + ' (Corrected on ' + ExamCorrectDate.Value() + ')';
+                }
+                else if (ExamID !== null) {
+                    headerText += ' -  Notes taken on ' + ExamDate.Value();
+                }
+                else {
+                    headerText += ' - New notes'
+                }
             }
             return headerText;
         }, vm.model);
@@ -158,6 +182,10 @@
         saveNotes(constants.enum.notesSaveType.Save);
     }
 
+    function defaultSave() {
+        alert('This feature is being implemented')
+    }
+
     function saveNotes(saveType) {
         deleteComputedProperties();
         return utility.httpPost('api/notes?type=' + saveType.toString(), vm.model).then(function (data) {
@@ -169,11 +197,3 @@
         });
     }
 });
-
-
-//for (var key in obj) {
-//    if(ko.isComputed(obj[key]))
-//    {
-//        delete obj[key];
-//    }
-//}

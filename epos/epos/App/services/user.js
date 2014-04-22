@@ -1,4 +1,4 @@
-﻿define(['services/message'], function (message) {
+﻿define(['plugins/router', 'services/message'], function (router, message) {
 
     var title = "Users";
     var addText = "Add User";
@@ -37,7 +37,8 @@
         getSelected: getSelected,
         cancelEdit: cancelEdit,
         save: save,
-        photoSelect: photoSelect
+        photoSelect: photoSelect,
+        deleteDefault: deleteDefault
     };
 
     return vm;
@@ -59,10 +60,17 @@
         });
     }
 
-    function navigateNotes(history) {
-        alert('This feature is not implemented yet');
+    function navigateNotes(item) {
+        var hash = '#notes/4/' + vm.model.UserID();
+        if (item.ExamDefaultID !== undefined) {
+            hash += '/' + item.ExamDefaultID
+        }
+        router.navigate(hash);
     }
 
+    function deleteDefault(item) {
+        alert('This feature is being implemented');
+    }
 
     function setUser(model) {
         ko.viewmodel.updateFromModel(vm.model, model);

@@ -15,7 +15,7 @@ namespace epos.Models
         public Field AgeStart { get; set; }
         public Field AgeEnd { get; set; }
         public Field PrematureBirth { get; set; }
-        public Field DoctorList { get; set; }
+        public Field DoctorName { get; set; }
 
         //Hidden fields
         public Field hdnPatientID { get; set; }

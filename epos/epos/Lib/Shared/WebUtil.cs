@@ -8,6 +8,10 @@ using System.Data.SqlClient;
 using System.Data;
 using System.IO;
 using System.Xml;
+using epos.Models;
+using System.Reflection;
+using System.Web.Mvc;
+using epos.Lib.Repository;
 
 namespace epos.Lib.Shared
 {
@@ -66,6 +70,136 @@ namespace epos.Lib.Shared
             stringReader.Dispose();
 
             return dict;
+        }
+
+        public static string GetXml(NotesModel notes, bool acceptDefaults, Dictionary<string, string> dict)
+        {
+            dict = (dict == null) ? new Dictionary<string, string>() : dict;
+
+            StringWriter stringWriter = new StringWriter();
+            XmlWriterSettings settings = new XmlWriterSettings();
+            settings.CheckCharacters = false;
+            XmlWriter xmlWriter = XmlWriter.Create(stringWriter, settings);
+
+            xmlWriter.WriteProcessingInstruction("xml", "version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"");
+            xmlWriter.WriteStartElement("patient");
+
+            //getting the properties from the model
+            PropertyInfo[] notesFields = notes.GetType().GetProperties();
+            Field field;
+
+            foreach (var pi in notesFields)
+            {
+                if (pi.PropertyType == typeof(Field))
+                {
+                    field = (Field)pi.GetValue(notes);
+
+                    if (field == null)
+                    {
+                        field = new Field() { Name = pi.Name, Value = String.Empty, ColourType = (int)PosConstants.ColourType.Normal };
+                    }
+
+                    if (field.Value == null)
+                        field.Value = String.Empty;
+
+                    if (dict.ContainsKey(field.Name) && dict[field.Name] != field.Value.Trim())
+                    {
+                        field.ColourType = (int)PosConstants.ColourType.Correct;
+                    }
+                    else if (acceptDefaults)
+                    {
+                        field.ColourType = (int)PosConstants.ColourType.Normal;
+                    }
+
+                    xmlWriter.WriteStartElement(field.Name);
+                    xmlWriter.WriteAttributeString("CustomColourType", field.ColourType.ToString());
+                    xmlWriter.WriteCData(field.Value.Trim());
+                    xmlWriter.WriteEndElement();
+
+                }
+
+            }
+
+            xmlWriter.WriteEndElement();
+            xmlWriter.Flush();
+            xmlWriter.Close();
+            stringWriter.Flush();
+            string xml = stringWriter.ToString();
+            stringWriter.Dispose();
+            return xml;
+        }
+
+        public static NotesModel GetNotes(string examText, PosConstants.NotesType notesType)
+        {
+            NotesModel notes = new NotesModel() { NotesType = notesType };
+            notes.Doctors = PosRepository.DoctorsGet();
+            List<SelectListItem> examLookUp = PosRepository.ExamLookUpGet();
+
+            PropertyInfo[] notesFields = notes.GetType().GetProperties();
+            Field value;
+
+            //looping through the xml and setting the Notes
+            StringReader stringReader = new StringReader(examText);
+            XmlReaderSettings settings = new XmlReaderSettings();
+            settings.CheckCharacters = false;
+            XmlReader reader = XmlReader.Create(stringReader, settings);
+
+            string fieldName = "";
+            string fieldValue = "";
+            string fieldAttr = "";
+            while (reader.Read())
+            {
+                switch (reader.NodeType)
+                {
+                    case XmlNodeType.Element:
+                        fieldName = reader.Name;
+                        fieldAttr = reader.GetAttribute("CustomColourType");
+                        break;
+                    case XmlNodeType.Text:
+                        fieldValue = reader.Value;
+                        break;
+                    case XmlNodeType.CDATA:
+                        fieldValue = reader.Value;
+                        break;
+                    case XmlNodeType.EndElement:
+                        if (fieldName != "")
+                        {
+                            //SetControlValue(fieldName, fieldValue, fieldAttr);
+
+                            PropertyInfo pi = notesFields.FirstOrDefault(p => p.Name == fieldName);
+
+                            if (pi != null)
+                            {
+                                value = new Field() { Name = fieldName, Value = fieldValue, ColourType = Convert.ToInt32(fieldAttr) };
+                                //setting the colour type
+                                if (notesType == PosConstants.NotesType.New)
+                                {
+                                    if (fieldValue != "" && fieldValue != "OU")
+                                        value.ColourType = (int)PosConstants.ColourType.New;
+                                }
+                                //setting the loopup
+                                var lookupItem = examLookUp.FirstOrDefault(m => m.Text.Trim() == fieldName.Trim());
+                                if (lookupItem != null)
+                                {
+                                    value.LookUpFieldName = lookupItem.Value;
+                                }
+
+                                pi.SetValue(notes, value);
+                            }
+
+                            fieldName = "";
+                            fieldValue = "";
+                            fieldAttr = "";
+                        }
+                        break;
+                }
+            }
+
+            reader.Close();
+            stringReader.Close();
+            stringReader.Dispose();
+
+            return notes;
         }
 
 

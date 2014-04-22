@@ -444,6 +444,30 @@ namespace epos.Lib.Repository
 
         }
 
+        public static ExamDefaultModel ExamDefaultGet(int examDefaultID)
+        {
+            using(var db = new PosEntities())
+            {
+                var defaultQuery = from dbDefault in db.ExamDefaults
+                                    join user in db.Users on dbDefault.DoctorUserID equals user.UserID
+                                   where dbDefault.ExamDefaultID == examDefaultID
+                                   select new ExamDefaultModel
+                                   {
+                                       ExamDefaultID = dbDefault.ExamDefaultID,
+                                       DefaultName = dbDefault.DefaultName,
+                                       AgeStart = dbDefault.AgeStart,
+                                       AgeEnd = dbDefault.AgeEnd,
+                                       PrematureBirth = dbDefault.PrematureBirth,
+                                       DoctorUserID = dbDefault.DoctorUserID,
+                                       ExamText = dbDefault.ExamText,
+                                       DoctorName = user.FirstName + " " + user.LastName,
+                                       DoctorUserName = user.UserName
+                                   };
+
+                return defaultQuery.First();
+            }
+        }
+
     }
 }
 
