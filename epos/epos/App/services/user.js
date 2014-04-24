@@ -32,6 +32,7 @@
         blankModel: blankModel,
         noDefault: message.noDefault,
         getSearchResults: getSearchResults,
+        getPhotoUrl: getPhotoUrl,
         defaults: defaults,
         navigateNotes: navigateNotes,
         getSelected: getSelected,

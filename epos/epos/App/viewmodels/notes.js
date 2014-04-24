@@ -55,13 +55,13 @@
     }
     function compositionComplete() {
         var notesHeaderDefaultOffset = $("div.notes-header").offset().top;
-        var patientinfoOffset = $("#info-header").offset().top;
+        var infoOffset = $("#info-header").offset().top;
         var cchistoryOffset = $("#cc-history-header").offset().top;
         var acuityOffset = $("#acuity-header").offset().top;
         var ocularmotOffset = $("#ocular-mot-header").offset().top;
         var antsegOffset = $("#ant-seg-header").offset().top;
         var summaryOffset = $("#summary-header").offset().top;
-        var currentOffset = patientinfoOffset;
+        var currentOffset = infoOffset;
         $(window).scrollTop(0);
 
         $(window).scroll(function () {
@@ -74,13 +74,14 @@
             $("div.notes-header").offset({ top: notesHeaderoffset });
 
             //calculating the menu offset
-            var newOffset = patientinfoOffset;
+            var newOffset = infoOffset;
             var notesHeight = $("div.notes-header").height();
             var winOffset = winScroll + notesHeight + 1;
-            if (winOffset >= 0 && winOffset < cchistoryOffset && currentOffset != patientinfoOffset) {
+            if (winOffset >= 0 && winOffset < cchistoryOffset && currentOffset != infoOffset) {
                 $(".notes-menu").removeClass('notes-menu-selected');
+                $("#default-info-menu").addClass('notes-menu-selected');
                 $("#patient-info-menu").addClass('notes-menu-selected');
-                currentOffset = patientinfoOffset;
+                currentOffset = infoOffset;
             }
             else if (winOffset >= cchistoryOffset && winOffset < acuityOffset && currentOffset != cchistoryOffset) {
                 $(".notes-menu").removeClass('notes-menu-selected');

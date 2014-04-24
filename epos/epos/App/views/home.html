@@ -12,7 +12,7 @@
             </table>
             <div id="results" data-bind="style: {height: windowHeight }" class="search-results">
                 <table class="full-width">
-                    <tbody data-bind='template: { name: searchTemplate, foreach: results }'></tbody>
+                    <tbody data-bind='template: { name: searchTemplate, foreach: results, if: !viewActivate() }'></tbody>
                 </table>
             </div>
         </div>
@@ -184,8 +184,13 @@
     <tr>
         <td data-bind="click: $root.show, css: { selected: (ID() == $root.currentID()) }">
             <div data-bind="attr: { id: ID }">
-                <span data-bind="text: FullName"></span><br />
-                UserName: <span data-bind="text: UserName"></span>
+                <div class="row row-narrow">
+                    <div class="small-4 columns tight"><img class="top-header" data-bind="attr: { src: $root.module.getPhotoUrl(PhotoUrl()) }" /></div>
+                    <div class="small-8 columns tight">
+                        <span data-bind="text: FullName"></span><br />
+                        (<span data-bind="text: UserName"></span>)
+                    </div>
+                </div>
             </div>
         </td>
     </tr>

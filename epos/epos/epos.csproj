@@ -249,6 +249,9 @@
     <Content Include="Content\foundation-icons.css" />
     <Content Include="Content\foundation-icons.svg" />
     <Content Include="Content\foundation.css" />
+    <Content Include="Content\Images\eye-background.jpg" />
+    <Content Include="Content\Images\line-horizontal.gif" />
+    <Content Include="Content\Images\line-vertical.gif" />
     <Content Include="Content\Images\loading.gif" />
     <Content Include="Content\Images\login-title.png" />
     <Content Include="Content\Images\login.png" />

@@ -122,6 +122,7 @@
         moduleEditInd: moduleEditInd,
         viewActivate: viewActivate,
         windowHeight: windowHeight,
+        getThumbphoto: getThumbphoto,
 
         //events
         show: show,
@@ -214,12 +215,18 @@
 
     function setCriteria(searchCriteria) {
         if (searchCriteria === vm.criteria()) {
+            vm.viewActivate(false);
             getSelected();
         }
         else {
             vm.criteria(searchCriteria)
         }
     }
+
+    function getThumbphoto(photoUrl) {
+        return vm.module.getPhotoUrl(photoUrl)
+    }
+
 
     function show(record) {
         //getting the data from server

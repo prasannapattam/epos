@@ -4,7 +4,7 @@
     var lastName = ko.observable();
     var userName = ko.observable();
     var photoUrl = ko.observable();
-    var isAuthenticated = ko.observable(true);
+    var isAuthenticated = ko.observable(false);
 
 
     var vm = {

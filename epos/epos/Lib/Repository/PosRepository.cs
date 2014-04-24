@@ -199,7 +199,8 @@ namespace epos.Lib.Repository
                                     UserID = dbUser.UserID,
                                     FirstName = dbUser.FirstName,
                                     LastName = dbUser.LastName,
-                                    UserName = dbUser.UserName
+                                    UserName = dbUser.UserName,
+                                    PhotoUrl = dbUser.PhotoUrl
                                 };
 
                     return query.Take(20).ToList();
@@ -220,7 +221,8 @@ namespace epos.Lib.Repository
                                     UserID = dbUser.UserID,
                                     FirstName = dbUser.FirstName,
                                     LastName = dbUser.LastName,
-                                    UserName = dbUser.UserName
+                                    UserName = dbUser.UserName,
+                                    PhotoUrl = dbUser.PhotoUrl
                                 };
 
                     return query.Take(20).ToList();
@@ -437,6 +439,12 @@ namespace epos.Lib.Repository
                 dbExam.LastUpdatedDate = DateTime.Now;
                 dbExam.ExamCorrectDate = exam.ExamCorrectDate;
                 dbExam.CorrectExamID = exam.CorrectExamID;
+
+                var patient = (from pat in db.Patients where pat.PatientID == exam.PatientID select pat).First();
+                if(!patient.LastExamDate.HasValue || patient.LastExamDate < exam.ExamDate)
+                {
+                    patient.LastExamDate = exam.ExamDate;
+                }
 
                 db.SaveChanges();
                 exam.ExamID = dbExam.ExamID;
