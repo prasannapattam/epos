@@ -12,8 +12,8 @@ namespace epos.App_Start
         {
             bundles.Add(
                 new ScriptBundle("~/scripts/libraries")
-                    .Include("~/scripts/jquery-{version}.js")
-                    .Include("~/scripts/knockout-{version}.js")
+                    .Include("~/scripts/jquery-2.1.0.min.js")
+                    .Include("~/scripts/knockout-3.1.0.js")
                     .Include("~/scripts/knockout.validation.js")
                     .Include("~/scripts/knockout.viewmodel.js")
                     .Include("~/scripts/toastr.js")

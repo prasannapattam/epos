@@ -26,12 +26,25 @@ namespace epos.Controllers
                 //get the last examid or the passed in exam id
                 ExamModel exam = PosRepository.ExamGet(patientID, examID);
                
-                //setting the notes type
+                //setting the notes type & examid
                 PosConstants.NotesType notesType = PosConstants.NotesType.New;
-                if (exam.ExamDate.Date == DateTime.Today.Date)
+                if(exam.SaveInd == 1)
+                {
+                    notesType = PosConstants.NotesType.Saved;
+                }
+                else if (examID == null && exam.ExamDate.Date == DateTime.Today.Date)
+                {
                     notesType = PosConstants.NotesType.Correct;
+                }
                 else if (examID == null)
+                {
+                    notesType = PosConstants.NotesType.New;
                     exam.ExamID = 0;
+                }
+                else
+                {
+                    notesType = PosConstants.NotesType.Correct;
+                }
 
                 if (exam.SaveInd == 1)
                     notesType = PosConstants.NotesType.Saved;

@@ -25,7 +25,7 @@
     var notesText = ko.observable();
     var criteria = ko.observable();
     var lastCriteria = '';
-    var viewActivate = ko.observable(false);
+    var viewActivate = ko.observable(true);
     var resultHeader = ko.computed(function () {
         if (criteria() == '')
             return 'Recent ' + title();
@@ -42,12 +42,6 @@
             vm.module.getSearchResults(criteria()).then(function (data) {
                 if (data.Success === true) {
                     //results.removeAll();
-                    if (vm.moduleName() === constants.enum.module.patient) {
-                        vm.searchTemplate(patientSearchTemplate);
-                    }
-                    else {
-                        vm.searchTemplate(userSearchTemplate);
-                    }
 
                     results(ko.viewmodel.fromModel(data.Model)());
                     vm.lastCriteria = criteria();
@@ -158,7 +152,7 @@
             vm.title(patient.title);
             vm.addText(patient.addText);
             vm.notesText(patient.notesText);
-            //vm.searchTemplate(patientSearchTemplate);
+            vm.searchTemplate(patientSearchTemplate);
             vm.summaryTemplate(patientHistoryTemplate);
             vm.detailTemplate(patientDetailTemplate);
         }
@@ -168,7 +162,7 @@
             vm.title(user.title);
             vm.addText(user.addText);
             vm.notesText(user.notesText);
-            //vm.searchTemplate(userSearchTemplate);
+            vm.searchTemplate(userSearchTemplate);
             vm.summaryTemplate(userDefaultTemplate);
             vm.detailTemplate(userDetailTemplate);
         }
