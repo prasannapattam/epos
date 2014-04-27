@@ -153,6 +153,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Lib\Domain\NotesDomain.cs" />
     <Compile Include="Lib\Repository\AutoCorrect.cs">
       <DependentUpon>Pos.tt</DependentUpon>
     </Compile>

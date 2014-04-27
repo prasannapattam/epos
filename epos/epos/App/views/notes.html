@@ -4,10 +4,10 @@
         <div class="row row-narrow title">
             <div class="small-8 columns col-narrow" data-bind = "text: model.HeaderText"></div>
             <div class="small-4 columns col-narrow text-right">
-                    <a href="#" class="button tiny selected" data-bind="click: defaultSave, css: { display_none: model.NotesType() !== constants.enum.notesType.Default }"><i class="button-icon fi-check"></i>Save</a>
-                    <a href="#" class="button tiny selected" data-bind="click: save, css: { display_none: model.NotesType() !== constants.enum.notesType.New && model.NotesType() !== constants.enum.notesType.Saved }"><i class="button-icon fi-check"></i>Save</a>
-                    <a href="#" class="button tiny selected" data-bind="click: correct, css: { display_none: model.NotesType() !== constants.enum.notesType.Correct }"><i class="button-icon fi-clipboard-pencil"></i>Correct</a>
-                    <a href="#" class="button tiny selected" data-bind="click: signOff, css: { display_none: model.NotesType() !== constants.enum.notesType.New && model.NotesType() !== constants.enum.notesType.Saved }"><i class="button-icon fi-clipboard-notes"></i>Sign off</a>
+                    <a href="#" class="button tiny selected" data-bind="click: defaultSave, css: { display_none: model.NotesType() !== constants.enum.notesType.Default, disabled: !window.isDirty() }"><i class="button-icon fi-check"></i>Save</a>
+                    <a href="#" class="button tiny selected" data-bind="click: save, css: { display_none: model.NotesType() !== constants.enum.notesType.New && model.NotesType() !== constants.enum.notesType.Saved, disabled: !window.isDirty() }"><i class="button-icon fi-check"></i>Save</a>
+                    <a href="#" class="button tiny selected" data-bind="click: correct, css: { display_none: model.NotesType() !== constants.enum.notesType.Correct, disabled: !window.isDirty() }"><i class="button-icon fi-clipboard-pencil"></i>Correct</a>
+                    <a href="#" class="button tiny selected" data-bind="click: signOff, css: { display_none: model.NotesType() !== constants.enum.notesType.New && model.NotesType() !== constants.enum.notesType.Saved, disabled: !window.isDirty() }"><i class="button-icon fi-clipboard-notes"></i>Sign off</a>
                     <a href="#" class="button tiny selected" data-bind="click: cancel"><i class="button-icon fi-x"></i>Cancel</a>
             </div>
         </div>
@@ -21,7 +21,7 @@
             <div id="summary-menu" class="small-2 columns col-narrow notes-menu"><a data-bind="click: function () { scrollToHeader('summary-header') }">Summary</a></div>
         </div>
     </div>
-    
+
     <div id="info-header">
     <div data-bind="css: { display_none: model.NotesType() !== window.constants.enum.notesType.Default }">
     <h5 id="default-info-header">Default Information</h5>    
@@ -86,7 +86,7 @@
         </div>
         <div class="tiny-3 columns left col-narrow">
             <label>Sex</label>
-            <input type="text" placeholder="" data-bind="notesvalue: model.Sex" />
+            <select data-bind="notesselect: model.Sex" />
         </div>
         <div class="tiny-3 columns left col-narrow">
             <label>Premature</label>
@@ -104,10 +104,10 @@
             </div>
             <div class="row full-width row-narrow">
                 <div class="tiny-12 columns tight">
-                    <select data-bind="notesselect: model.HxFrom"></select>
+                    <select data-bind="notesselect: model.HxFromList"></select>
                 </div>
                 <div class="tiny-12 columns left tight">
-                    <input type="text" data-bind="notesvalue: model.HxFrom" />
+                    <input type="text" data-bind="notesvalue: model.HxFromOther, enable: model.HxFromList.Value() === undefined " />
                 </div>
             </div>
         </div>

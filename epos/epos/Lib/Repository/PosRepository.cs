@@ -84,7 +84,7 @@ namespace epos.Lib.Repository
             }
         }
 
-        public static PatientModel PatientGet(int patientID)
+        public static PatientModel PatientGet(int patientID, bool includeHistory)
         {
             using(var db = new PosEntities())
             {
@@ -94,20 +94,23 @@ namespace epos.Lib.Repository
 
                 PatientModel patientModel = Mapper.Map<Patient, PatientModel>(patientQuery.FirstOrDefault());
 
-                var historyQuery = from dbExam in db.Exams
-                                   where dbExam.PatientID == patientID
-                                   orderby dbExam.ExamDate descending, dbExam.ExamID descending
-                                   select new PatientHistoryModel
-                                   {
-                                       ExamID = dbExam.ExamID,
-                                       ExamDate = dbExam.ExamDate,
-                                       ExamCorrectDate = dbExam.ExamCorrectDate,
-                                       CorrectExamID = dbExam.CorrectExamID,
-                                       SavedInd = dbExam.SavedInd,
-                                       LastUpdatedDate = dbExam.LastUpdatedDate
-                                   };
+                if (includeHistory)
+                {
+                    var historyQuery = from dbExam in db.Exams
+                                       where dbExam.PatientID == patientID
+                                       orderby dbExam.ExamDate descending, dbExam.ExamID descending
+                                       select new PatientHistoryModel
+                                       {
+                                           ExamID = dbExam.ExamID,
+                                           ExamDate = dbExam.ExamDate,
+                                           ExamCorrectDate = dbExam.ExamCorrectDate,
+                                           CorrectExamID = dbExam.CorrectExamID,
+                                           SavedInd = dbExam.SavedInd,
+                                           LastUpdatedDate = dbExam.LastUpdatedDate
+                                       };
 
-                patientModel.History = historyQuery.ToList();
+                    patientModel.History = historyQuery.ToList();
+                }
 
                 return patientModel;
             }

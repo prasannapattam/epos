@@ -1,9 +1,11 @@
-﻿define(['plugins/router'], function (router) {
+﻿define(['plugins/router', 'services/profile'], function (router, profile) {
 
     var model;
+    var dirtyFlag;
 
     var vm = {
         model: model,
+        dirtyFlag: dirtyFlag,
         resetColour: resetColour,
         scrollToHeader: scrollToHeader,
         activate: activate,
@@ -20,6 +22,8 @@
     return vm;
 
     function activate(notestype, id, examid) {
+        window.isDirty(false);
+        window.trackDirty(false);
         if (parseInt(notestype) === constants.enum.notesType.Default) {
             var getdata = { "doctorUserID": id, "examDefaultID": examid };
             return utility.httpGet('api/examdefault', getdata).then(function (data) {
@@ -35,8 +39,24 @@
             var getdata = { "patientid": id, "examid": examid };
             return utility.httpGet('api/notes', getdata).then(function (data) {
                 if (data.Success === true) {
+
+                    data.Model.HxFromList = {
+                        Name: 'HxFromList',
+                        Value: data.Model.HxFrom.Value,
+                        LookUpFieldName: data.Model.HxFrom.LookUpFieldName,
+                        ColourType: data.Model.HxFrom.ColourType
+                    };
+
+                    data.Model.HxFromOther = {
+                        Name: 'HxFromOther',
+                        Value: data.Model.HxFrom.Value,
+                        LookUpFieldName: data.Model.HxFrom.LookUpFieldName,
+                        ColourType: data.Model.HxFrom.ColourType
+                    }
+
                     vm.model = ko.viewmodel.fromModel(data.Model);
                     addComputedProperties();
+                    setOverrides();
                 }
 
                 return data;
@@ -54,6 +74,7 @@
 //        alert('attached');
     }
     function compositionComplete() {
+        window.trackDirty(true);
         var notesHeaderDefaultOffset = $("div.notes-header").offset().top;
         var infoOffset = $("#info-header").offset().top;
         var cchistoryOffset = $("#cc-history-header").offset().top;
@@ -122,6 +143,7 @@
     }
     
     function addComputedProperties() {
+
         vm.model.HeaderText = ko.computed(function () {
             var notestype = ko.unwrap(vm.model.NotesType);
 
@@ -151,10 +173,55 @@
             return headerText;
         }, vm.model);
 
+        vm.model.AgeCalculation = ko.computed(function () {
+            var examDateMoment = moment(vm.model.ExamDate.Value());
+            var dobMoment = moment(vm.model.DOB.Value());
+
+            if (examDateMoment.isValid() === true && dobMoment.isValid() === true) {
+                var age = examDateMoment.diff(dobMoment);
+                var duration = moment.duration(age);
+                if (duration.asMonths() <= 6)
+                    age = parseInt(duration.asWeeks()) + ' weeks';
+                else if(duration.asMonths() < 12)
+                    age = duration.months() + ' months';
+                else if (duration.asYears() <= 10)
+                    age = duration.years() + '.' + duration.months() + ' years';
+                else
+                    age = duration.years() + ' years';
+                    
+                vm.model.tbAge.Value(age);
+            }
+
+            return vm.model.ExamDate.Value() + '  ' + vm.model.DOB.Value(); //dummy return
+        }, vm.model)
+
+        vm.model.HxFromCalculation = ko.computed(function () {           
+            if (vm.model.HxFromList.Value() === undefined) {
+                vm.model.HxFrom.Value(vm.model.HxFromOther.Value());
+            }
+            else {
+                vm.model.HxFromOther.Value('');
+                vm.model.HxFrom.Value(vm.model.HxFromList.Value());
+            }
+
+            return vm.model.HxFromList.Value() + ' ' + vm.model.HxFromOther.Value();
+        }, vm.model);
+
+    }
+
+    function setOverrides() {
+        if (profile.userName() !== undefined) {
+            vm.model.User.Value = profile.userName;
+        }
     }
 
     function deleteComputedProperties() {
         delete vm.model.HeaderText;
+        delete vm.model.AgeCalculation;
+        delete vm.model.HxFromList;
+        delete vm.model.HxFromOther;
+        delete vm.model.HxFromCalculation;
+
     }
 
     function resetColour(item) {
@@ -168,7 +235,16 @@
     }
 
     function cancel() {
-        router.navigateBack();
+        if (window.isDirty()) {
+            utility.showMessage('Are you sure you want cancel and loose all changes?', 'Notes').then(function (dialogResult) {
+                if (dialogResult === 'Yes') {
+                    router.navigateBack();
+                }
+            });
+        }
+        else {
+            router.navigateBack();
+        }
     }
 
     function signOff() {
@@ -188,6 +264,8 @@
     }
 
     function saveNotes(saveType) {
+        if (!window.isDirty())
+            return;
         deleteComputedProperties();
         return utility.httpPost('api/notes?type=' + saveType.toString(), vm.model).then(function (data) {
             if (data.Success === true) {

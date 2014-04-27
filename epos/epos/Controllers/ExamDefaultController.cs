@@ -1,4 +1,5 @@
-﻿using epos.Lib.Repository;
+﻿using epos.Lib.Domain;
+using epos.Lib.Repository;
 using epos.Lib.Shared;
 using epos.Models;
 using System;
@@ -19,18 +20,8 @@ namespace epos.Controllers
 
             try
             {
-                ExamDefaultModel examDefault = PosRepository.ExamDefaultGet(examDefaultID.Value);
-
-                NotesModel notes = WebUtil.GetNotes(examDefault.ExamText, PosConstants.NotesType.Default);
-
-                notes.hdnExamDefaultID = new Field() { Name = "hdnExamDefaultID", Value = examDefault.ExamDefaultID.ToString() };
-                notes.DefaultName = new Field() { Name = "DefaultName", Value = examDefault.DefaultName };
-                notes.AgeStart = new Field() { Name = "AgeStart", Value = examDefault.AgeStart.ToString() };
-                notes.AgeEnd = new Field() { Name = "AgeEnd", Value = examDefault.AgeEnd.ToString() };
-                notes.PrematureBirth = new Field() { Name = "PrematureBirth", Value = examDefault.PrematureBirth.ToString(), LookUpFieldName = "Premature" };
-                notes.DoctorName = new Field() { Name = "DoctorName", Value = examDefault.DoctorName };
-
-                ajax.Model = notes;
+                NotesDomain domain = new NotesDomain();
+                ajax.Model = domain.GetDefaultNotes(doctorUserID, examDefaultID);
 
             }
             catch (Exception exp)

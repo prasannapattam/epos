@@ -625,3 +625,10 @@ hr{
     font-size: 0.875rem;
     padding: 0.1625rem 0.1325rem;
 }
+
+.button.disabled {
+    background-color: grey;
+}
+.button.disabled:hover {
+    background-color: grey;
+}

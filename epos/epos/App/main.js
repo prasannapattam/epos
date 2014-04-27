@@ -110,6 +110,15 @@ define(['durandal/system', 'durandal/app', 'durandal/viewLocator', 'durandal/com
             var field = valueAccessor();
             field.focusctrl = ko.computed(function () { return field.ColourType() === 1 });
             field.correctctrl = ko.computed(function () { return field.ColourType() === 2 });
+            var fieldInit = ko.toJSON(field);
+            field.isDirty = ko.computed(function () {
+                var fieldJSON = ko.toJSON(field);
+                if (window.trackDirty() && fieldInit !== fieldJSON)
+                    window.isDirty(true);
+                else
+                    fieldInit = fieldJSON;
+            });
+
             ko.applyBindingsToNode(element, {
                 value: field.Value,
                 css: { focusctrl: field.focusctrl, correctctrl: field.correctctrl },
@@ -129,6 +138,15 @@ define(['durandal/system', 'durandal/app', 'durandal/viewLocator', 'durandal/com
             var field = valueAccessor();
             field.focusctrl = ko.computed(function () { return field.ColourType() === 1 });
             field.correctctrl = ko.computed(function () { return field.ColourType() === 2 });
+            var fieldInit = ko.toJSON(field);
+            field.isDirty = ko.computed(function () {
+                var fieldJSON = ko.toJSON(field);
+                if (window.trackDirty() && fieldInit !== fieldJSON)
+                    window.isDirty(true);
+                else
+                    fieldInit = fieldJSON;
+            });
+
 
             var lookupFieldName = field.LookUpFieldName();
             if (lookupFieldName !== null && lookupFieldName !== undefined) {
@@ -159,6 +177,15 @@ define(['durandal/system', 'durandal/app', 'durandal/viewLocator', 'durandal/com
                 return;
             field.focusctrl = ko.computed(function () { return field.ColourType() === 1 });
             field.correctctrl = ko.computed(function () { return field.ColourType() === 2 });
+            var fieldInit = ko.toJSON(field);
+            field.isDirty = ko.computed(function () {
+                var fieldJSON = ko.toJSON(field);
+                if (window.trackDirty() && fieldInit !== fieldJSON)
+                    window.isDirty(true);
+                else
+                    fieldInit = fieldJSON;
+            });
+
             ko.applyBindingsToNode(element, {
                 datepicker: field.Value,
                 css: { focusctrl: field.focusctrl, correctctrl: field.correctctrl },
@@ -172,7 +199,6 @@ define(['durandal/system', 'durandal/app', 'durandal/viewLocator', 'durandal/com
             });
         }
     };
-
 
     app.start().then(function () {
         toastr.options.positionClass = 'toast-bottom-right';

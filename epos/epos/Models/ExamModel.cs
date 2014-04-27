@@ -17,5 +17,11 @@ namespace epos.Models
         public DateTime LastUpdatedDate { get; set; }
         public int PatientID { get; set; }
         public string UserName { get; set; }
+
+        public ExamModel()
+        {
+            ExamID = 0;
+            ExamDate = DateTime.Now;
+        }
     }
 }

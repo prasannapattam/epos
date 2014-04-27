@@ -50,6 +50,8 @@
         window.utility = utility;
         window.constants = constants;
         window.navigation = navigation;
+        window.isDirty = ko.observable(false);
+        window.trackDirty = ko.observable(false);
 
         if (location.href.indexOf('#') !== -1)
             navigation.returnUrl = location.href.substring(location.href.indexOf('#'));

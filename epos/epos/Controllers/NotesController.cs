@@ -11,6 +11,7 @@ using System.IO;
 using System.Xml;
 using System.Reflection;
 using System.Web.Mvc;
+using epos.Lib.Domain;
 
 namespace epos.Controllers
 {
@@ -23,70 +24,8 @@ namespace epos.Controllers
 
             try
             {
-                //get the last examid or the passed in exam id
-                ExamModel exam = PosRepository.ExamGet(patientID, examID);
-               
-                //setting the notes type & examid
-                PosConstants.NotesType notesType = PosConstants.NotesType.New;
-                if(exam.SaveInd == 1)
-                {
-                    notesType = PosConstants.NotesType.Saved;
-                }
-                else if (examID == null && exam.ExamDate.Date == DateTime.Today.Date)
-                {
-                    notesType = PosConstants.NotesType.Correct;
-                }
-                else if (examID == null)
-                {
-                    notesType = PosConstants.NotesType.New;
-                    exam.ExamID = 0;
-                }
-                else
-                {
-                    notesType = PosConstants.NotesType.Correct;
-                }
-
-                if (exam.SaveInd == 1)
-                    notesType = PosConstants.NotesType.Saved;
-                else if (exam.ExamID > 0)
-                {
-                    notesType = PosConstants.NotesType.Correct;
-                }
-
-                NotesModel notes = WebUtil.GetNotes(exam.ExamText, notesType);
-
-                notes.hdnPatientID = new Field() { Name = "hdnPatientID", Value = patientID.ToString() };
-                if(exam.ExamID > 0)
-                {
-                    notes.ExamDate = new Field() { Name = "ExamDate", Value = exam.ExamDate.ToShortDateString() };
-                    notes.hdnExamID = new Field() { Name = "hdnExamID", Value = exam.ExamID.ToString() };
-                }
-                else
-                {
-                    notes.ExamDate = new Field() { Name = "ExamDate", Value = DateTime.Now.ToShortDateString() };
-                    notes.hdnExamID = null;
-                }
-                //setting ExamDate & Correct Date
-                if(notesType == PosConstants.NotesType.Correct && exam.CorrectExamID != null)
-                {
-                    notes.ExamCorrectDate = new Field() { Name = "ExamCorrectDate", Value = exam.ExamCorrectDate.Value.ToShortDateString() };
-                }
-                else
-                {
-                    notes.ExamCorrectDate = null;
-                }
-                if(notesType == PosConstants.NotesType.Saved)
-                {
-                    notes.ExamSaveDate = new Field() { Name = "ExamSaveDate", Value = exam.LastUpdatedDate.ToString() };
-                }
-                else
-                {
-                    notes.ExamSaveDate = null;
-                }
-
-                notes.PatientName = new Field() { Name = "PatientName", Value = notes.FirstName.Value + ' ' + notes.LastName.Value };
-
-                ajax.Model = notes;
+                NotesDomain domain = new NotesDomain();
+                ajax.Model = domain.GetNotes(patientID, examID);
 
             }
             catch (Exception exp)

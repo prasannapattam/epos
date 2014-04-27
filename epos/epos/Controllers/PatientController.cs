@@ -16,7 +16,7 @@ namespace epos.Controllers
         {
             AjaxModel<PatientModel> ajax = null;
 
-            PatientModel result = PosRepository.PatientGet(id);
+            PatientModel result = PosRepository.PatientGet(id, true);
 
             if(result == null)
             {
