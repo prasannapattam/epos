@@ -97,7 +97,7 @@
             //calculating the menu offset
             var newOffset = infoOffset;
             var notesHeight = $("div.notes-header").height();
-            var winOffset = winScroll + notesHeight + 1;
+            var winOffset = winScroll + notesHeight + 5;
             if (winOffset >= 0 && winOffset < cchistoryOffset && currentOffset != infoOffset) {
                 $(".notes-menu").removeClass('notes-menu-selected');
                 $("#default-info-menu").addClass('notes-menu-selected');
@@ -124,7 +124,7 @@
                 $("#ant-seg-menu").addClass('notes-menu-selected');
                 currentOffset = antsegOffset;
             }
-            else if (winOffset >= summaryOffset && currentOffset != summaryOffset) {
+            else if ((winOffset >= summaryOffset && currentOffset != summaryOffset) || ($(document).height() == $(window).scrollTop() + window.innerHeight)) {
                 $(".notes-menu").removeClass('notes-menu-selected');
                 $("#summary-menu").addClass('notes-menu-selected');
                 currentOffset = summaryOffset;
