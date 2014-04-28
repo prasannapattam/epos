@@ -29,6 +29,7 @@ namespace epos.Models
         public Field FirstName { get; set; }
         public Field MiddleName { get; set; }
         public Field LastName { get; set; }
+        public Field NickName { get; set; }
         public Field DOB { get; set; }
         public Field Age { get; set; }
         public Field tbAge { get; set; }

@@ -288,21 +288,29 @@
             return;
         var patientData = {
             PatientID : vm.model.hdnPatientID.Value(),
-            PatientNumber : vm.model.hdnPatientID.Value(),
-            Greeting : vm.model.hdnPatientID.Value(),
-            FirstName : vm.model.hdnPatientID.Value(),
-            MiddleName : vm.model.hdnPatientID.Value(),
-            LastName : vm.model.hdnPatientID.Value(),
-            NickName : vm.model.hdnPatientID.Value(),
-            DateOfBirth : vm.model.hdnPatientID.Value(),
-            Sex : vm.model.hdnPatientID.Value(),
-            Occupation : vm.model.hdnPatientID.Value(),
-            HxFrom : vm.model.hdnPatientID.Value(),
-            ReferredFrom : vm.model.hdnPatientID.Value(),
-            ReferredDoctor : vm.model.hdnPatientID.Value(),
-            Allergies : vm.model.hdnPatientID.Value(),
-            Medications : vm.model.hdnPatientID.Value(),
-            PrematureBirth : vm.model.hdnPatientID.Value()       
+            PatientNumber: vm.model.PatientNumber.Value(),
+            Greeting: vm.model.Greeting.Value(),
+            FirstName: vm.model.FirstName.Value(),
+            MiddleName: vm.model.MiddleName.Value(),
+            LastName: vm.model.LastName.Value(),
+            NickName: vm.model.NickName.Value(),
+            DateOfBirth: vm.model.DOB.Value(),
+            Sex: vm.model.Sex.Value(),
+            Occupation: vm.model.Occupation.Value(),
+            HxFrom: vm.model.HxFrom.Value(),
+            ReferredFrom: vm.model.Refd.Value(),
+            ReferredDoctor: vm.model.RefDoctor.Value(),
+            Allergies: vm.model.Allergies.Value(),
+            Medications: vm.model.Medications.Value(),
+            PrematureBirth: vm.model.PrematureBirth.Value()
         }
+
+        utility.httpPost('api/patient', patientData).then(function (data) {
+            if (data.Success === true) {
+                toastr.info(data.Message);
+                session.isNotesPatientDirty(false);
+            }
+        });
+
     }
 });

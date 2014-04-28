@@ -172,6 +172,7 @@
     <Compile Include="Lib\Repository\Patient.cs">
       <DependentUpon>Pos.tt</DependentUpon>
     </Compile>
+    <Compile Include="Lib\Repository\PatientRepository.cs" />
     <Compile Include="Lib\Repository\Pos.Context.cs">
       <DependentUpon>Pos.Context.tt</DependentUpon>
       <DesignTime>True</DesignTime>

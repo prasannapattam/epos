@@ -21,7 +21,7 @@ namespace epos.Controllers
         {
             AjaxModel<List<PatientSearchResultModel>> ajax = null;
 
-            List<PatientSearchResultModel> result = PosRepository.PatientSearch(criteria.Trim());
+            List<PatientSearchResultModel> result = PatientRepository.PatientSearch(criteria.Trim());
 
             if (result.Count == 0)
             {

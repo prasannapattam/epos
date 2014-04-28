@@ -16,7 +16,7 @@ namespace epos.Controllers
         {
             AjaxModel<PatientModel> ajax = null;
 
-            PatientModel result = PosRepository.PatientGet(id, true);
+            PatientModel result = PatientRepository.PatientGet(id, true);
 
             if(result == null)
             {
@@ -35,7 +35,7 @@ namespace epos.Controllers
             AjaxModel<string> ajax = new AjaxModel<string>() { Success = true, Message = PosMessage.PatientSaveSuccessful, Model = PosMessage.Blank };
             try
             {
-                PosRepository.PatientSave(model);
+                PatientRepository.PatientSave(model);
             }
             catch(Exception exp)
             {

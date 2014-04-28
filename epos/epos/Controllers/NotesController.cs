@@ -18,14 +18,14 @@ namespace epos.Controllers
     public class NotesController : ApiController
     {
 
-        public AjaxModel<NotesModel> Get(int patientID, int? examID)
+        public AjaxModel<NotesModel> Get(int userID, int patientID, int? examID)
         {
             AjaxModel<NotesModel> ajax = new AjaxModel<NotesModel>() { Success = true };
 
             try
             {
                 NotesDomain domain = new NotesDomain();
-                ajax.Model = domain.GetNotes(patientID, examID);
+                ajax.Model = domain.GetNotes(userID, patientID, examID);
 
             }
             catch (Exception exp)
@@ -72,7 +72,7 @@ namespace epos.Controllers
                         exam.CorrectExamID = exam.ExamID;
                         exam.ExamID = 0;
                         //getting the original exam
-                        ExamModel orginalExam = PosRepository.ExamGet(exam.PatientID, exam.CorrectExamID);
+                        ExamModel orginalExam = PatientRepository.ExamGet(exam.PatientID, exam.CorrectExamID);
                         Dictionary<string, string> dict = WebUtil.GetDictionary(orginalExam.ExamText, false);
                         exam.ExamText = WebUtil.GetXml(model, true, dict);
                         break;
@@ -81,7 +81,7 @@ namespace epos.Controllers
                         break;
                 }
 
-                PosRepository.ExamSave(exam);
+                PatientRepository.ExamSave(exam);
 
                 //removing & creating print queue
                 if (saveType == PosConstants.NotesSaveType.Correct)

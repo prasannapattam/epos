@@ -14,33 +14,27 @@ namespace epos.Lib.Domain
 {
     public class NotesDomain
     {
-        private int patientID;
-        private int? examID;
+        private string[] patientFields =  { "patientID", "hdnPatientID", "Greeting", "FirstName", "MiddleName", "LastName", "PatientName", "NickName", "DOB", "Sex", "PrematureBirth", "HxFrom", "RefDoctor", "Refd", "Allergies", "Occupation", "tbAge" };
 
-        private string[] patientFields =  { "patientID", "hdnPatientID", "Greeting", "FirstName", "MiddleName", "LastName", "PatientName", "DOB", "Sex", "PrematureBirth", "HxFrom", "RefDoctor", "Refd", "Allergies", "Occupation", "tbAge" };
-
-        public NotesModel GetNotes(int patientID, int? examID)
+        public NotesModel GetNotes(int userID, int patientID, int? examID)
         {
-            this.patientID = patientID;
-            this.examID = examID;
-
-            PatientModel patient = PosRepository.PatientGet(patientID, false);
+            PatientModel patient = PatientRepository.PatientGet(patientID, false);
 
             //get the last examid or the passed in exam id
-            ExamModel exam = PosRepository.ExamGet(patientID, examID);
+            ExamModel exam = PatientRepository.ExamGet(patientID, examID);
             if (exam == null)
             {
-                //getting the defaults
-
-                //finally setting the blank exam record
                 exam = new ExamModel();
+                //getting the defaults if exists
+                exam.ExamText = GetDefaultNotesText(userID, patient);
+
             }
 
-            PosConstants.NotesType notesType = GetNotesType(exam);
+            PosConstants.NotesType notesType = GetNotesType(exam, examID);
 
             NotesModel notes = GetNotesFromXml(exam.ExamText, notesType);
 
-            SetOverrides(exam, notes);
+            SetOverrides(exam, notes, patientID);
             if(notes.NotesType ==  PosConstants.NotesType.New)
                 SetPatientInfo(patient, notes);
 
@@ -49,7 +43,7 @@ namespace epos.Lib.Domain
 
         public NotesModel GetDefaultNotes(int doctorUserID, int? examDefaultID)
         {
-            ExamDefaultModel examDefault = PosRepository.ExamDefaultGet(examDefaultID.Value);
+            ExamDefaultModel examDefault = PatientRepository.ExamDefaultGet(examDefaultID.Value);
 
             NotesModel notes = GetNotesFromXml(examDefault.ExamText, PosConstants.NotesType.Default);
 
@@ -63,7 +57,7 @@ namespace epos.Lib.Domain
             return notes;
         }
 
-        private PosConstants.NotesType GetNotesType(ExamModel exam)
+        private PosConstants.NotesType GetNotesType(ExamModel exam, int? examID)
         {
             //setting the notes type & examid
             PosConstants.NotesType notesType = PosConstants.NotesType.New;
@@ -88,7 +82,7 @@ namespace epos.Lib.Domain
             return notesType;
         }
 
-        private void SetOverrides(ExamModel exam, NotesModel notes)
+        private void SetOverrides(ExamModel exam, NotesModel notes, int patientID)
         {
             if (notes.NotesType == PosConstants.NotesType.New)
                 exam.ExamID = 0;
@@ -131,6 +125,7 @@ namespace epos.Lib.Domain
             SetPatientField(notes.FirstName, patient.FirstName);
             SetPatientField(notes.MiddleName, patient.MiddleName);
             SetPatientField(notes.LastName, patient.LastName);
+            SetPatientField(notes.NickName, patient.NickName);
             SetPatientField(notes.PatientName, patient.FirstName + " " + patient.LastName);
             SetPatientField(notes.DOB, patient.DateOfBirth.Value.ToShortDateString());
             SetPatientField(notes.Sex, patient.Sex);
@@ -263,6 +258,12 @@ namespace epos.Lib.Domain
                     field.ColourType = (int)PosConstants.ColourType.New;
             }
 
+        }
+
+        private string GetDefaultNotesText(int userID, PatientModel patient)
+        {
+
+            return null;
         }
     }
 }
