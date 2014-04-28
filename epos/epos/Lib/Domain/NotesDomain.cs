@@ -17,6 +17,8 @@ namespace epos.Lib.Domain
         private int patientID;
         private int? examID;
 
+        private string[] patientFields =  { "patientID", "hdnPatientID", "Greeting", "FirstName", "MiddleName", "LastName", "PatientName", "DOB", "Sex", "PrematureBirth", "HxFrom", "RefDoctor", "Refd", "Allergies", "Occupation", "tbAge" };
+
         public NotesModel GetNotes(int patientID, int? examID)
         {
             this.patientID = patientID;
@@ -39,7 +41,8 @@ namespace epos.Lib.Domain
             NotesModel notes = GetNotesFromXml(exam.ExamText, notesType);
 
             SetOverrides(exam, notes);
-            SetPatientInfo(patient, notes);
+            if(notes.NotesType ==  PosConstants.NotesType.New)
+                SetPatientInfo(patient, notes);
 
             return notes;
         }
@@ -123,6 +126,7 @@ namespace epos.Lib.Domain
         {
             SetPatientField(notes.patientID, patient.PatientID.ToString());
             SetPatientField(notes.hdnPatientID, patient.PatientID.ToString());
+            SetPatientField(notes.PatientNumber, patient.PatientNumber.ToString());
             SetPatientField(notes.Greeting, patient.Greeting);
             SetPatientField(notes.FirstName, patient.FirstName);
             SetPatientField(notes.MiddleName, patient.MiddleName);
@@ -143,6 +147,7 @@ namespace epos.Lib.Domain
         {
             field.Value = value;
             field.ColourType = (int) PosConstants.ColourType.Normal;
+            field.FieldType = (int)PosConstants.FieldType.Patient;
         }
 
         private NotesModel GetNotesFromXml(string examText, PosConstants.NotesType notesType)
@@ -219,17 +224,26 @@ namespace epos.Lib.Domain
         {
             if (pi != null && pi.PropertyType == typeof(Field))
             {
-                Field value = new Field() { Name = fieldName };
+                Field field = new Field() { Name = fieldName };
                 //setting the colour type
 
                 //setting the loopup
                 var lookupItem = examLookUp.FirstOrDefault(m => m.Text.Trim() == fieldName.Trim());
                 if (lookupItem != null)
                 {
-                    value.LookUpFieldName = lookupItem.Value;
+                    field.LookUpFieldName = lookupItem.Value;
                 }
 
-                pi.SetValue(notes, value);
+                if(patientFields.Contains(fieldName))
+                {
+                    field.FieldType = (int) PosConstants.FieldType.Patient;
+                }
+                else
+                {
+                    field.FieldType = (int) PosConstants.FieldType.Notes;
+                }
+
+                pi.SetValue(notes, field);
 
                 SetPropertyValue(notes, pi, fieldValue, colourType);
             }

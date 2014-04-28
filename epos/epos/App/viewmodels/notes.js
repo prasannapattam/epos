@@ -1,11 +1,9 @@
 ﻿define(['plugins/router', 'services/profile'], function (router, profile) {
 
     var model;
-    var dirtyFlag;
 
     var vm = {
         model: model,
-        dirtyFlag: dirtyFlag,
         resetColour: resetColour,
         scrollToHeader: scrollToHeader,
         activate: activate,
@@ -16,14 +14,17 @@
         correct: correct,
         save: save,
         defaultSave: defaultSave,
-        cancel: cancel
+        cancel: cancel,
+        savePatient: savePatient
 };
 
     return vm;
 
     function activate(notestype, id, examid) {
-        window.isDirty(false);
-        window.trackDirty(false);
+        session.isDirty(false);
+        session.isNotesPatientDirty(false);
+        session.trackDirty(false);
+
         if (parseInt(notestype) === constants.enum.notesType.Default) {
             var getdata = { "doctorUserID": id, "examDefaultID": examid };
             return utility.httpGet('api/examdefault', getdata).then(function (data) {
@@ -74,7 +75,7 @@
 //        alert('attached');
     }
     function compositionComplete() {
-        window.trackDirty(true);
+        session.trackDirty(true);
         var notesHeaderDefaultOffset = $("div.notes-header").offset().top;
         var infoOffset = $("#info-header").offset().top;
         var cchistoryOffset = $("#cc-history-header").offset().top;
@@ -98,6 +99,11 @@
             var newOffset = infoOffset;
             var notesHeight = $("div.notes-header").height();
             var winOffset = winScroll + notesHeight + 5;
+            //checking for scroll end
+            if ($(document).height() == $(window).scrollTop() + window.innerHeight) {
+                winOffset = summaryOffset;
+            }
+
             if (winOffset >= 0 && winOffset < cchistoryOffset && currentOffset != infoOffset) {
                 $(".notes-menu").removeClass('notes-menu-selected');
                 $("#default-info-menu").addClass('notes-menu-selected');
@@ -124,7 +130,7 @@
                 $("#ant-seg-menu").addClass('notes-menu-selected');
                 currentOffset = antsegOffset;
             }
-            else if ((winOffset >= summaryOffset && currentOffset != summaryOffset) || ($(document).height() == $(window).scrollTop() + window.innerHeight)) {
+            else if ((winOffset >= summaryOffset && currentOffset != summaryOffset)) {
                 $(".notes-menu").removeClass('notes-menu-selected');
                 $("#summary-menu").addClass('notes-menu-selected');
                 currentOffset = summaryOffset;
@@ -140,6 +146,7 @@
         var scrollPosition = $("#" + tag).offset().top;
         var notesHeight = $("div.notes-header").height();
         $(window).scrollTop(scrollPosition - notesHeight);
+        alert(scrollPosition - notesHeight)
     }
     
     function addComputedProperties() {
@@ -235,7 +242,7 @@
     }
 
     function cancel() {
-        if (window.isDirty()) {
+        if (session.isDirty()) {
             utility.showMessage('Are you sure you want cancel and loose all changes?', 'Notes').then(function (dialogResult) {
                 if (dialogResult === 'Yes') {
                     router.navigateBack();
@@ -264,7 +271,7 @@
     }
 
     function saveNotes(saveType) {
-        if (!window.isDirty())
+        if (!session.isDirty())
             return;
         deleteComputedProperties();
         return utility.httpPost('api/notes?type=' + saveType.toString(), vm.model).then(function (data) {
@@ -274,5 +281,28 @@
             }
             return data;
         });
+    }
+
+    function savePatient() {
+        if (!session.isNotesPatientDirty())
+            return;
+        var patientData = {
+            PatientID : vm.model.hdnPatientID.Value(),
+            PatientNumber : vm.model.hdnPatientID.Value(),
+            Greeting : vm.model.hdnPatientID.Value(),
+            FirstName : vm.model.hdnPatientID.Value(),
+            MiddleName : vm.model.hdnPatientID.Value(),
+            LastName : vm.model.hdnPatientID.Value(),
+            NickName : vm.model.hdnPatientID.Value(),
+            DateOfBirth : vm.model.hdnPatientID.Value(),
+            Sex : vm.model.hdnPatientID.Value(),
+            Occupation : vm.model.hdnPatientID.Value(),
+            HxFrom : vm.model.hdnPatientID.Value(),
+            ReferredFrom : vm.model.hdnPatientID.Value(),
+            ReferredDoctor : vm.model.hdnPatientID.Value(),
+            Allergies : vm.model.hdnPatientID.Value(),
+            Medications : vm.model.hdnPatientID.Value(),
+            PrematureBirth : vm.model.hdnPatientID.Value()       
+        }
     }
 });

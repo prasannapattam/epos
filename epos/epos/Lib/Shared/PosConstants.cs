@@ -30,5 +30,12 @@ namespace epos.Lib.Shared
             SignOff = 2,
             Correct = 3
         }
+
+        public enum FieldType
+        {
+            Notes = 0,
+            Patient = 1,
+            Default = 2
+        }
     }
 }

@@ -24,6 +24,7 @@ namespace epos.Models
         public Field hdnColourType { get; set; }
 
         //Patient
+        public Field PatientNumber { get; set; }
         public Field Greeting { get; set; }
         public Field FirstName { get; set; }
         public Field MiddleName { get; set; }
@@ -330,6 +331,7 @@ namespace epos.Models
         public string Value { get; set; }
         public int ColourType { get; set; }
         public string LookUpFieldName { get; set; }
+        public int FieldType { get; set; }
     }
 }
 

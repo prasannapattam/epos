@@ -4,10 +4,10 @@
         <div class="row row-narrow title">
             <div class="small-8 columns col-narrow" data-bind = "text: model.HeaderText"></div>
             <div class="small-4 columns col-narrow text-right">
-                    <a href="#" class="button tiny selected" data-bind="click: defaultSave, css: { display_none: model.NotesType() !== constants.enum.notesType.Default, disabled: !window.isDirty() }"><i class="button-icon fi-check"></i>Save</a>
-                    <a href="#" class="button tiny selected" data-bind="click: save, css: { display_none: model.NotesType() !== constants.enum.notesType.New && model.NotesType() !== constants.enum.notesType.Saved, disabled: !window.isDirty() }"><i class="button-icon fi-check"></i>Save</a>
-                    <a href="#" class="button tiny selected" data-bind="click: correct, css: { display_none: model.NotesType() !== constants.enum.notesType.Correct, disabled: !window.isDirty() }"><i class="button-icon fi-clipboard-pencil"></i>Correct</a>
-                    <a href="#" class="button tiny selected" data-bind="click: signOff, css: { display_none: model.NotesType() !== constants.enum.notesType.New && model.NotesType() !== constants.enum.notesType.Saved, disabled: !window.isDirty() }"><i class="button-icon fi-clipboard-notes"></i>Sign off</a>
+                    <a href="#" class="button tiny selected" data-bind="click: defaultSave, css: { display_none: model.NotesType() !== constants.enum.notesType.Default, disabled: !session.isDirty() }"><i class="button-icon fi-check"></i>Save</a>
+                    <a href="#" class="button tiny selected" data-bind="click: save, css: { display_none: model.NotesType() !== constants.enum.notesType.New && model.NotesType() !== constants.enum.notesType.Saved, disabled: !session.isDirty() }"><i class="button-icon fi-check"></i>Save</a>
+                    <a href="#" class="button tiny selected" data-bind="click: correct, css: { display_none: model.NotesType() !== constants.enum.notesType.Correct, disabled: !session.isDirty() }"><i class="button-icon fi-clipboard-pencil"></i>Correct</a>
+                    <a href="#" class="button tiny selected" data-bind="click: signOff, css: { display_none: model.NotesType() !== constants.enum.notesType.New && model.NotesType() !== constants.enum.notesType.Saved, disabled: !session.isDirty() }"><i class="button-icon fi-clipboard-notes"></i>Sign off</a>
                     <a href="#" class="button tiny selected" data-bind="click: cancel"><i class="button-icon fi-x"></i>Cancel</a>
             </div>
         </div>
@@ -28,7 +28,7 @@
     <fieldset>
         <div class="row row-narrow">
             <div class="small-4 columns col-narrow">
-                <label>&nbsp;Default Name</label>
+                <label>Default Name</label>
                 <input type="text" data-bind="notesvalue: model.DefaultName" />
             </div>
             <div class="small-2 columns left col-narrow">
@@ -59,7 +59,7 @@
     <div class="row row-narrow">
         <div class="tiny-8 columns col-narrow">
             <div class="row full-width row-narrow">
-                <label>&nbsp;Patient Name</label>
+                <label>Patient Name</label>
             </div>
             <div class="row full-width row-narrow">
                 <div class="tiny-4 columns tight">
@@ -98,41 +98,46 @@
         </div>
     </div>
     <div class="row row-narrow">
-        <div class="tiny-8 columns col-narrow">
+        <div class="small-4 columns col-narrow">
             <div class="row full-width row-narrow">
-                <label>&nbsp;Hx From</label>
+                <label>Hx From</label>
             </div>
             <div class="row full-width row-narrow">
-                <div class="tiny-12 columns tight">
+                <div class="small-6 columns tight">
                     <select data-bind="notesselect: model.HxFromList"></select>
                 </div>
-                <div class="tiny-12 columns left tight">
+                <div class="small-6 columns left tight">
                     <input type="text" data-bind="notesvalue: model.HxFromOther, enable: model.HxFromList.Value() === undefined " />
                 </div>
             </div>
         </div>
-        <div class="tiny-6 columns col-narrow">
+        <div class="small-3 columns col-narrow">
+            <label>Ref'd By</label>
+            <input type="text" placeholder="" data-bind="notesvalue: model.Refd" />
+        </div>
+        <div class="small-3 columns col-narrow">
+            <label>&nbsp;</label>
             <div class="row full-width row-narrow">
-                <label>&nbsp;Ref'd By</label>
-            </div>
-            <div class="row full-width row-narrow">
-                <div class="tiny-12 columns tight">
-                    <input type="text" placeholder="" data-bind="notesvalue: model.Refd" />
-                </div>
                 <div class="tiny-2 columns tight">(Dr.</div>
-                <div class="tiny-9 columns left tight">
+                <div class="tiny-21 columns left tight">
                     <input type="text" data-bind="notesvalue: model.RefDoctor" />
                 </div>
                 <div class="tiny-1 columns tight">)</div>
             </div>
         </div>
-        <div class="tiny-6 columns left col-narrow">
+        <div class="small-2 columns col-narrow">&nbsp;</div>
+    </div> 
+    <div class="row row-narrow">
+        <div class="small-4 columns left col-narrow">
             <label>Allergies</label>
             <input type="text" placeholder="" data-bind="notesvalue: model.Allergies" />
         </div>
-        <div class="tiny-4 columns left col-narrow">
+        <div class="small-6 columns left col-narrow">
             <label>Grade Level/Occup</label>
             <input type="text" placeholder="" data-bind="notesvalue: model.Occupation" />
+        </div>
+        <div class="small-2 columns col-narrow text-right">
+            <a href="#" class="button tiny selected" data-bind="click: savePatient, css: { disabled: !session.isNotesPatientDirty() }"><i class="button-icon fi-check"></i>Save Patient</a>
         </div>
     </div>
     </fieldset>  

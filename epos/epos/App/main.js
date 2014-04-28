@@ -108,16 +108,8 @@ define(['durandal/system', 'durandal/app', 'durandal/viewLocator', 'durandal/com
     ko.bindingHandlers.notesvalue = {
         init: function (element, valueAccessor, allBindingsAccessor, data) {
             var field = valueAccessor();
-            field.focusctrl = ko.computed(function () { return field.ColourType() === 1 });
-            field.correctctrl = ko.computed(function () { return field.ColourType() === 2 });
-            var fieldInit = ko.toJSON(field);
-            field.isDirty = ko.computed(function () {
-                var fieldJSON = ko.toJSON(field);
-                if (window.trackDirty() && fieldInit !== fieldJSON)
-                    window.isDirty(true);
-                else
-                    fieldInit = fieldJSON;
-            });
+
+            AddNotesComputedFields(field);
 
             ko.applyBindingsToNode(element, {
                 value: field.Value,
@@ -136,17 +128,8 @@ define(['durandal/system', 'durandal/app', 'durandal/viewLocator', 'durandal/com
     ko.bindingHandlers.notesselect = {
         init: function (element, valueAccessor, allBindingsAccessor, data) {
             var field = valueAccessor();
-            field.focusctrl = ko.computed(function () { return field.ColourType() === 1 });
-            field.correctctrl = ko.computed(function () { return field.ColourType() === 2 });
-            var fieldInit = ko.toJSON(field);
-            field.isDirty = ko.computed(function () {
-                var fieldJSON = ko.toJSON(field);
-                if (window.trackDirty() && fieldInit !== fieldJSON)
-                    window.isDirty(true);
-                else
-                    fieldInit = fieldJSON;
-            });
 
+            AddNotesComputedFields(field);
 
             var lookupFieldName = field.LookUpFieldName();
             if (lookupFieldName !== null && lookupFieldName !== undefined) {
@@ -175,16 +158,8 @@ define(['durandal/system', 'durandal/app', 'durandal/viewLocator', 'durandal/com
             var field = valueAccessor();
             if (field.Value === undefined)
                 return;
-            field.focusctrl = ko.computed(function () { return field.ColourType() === 1 });
-            field.correctctrl = ko.computed(function () { return field.ColourType() === 2 });
-            var fieldInit = ko.toJSON(field);
-            field.isDirty = ko.computed(function () {
-                var fieldJSON = ko.toJSON(field);
-                if (window.trackDirty() && fieldInit !== fieldJSON)
-                    window.isDirty(true);
-                else
-                    fieldInit = fieldJSON;
-            });
+
+            AddNotesComputedFields(field);
 
             ko.applyBindingsToNode(element, {
                 datepicker: field.Value,
@@ -199,6 +174,23 @@ define(['durandal/system', 'durandal/app', 'durandal/viewLocator', 'durandal/com
             });
         }
     };
+
+    var AddNotesComputedFields = function (field) {
+        field.focusctrl = ko.computed(function () { return field.ColourType() === constants.enum.colourType.New });
+        field.correctctrl = ko.computed(function () { return field.ColourType() === constants.enum.colourType.Correct });
+        var fieldInit = ko.toJSON(field);
+        field.isDirty = ko.computed(function () {
+            var fieldJSON = ko.toJSON(field);
+            if (session.trackDirty() && fieldInit !== fieldJSON){
+                session.isDirty(true);
+                if (field.FieldType !== undefined && field.FieldType() === constants.enum.fieldType.Patient) {
+                    session.isNotesPatientDirty(true);
+                }
+            }
+            else
+                fieldInit = fieldJSON;
+        });
+    }
 
     app.start().then(function () {
         toastr.options.positionClass = 'toast-bottom-right';
