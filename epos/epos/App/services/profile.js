@@ -1,5 +1,5 @@
 ﻿define([], function () {
-    var userID = ko.observable();
+    var userID = ko.observable(1);
     var firstName = ko.observable();
     var lastName = ko.observable();
     var userName = ko.observable();

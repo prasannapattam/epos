@@ -262,8 +262,9 @@ namespace epos.Lib.Domain
 
         private string GetDefaultNotesText(int userID, PatientModel patient)
         {
-
-            return null;
+            int patientAge = (int) DateTime.Now.Subtract(patient.DateOfBirth.Value).Days / 30; //in months
+            bool prematureBirth = patient.PrematureBirth.Value && patientAge < 6;
+            return PatientRepository.ExamDefaultNotesText(userID, patientAge, prematureBirth);
         }
     }
 }
