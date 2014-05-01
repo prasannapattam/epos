@@ -18,14 +18,14 @@ namespace epos.Controllers
     public class NotesController : ApiController
     {
 
-        public AjaxModel<NotesModel> Get(int userID, int patientID, int? examID)
+        public AjaxModel<NotesModel> Get(string userName, int patientID, int? examID)
         {
             AjaxModel<NotesModel> ajax = new AjaxModel<NotesModel>() { Success = true };
 
             try
             {
                 NotesDomain domain = new NotesDomain();
-                ajax.Model = domain.GetNotes(userID, patientID, examID);
+                ajax.Model = domain.GetNotes(userName, patientID, examID);
 
             }
             catch (Exception exp)

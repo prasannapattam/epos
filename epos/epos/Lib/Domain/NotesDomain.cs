@@ -16,7 +16,7 @@ namespace epos.Lib.Domain
     {
         private string[] patientFields =  { "patientID", "hdnPatientID", "Greeting", "FirstName", "MiddleName", "LastName", "PatientName", "NickName", "DOB", "Sex", "PrematureBirth", "HxFrom", "RefDoctor", "Refd", "Allergies", "Occupation", "tbAge" };
 
-        public NotesModel GetNotes(int userID, int patientID, int? examID)
+        public NotesModel GetNotes(string userName, int patientID, int? examID)
         {
             PatientModel patient = PatientRepository.PatientGet(patientID, false);
 
@@ -26,7 +26,7 @@ namespace epos.Lib.Domain
             {
                 exam = new ExamModel();
                 //getting the defaults if exists
-                exam.ExamText = GetDefaultNotesText(userID, patient);
+                exam.ExamText = GetDefaultNotesText(userName, patient);
 
             }
 
@@ -260,11 +260,41 @@ namespace epos.Lib.Domain
 
         }
 
-        private string GetDefaultNotesText(int userID, PatientModel patient)
+        private string GetDefaultNotesText(string userName, PatientModel patient)
         {
             int patientAge = (int) DateTime.Now.Subtract(patient.DateOfBirth.Value).Days / 30; //in months
             bool prematureBirth = patient.PrematureBirth.Value && patientAge < 6;
-            return PatientRepository.ExamDefaultNotesText(userID, patientAge, prematureBirth);
+            string examText = PatientRepository.ExamDefaultNotesText(userName, patientAge, prematureBirth);
+
+            //replacing the special fields
+            examText = examText.Replace("[PatientName]", patient.PatientName);
+            examText = examText.Replace("[FirstName]", patient.FirstName);
+            examText = examText.Replace("[LastName]", patient.LastName);
+            //examText = examText.Replace("[Age]", patientAge);
+            examText = examText.Replace("[Sex]", patient.Sex);
+
+            return examText;
+        }
+
+        private string GetPatientAge(DateTime dob)
+        {
+                TimeSpan ts = DateTime.Now.Subtract(dob);
+                int totalDays = (int) ts.TotalDays;
+                int totalWeeks = totalDays / 7;
+                int totalMonths = totalDays / 30;
+                int totalYears = totalMonths / 12;
+
+                string age = string.Empty;
+                if (totalMonths <= 6)
+                    age = totalWeeks.ToString() + " weeks";
+                else if(totalWeeks < 12)
+                    age = totalMonths.ToString() + " months";
+                else if (totalYears <= 10)
+                    age = totalYears.ToString() + '.' + totalMonths.ToString() + " years";
+                else
+                    age = totalYears.ToString() + " years";
+
+                return age;
         }
     }
 }

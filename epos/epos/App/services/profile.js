@@ -2,7 +2,7 @@
     var userID = ko.observable(1);
     var firstName = ko.observable();
     var lastName = ko.observable();
-    var userName = ko.observable();
+    var userName = ko.observable('koty');
     var photoUrl = ko.observable();
     var isAuthenticated = ko.observable(true);
 
@@ -36,7 +36,7 @@
         else {
             this.photoUrl(utility.virtualDirectory + '/Data/' + data.PhotoUrl + '.jpg');
         }
-        this.isAuthenticated(true);
+        this.isAuthenticated(true); 
     };
 
     function logout() {

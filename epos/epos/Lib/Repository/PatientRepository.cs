@@ -229,12 +229,13 @@ namespace epos.Lib.Repository
             }
         }
 
-        public static string ExamDefaultNotesText(int userID, int patientAge, bool prematureBirth)
+        public static string ExamDefaultNotesText(string userName, int patientAge, bool prematureBirth)
         {
             using(var db = new PosEntities())
             {
                 var defaultQuery = from dbDefault in db.ExamDefaults
-                                   where dbDefault.DoctorUserID == userID
+                                   join dbUser in db.Users on dbDefault.DoctorUserID equals dbUser.UserID
+                                   where dbUser.UserName.ToLower() == userName.ToLower()
                                    && dbDefault.PrematureBirth == prematureBirth
                                    && dbDefault.AgeStart <= patientAge
                                    && dbDefault.AgeEnd >= patientAge

@@ -37,7 +37,7 @@
             });
         }
         else {
-            var getdata = { "userID": profile.userID(), "patientid": id, "examid": examid };
+            var getdata = { "userName": profile.userName(), "patientid": id, "examid": examid };
             return utility.httpGet('api/notes', getdata).then(function (data) {
                 if (data.Success === true) {
 
