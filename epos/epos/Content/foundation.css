@@ -4478,7 +4478,7 @@ textarea {
   input[type="time"][disabled],
   input[type="url"][disabled],
   textarea[disabled] {
-    background-color: #dddddd; }
+    background-color: #ffffff; }
 
 /* Adjust margin for form elements below */
 input[type="file"],
