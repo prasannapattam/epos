@@ -1,10 +1,10 @@
-﻿define([], function () {
+﻿define(['services/utility'], function (utility) {
     var userID = ko.observable(1);
     var firstName = ko.observable();
     var lastName = ko.observable();
     var userName = ko.observable('koty');
     var photoUrl = ko.observable();
-    var isAuthenticated = ko.observable(true);
+    var isAuthenticated = ko.observable(utility.isAuthenticated);
 
 
     var vm = {

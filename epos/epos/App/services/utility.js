@@ -1,10 +1,12 @@
 ﻿define(['plugins/http', 'plugins/dialog', 'viewmodels/messagebox'], function (http, dialog, messagebox) {
     var loading = ko.observable(false);
-    var virtualDirectory = '';
+    var virtualDirectory = window.virtualDirectory;
+    var isAuthenticated = window.userState;
     var vm =
         {
             loading: loading,
             virtualDirectory: virtualDirectory,
+            isAuthenticated: isAuthenticated,
             httpPost: httpPost,
             httpGet: httpGet,
             showMessage: showMessage

@@ -17,8 +17,10 @@
     </div>
 
     @Scripts.Render("~/scripts/libraries")
+    <script>
+        window.virtualDirectory = '@ViewBag.VirtualDirectory';
+        window.userState = @ViewBag.UserState;
+    </script>
     <script src="~/Scripts/require.js" data-main="@Url.Content("~/App/main")"></script>
-
-
 </body>
 </html>
