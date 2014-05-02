@@ -14,12 +14,17 @@
             <img class="loading" data-bind="attr: { src: utility.virtualDirectory + '/content/images/loading.gif' }" />
         </div>
         <div class="content">
-            <ul class="tabrow" data-bind="foreach: navigation.tabs">
-                <li data-bind="css: {selected: active }">
-                    <a data-bind="click: $root.navigation.activateTab, text: title"></a>
-                    <a class="tab-close" data-bind="click: $root.navigation.removeTab, css: { display_none: firstTab }">x</a>
-                </li>
-            </ul>
+            <div class="row tight">
+                <div class="small-12 columns tight app-header">Heading</div>
+                <div class="small-12 columns tight">
+                    <ul class="tabrow" data-bind="foreach: navigation.tabs">
+                        <li data-bind="css: {selected: active }">
+                            <a data-bind="click: $root.navigation.activateTab, text: title"></a>
+                            <a class="tab-close" data-bind="click: $root.navigation.removeTab, css: { display_none: firstTab }">x</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
         </div>
     </div>
     <div class="tight">

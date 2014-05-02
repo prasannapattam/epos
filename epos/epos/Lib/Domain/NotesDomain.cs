@@ -171,6 +171,7 @@ namespace epos.Lib.Domain
                     case XmlNodeType.Element:
                         fieldName = reader.Name;
                         fieldAttr = reader.GetAttribute("CustomColourType");
+                        fieldAttr = fieldAttr == "" ? "0" : fieldAttr;
                         break;
                     case XmlNodeType.Text:
                         fieldValue = reader.Value;

@@ -17,6 +17,11 @@ img.photo{
     width: 100px;
 }
 
+.app-header{
+    font-size: 20pt;
+    text-align: center;
+}
+
 body.main
 {
     font-size: 9pt !important;
@@ -64,7 +69,7 @@ div.top-header{
 }
 
 div.left-header{
-    width: 50px; 
+    width: 70px; 
     float: left; 
     padding: 0 0 0 5px;
 }
@@ -285,7 +290,7 @@ td.selected {
 }
 
 .content{
-    margin-left: 50px;
+    margin-left: 70px;
 }
 
 
@@ -296,7 +301,7 @@ td.selected {
 	overflow: hidden;
 	font-size: 12px;
 	font-family: verdana;
-    padding-top: 39px;
+    padding-top: 6px;
     margin: 0 0 0 0;
 }
 .tabrow li {
