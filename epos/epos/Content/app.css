@@ -17,6 +17,10 @@ img.photo{
     width: 100px;
 }
 
+.header-row{
+    padding-right: 100px !important;
+}
+
 .app-header{
     font-size: 20pt;
     text-align: center;
