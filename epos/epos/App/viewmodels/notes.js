@@ -141,12 +141,9 @@
     }
 
     function scrollToHeader(tag) {
-        //alert(tag);
-        //document.getElementById(tag).scrollIntoView(true);
         var scrollPosition = $("#" + tag).offset().top;
         var notesHeight = $("div.notes-header").height();
         $(window).scrollTop(scrollPosition - notesHeight);
-        alert(scrollPosition - notesHeight)
     }
     
     function addComputedProperties() {
@@ -187,19 +184,24 @@
             if (examDateMoment.isValid() === true && dobMoment.isValid() === true) {
                 var age = examDateMoment.diff(dobMoment);
                 var duration = moment.duration(age);
-                if (duration.asMonths() <= 6)
-                    age = parseInt(duration.asWeeks()) + ' weeks';
-                else if(duration.asMonths() < 12)
-                    age = duration.months() + ' months';
-                else if (duration.asYears() <= 10)
-                    age = duration.years() + '.' + duration.months() + ' years';
+                var totalDays = duration.asDays();
+                var totalWeeks = parseInt(totalDays / 7);
+                var totalMonths = parseInt(totalDays / 30);
+                var totalYears = parseInt(totalMonths / 12);
+                var months = totalMonths - (totalYears * 12);
+
+                var age = '';
+                if (totalMonths <= 6)
+                    age = totalWeeks + " weeks";
+                else if(totalWeeks < 12)
+                    age = totalMonths + " month-old";
+                else if (totalYears <= 10)
+                    age = totalYears + '.' + months + " year-old";
                 else
-                    age = duration.years() + ' years';
-                    
+                    age = totalYears + " year-old";
+
                 vm.model.tbAge.Value(age);
             }
-
-            return vm.model.ExamDate.Value() + '  ' + vm.model.DOB.Value(); //dummy return
         }, vm.model)
 
         vm.model.HxFromCalculation = ko.computed(function () {           
@@ -211,9 +213,75 @@
                 vm.model.HxFrom.Value(vm.model.HxFromList.Value());
             }
 
-            return vm.model.HxFromList.Value() + ' ' + vm.model.HxFromOther.Value();
         }, vm.model);
 
+        vm.model.CopyToCalculation = ko.computed(function () {
+            var refd = vm.model.Refd.Value();
+            var refDoctor = vm.model.RefDoctor.Value();
+
+            var copyTo = refd;
+
+            if (refDoctor !== "" && refd !== refDoctor){
+                if (refd === "")
+                    copyTo = refDoctor;
+                else
+                    copyTo += ', ' + refDoctor;
+            }
+
+            vm.model.CopyTo.Value(copyTo);
+        }, vm.model);
+
+        vm.model.SummaryCalculation = ko.computed(function () {
+            var summary = vm.model.Summary.Value();
+
+            //replacing the age
+            var oldAge = vm.model.Age.Value();
+            var newAge = vm.model.tbAge.Value();
+            if (oldAge !== newAge) {
+                summary = summary.replace(oldAge, newAge);
+                vm.model.Age.Value(newAge)
+            }
+               
+
+            var GAtext = vm.model.GA.Value();
+            var PCAtext = vm.model.PCA.Value();
+            var BirthWttext = vm.model.BirthWt.Value();
+
+            if (GAtext != "weeks")
+                summary = summary.replace("[GA]", GAtext);
+            if (PCAtext != "weeks")
+                summary = summary.replace("[PCA]", PCAtext);
+            if (BirthWttext != "")
+                summary = summary.replace("[BW]", BirthWttext);
+
+            if (vm.model.Summary.Value() !== summary)
+                vm.model.Summary.Value(summary);
+        }, vm.model);
+
+        vm.model.DiscussedCalculation = ko.computed(function () {
+            var discussed = "Discussed findings with " + vm.model.PatientName.Value();
+            
+            var hxFrom = vm.model.HxFrom.Value();
+            if (hxFrom !== "" && hxFrom != "patient")
+            {
+                var displaySex = '';
+                if (hxFrom.indexOf("patient and") >= 0) {
+                    hxFrom = hxFrom.replace("patient and", "").trim();
+                    if (vm.model.Sex.Value().toLowerCase() == 'female')
+                        displaySex += "her";
+                    else 
+                        displaySex += "his";
+                    discussed += " and " + displaySex + " " + hxFrom;
+                }
+                else {
+                    discussed += "'s " + hxFrom;
+                }
+
+            }
+            vm.model.Discussed.Value(discussed);
+        }, vm.model);
+
+        
     }
 
     function setOverrides() {
@@ -228,7 +296,9 @@
         delete vm.model.HxFromList;
         delete vm.model.HxFromOther;
         delete vm.model.HxFromCalculation;
-
+        delete vm.model.CopyToCalculation;
+        delete vm.model.SummaryCalculation;
+        delete vm.model.DiscussedCalculation;
     }
 
     function resetColour(item) {

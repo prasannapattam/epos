@@ -37,5 +37,11 @@ namespace epos.Lib.Shared
             Patient = 1,
             Default = 2
         }
+
+        public enum Sex
+        {
+            Male = 0,
+            Female = 1
+        }
     }
 }

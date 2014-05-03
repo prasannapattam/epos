@@ -175,6 +175,19 @@ define(['durandal/system', 'durandal/app', 'durandal/viewLocator', 'durandal/com
         }
     };
 
+    ko.bindingHandlers.notescheck = {
+        init: function (element, valueAccessor, allBindingsAccessor, data) {
+            var field = valueAccessor();
+
+            AddNotesComputedFields(field);
+
+            ko.applyBindingsToNode(element, {
+                checked: field.Value
+            });
+        }
+    };
+
+
     var AddNotesComputedFields = function (field) {
         field.focusctrl = ko.computed(function () { return field.ColourType() === constants.enum.colourType.New });
         field.correctctrl = ko.computed(function () { return field.ColourType() === constants.enum.colourType.Correct });

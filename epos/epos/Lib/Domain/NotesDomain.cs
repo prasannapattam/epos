@@ -27,16 +27,18 @@ namespace epos.Lib.Domain
                 exam = new ExamModel();
                 //getting the defaults if exists
                 exam.ExamText = GetDefaultNotesText(userName, patient);
-
             }
 
             PosConstants.NotesType notesType = GetNotesType(exam, examID);
 
             NotesModel notes = GetNotesFromXml(exam.ExamText, notesType);
 
-            SetOverrides(exam, notes, patientID);
-            if(notes.NotesType ==  PosConstants.NotesType.New)
+            SetIdDates(exam, notes, patientID);
+            if (notes.NotesType == PosConstants.NotesType.New)
+            {
                 SetPatientInfo(patient, notes);
+                //SetOverides(notes);
+            }
 
             return notes;
         }
@@ -82,7 +84,7 @@ namespace epos.Lib.Domain
             return notesType;
         }
 
-        private void SetOverrides(ExamModel exam, NotesModel notes, int patientID)
+        private void SetIdDates(ExamModel exam, NotesModel notes, int patientID)
         {
             if (notes.NotesType == PosConstants.NotesType.New)
                 exam.ExamID = 0;
@@ -95,6 +97,7 @@ namespace epos.Lib.Domain
             else
             {
                 notes.ExamDate = new Field() { Name = "ExamDate", Value = DateTime.Now.ToShortDateString() };
+                notes.LastExam = new Field() { Name = "LastExam", Value = exam.ExamDate.ToShortDateString() };
                 notes.hdnExamID = null;
             }
             //setting ExamDate & Correct Date
@@ -136,6 +139,7 @@ namespace epos.Lib.Domain
             SetPatientField(notes.Allergies, patient.Allergies);
             SetPatientField(notes.Occupation, patient.Occupation);
             notes.tbAge.ColourType = (int)PosConstants.ColourType.Normal;
+            //notes.Age.Value = GetPatientAge(patient.DateOfBirth.Value);
         }
 
         private void SetPatientField(Field field, string value)
@@ -264,15 +268,15 @@ namespace epos.Lib.Domain
         private string GetDefaultNotesText(string userName, PatientModel patient)
         {
             int patientAge = (int) DateTime.Now.Subtract(patient.DateOfBirth.Value).Days / 30; //in months
-            bool prematureBirth = patient.PrematureBirth.Value && patientAge < 6;
+            bool prematureBirth = patient.PrematureBirth != null && patient.PrematureBirth.Value && patientAge < 6;
             string examText = PatientRepository.ExamDefaultNotesText(userName, patientAge, prematureBirth);
 
             //replacing the special fields
             examText = examText.Replace("[PatientName]", patient.PatientName);
             examText = examText.Replace("[FirstName]", patient.FirstName);
             examText = examText.Replace("[LastName]", patient.LastName);
-            //examText = examText.Replace("[Age]", patientAge);
-            examText = examText.Replace("[Sex]", patient.Sex);
+            examText = examText.Replace("[Age]", GetPatientAge(patient.DateOfBirth.Value));
+            examText = examText.Replace("[Sex]", GetSex(patient.DateOfBirth.Value, patient.Sex));
 
             return examText;
         }
@@ -284,18 +288,114 @@ namespace epos.Lib.Domain
                 int totalWeeks = totalDays / 7;
                 int totalMonths = totalDays / 30;
                 int totalYears = totalMonths / 12;
+                int months = totalMonths - (totalYears * 12);
 
                 string age = string.Empty;
                 if (totalMonths <= 6)
                     age = totalWeeks.ToString() + " weeks";
-                else if(totalWeeks < 12)
-                    age = totalMonths.ToString() + " months";
+                else if (totalMonths < 12)
+                    age = totalMonths.ToString() + " month-old";
                 else if (totalYears <= 10)
-                    age = totalYears.ToString() + '.' + totalMonths.ToString() + " years";
+                    age = totalYears.ToString() + '.' + months.ToString() + " year-old";
                 else
-                    age = totalYears.ToString() + " years";
+                    age = totalYears.ToString() + " year-old";
 
                 return age;
+        }
+
+        private string GetSex(DateTime dob, string sex)
+        {
+            TimeSpan ts = DateTime.Now.Subtract(dob);
+            int totalDays = (int)ts.TotalDays;
+            int totalMonths = totalDays / 30;
+                int totalYears = totalMonths / 12;
+
+            string displaySex = string.Empty;
+            if (totalMonths <= 6)
+                displaySex = "gestation";
+            else if (totalYears <= 16)
+            {
+                if(sex.ToLower() == PosConstants.Sex.Female.ToString().ToLower())
+                    displaySex = "girl";
+                else
+                    displaySex = "boy";
+            }
+            else if (totalYears <= 24)
+            {
+                if(sex.ToLower() == PosConstants.Sex.Female.ToString().ToLower())
+                    displaySex = "young lady";
+                else
+                    displaySex = "young man";
+            }
+            else 
+            {
+                if (sex.ToLower() == PosConstants.Sex.Female.ToString().ToLower())
+                    displaySex = "lady";
+                else
+                    displaySex = "gentleman";
+            }
+
+
+            return displaySex;
+
+        }
+
+        public string Save(PosConstants.NotesSaveType saveType, NotesModel model)
+        {
+            string message = String.Empty;
+
+            ExamModel exam = new ExamModel()
+            {
+                ExamID = model.hdnExamID != null ? Convert.ToInt32(model.hdnExamID.Value) : 0,
+                ExamDate = Convert.ToDateTime(model.ExamDate.Value),
+                PatientID = Convert.ToInt32(model.hdnPatientID.Value),
+                UserName = model.User.Value,
+                SaveInd = 0,
+                LastUpdatedDate = DateTime.Now,
+                ExamCorrectDate = DateTime.Now,
+                CorrectExamID = null,
+            };
+            switch (saveType)
+            {
+                case PosConstants.NotesSaveType.Save:
+                    message = PosMessage.NotesSaveSuccessful;
+                    exam.ExamText = WebUtil.GetXml(model, false, null);
+                    exam.SaveInd = 1;
+                    break;
+                case PosConstants.NotesSaveType.SignOff:
+                    message = PosMessage.NotesSignOffSuccessful;
+                    exam.ExamText = WebUtil.GetXml(model, true, null);
+                    break;
+                case PosConstants.NotesSaveType.Correct:
+                    message = PosMessage.NotesCorrectSuccessful;
+                    exam.CorrectExamID = exam.ExamID;
+                    exam.ExamID = 0;
+                    //getting the original exam
+                    ExamModel orginalExam = PatientRepository.ExamGet(exam.PatientID, exam.CorrectExamID);
+                    Dictionary<string, string> dict = WebUtil.GetDictionary(orginalExam.ExamText, false);
+                    exam.ExamText = WebUtil.GetXml(model, true, dict);
+                    break;
+                default:
+                    message = String.Empty;
+                    break;
+            }
+
+            PatientRepository.ExamSave(exam);
+
+            //removing & creating print queue
+            if (saveType == PosConstants.NotesSaveType.Correct)
+            {
+                PosRepository.PrintQueueRemove(exam.CorrectExamID.Value);
+            }
+
+            if(saveType == PosConstants.NotesSaveType.SignOff || saveType == PosConstants.NotesSaveType.Correct)
+            {
+                PosRepository.PrintQueueAdd(new PrintQueueItem() { ExamID = exam.ExamID, UserName = exam.UserName, PrintExamNote = null });
+                if(model.ExamNoteTo.Value != "")
+                    PosRepository.PrintQueueAdd(new PrintQueueItem() { ExamID = exam.ExamID, UserName = exam.UserName, PrintExamNote = true });
+            }
+
+            return message;
         }
     }
 }

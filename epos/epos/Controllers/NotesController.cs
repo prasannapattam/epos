@@ -24,9 +24,7 @@ namespace epos.Controllers
 
             try
             {
-                NotesDomain domain = new NotesDomain();
-                ajax.Model = domain.GetNotes(userName, patientID, examID);
-
+                ajax.Model = new NotesDomain().GetNotes(userName, patientID, examID);
             }
             catch (Exception exp)
             {
@@ -41,58 +39,10 @@ namespace epos.Controllers
         public AjaxModel<string> Post([FromUri] int type, [FromBody] NotesModel model)
         {
             PosConstants.NotesSaveType saveType = (PosConstants.NotesSaveType) type;
-            string message;
             AjaxModel<string> ajax = new AjaxModel<string>() { Success = true, Model = PosMessage.Blank };
             try
             {
-                ExamModel exam = new ExamModel()
-                {
-                    ExamID = model.hdnExamID != null ? Convert.ToInt32(model.hdnExamID.Value) : 0,
-                    ExamDate = Convert.ToDateTime(model.ExamDate.Value),
-                    PatientID = Convert.ToInt32(model.hdnPatientID.Value),
-                    UserName = model.User.Value,
-                    SaveInd = 0,
-                    LastUpdatedDate = DateTime.Now,
-                    ExamCorrectDate = DateTime.Now,
-                    CorrectExamID = null,
-                };
-                switch (saveType)
-                {
-                    case PosConstants.NotesSaveType.Save:
-                        message = PosMessage.NotesSaveSuccessful;
-                        exam.ExamText = WebUtil.GetXml(model, false, null);
-                        exam.SaveInd = 1;
-                        break;
-                    case PosConstants.NotesSaveType.SignOff:
-                        message = PosMessage.NotesSignOffSuccessful;
-                        exam.ExamText = WebUtil.GetXml(model, true, null);
-                        break;
-                    case PosConstants.NotesSaveType.Correct:
-                        message = PosMessage.NotesCorrectSuccessful;
-                        exam.CorrectExamID = exam.ExamID;
-                        exam.ExamID = 0;
-                        //getting the original exam
-                        ExamModel orginalExam = PatientRepository.ExamGet(exam.PatientID, exam.CorrectExamID);
-                        Dictionary<string, string> dict = WebUtil.GetDictionary(orginalExam.ExamText, false);
-                        exam.ExamText = WebUtil.GetXml(model, true, dict);
-                        break;
-                    default:
-                        message = String.Empty;
-                        break;
-                }
-
-                PatientRepository.ExamSave(exam);
-
-                //removing & creating print queue
-                if (saveType == PosConstants.NotesSaveType.Correct)
-                {
-                    PosRepository.PrintQueueRemove(exam.CorrectExamID.Value);
-                }
-
-                PosRepository.PrintQueueAdd(new PrintQueueItem() { ExamID = exam.ExamID, UserName = exam.UserName, PrintExamNote = null });
-                PosRepository.PrintQueueAdd(new PrintQueueItem() { ExamID = exam.ExamID, UserName = exam.UserName, PrintExamNote = true });
-
-                ajax.Message = message;
+                ajax.Message = new NotesDomain().Save(saveType, model);
             }
             catch (Exception exp)
             {
