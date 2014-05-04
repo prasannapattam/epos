@@ -390,7 +390,8 @@ namespace epos.Lib.Domain
 
             if(saveType == PosConstants.NotesSaveType.SignOff || saveType == PosConstants.NotesSaveType.Correct)
             {
-                PosRepository.PrintQueueAdd(new PrintQueueItem() { ExamID = exam.ExamID, UserName = exam.UserName, PrintExamNote = null });
+                if(model.cbPrintQueue.Value == true.ToString())
+                    PosRepository.PrintQueueAdd(new PrintQueueItem() { ExamID = exam.ExamID, UserName = exam.UserName, PrintExamNote = null });
                 if(model.ExamNoteTo.Value != "")
                     PosRepository.PrintQueueAdd(new PrintQueueItem() { ExamID = exam.ExamID, UserName = exam.UserName, PrintExamNote = true });
             }

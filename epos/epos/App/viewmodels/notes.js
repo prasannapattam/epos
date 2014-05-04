@@ -7,6 +7,7 @@
         resetColour: resetColour,
         scrollToHeader: scrollToHeader,
         activate: activate,
+        canDeactivate: canDeactivate,
         canReuseForRoute: canReuseForRoute,
         attached: attached,
         compositionComplete: compositionComplete,
@@ -315,6 +316,7 @@
         if (session.isDirty()) {
             utility.showMessage('Are you sure you want cancel and loose all changes?', 'Notes').then(function (dialogResult) {
                 if (dialogResult === 'Yes') {
+                    session.isDirty(false);
                     router.navigateBack();
                 }
             });
@@ -348,6 +350,7 @@
             if (data.Success === true) {
                 toastr.info(data.Message);
                 router.navigateBack();
+                session.isDirty(false);
             }
             return data;
         });
@@ -381,6 +384,21 @@
                 session.isNotesPatientDirty(false);
             }
         });
+    }
 
+    function canDeactivate() {
+        if (session.isDirty()) {
+            return utility.showMessage('There are unsaved changes. Do you want to loose those changes?', 'Notes').then(function (dialogResult) {
+                if (dialogResult === 'Yes') {
+                    return true;
+                }
+                else {
+                    return false;
+                }
+            });
+        }
+        else {
+            return true;
+        }
     }
 });

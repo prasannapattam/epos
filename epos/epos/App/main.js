@@ -178,7 +178,10 @@ define(['durandal/system', 'durandal/app', 'durandal/viewLocator', 'durandal/com
     ko.bindingHandlers.notescheck = {
         init: function (element, valueAccessor, allBindingsAccessor, data) {
             var field = valueAccessor();
-
+            if (field.Value().toLowerCase() === "true")
+                field.Value(true);
+            else
+                field.Value(false);
             AddNotesComputedFields(field);
 
             ko.applyBindingsToNode(element, {
