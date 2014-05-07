@@ -72,6 +72,7 @@
     var moduleHideInd = ko.observable(true);
     var moduleAddInd = ko.observable(false);
     var detailEditInd = ko.observable(false);
+    var patientSearchInd = ko.observable(true);
     var detailHideInd = ko.computed(function () {
         return moduleHideInd() && !moduleAddInd();
     });
@@ -114,6 +115,7 @@
         detailEditInd: detailEditInd,
         detailHideInd: detailHideInd,
         moduleEditInd: moduleEditInd,
+        patientSearchInd: patientSearchInd,
         viewActivate: viewActivate,
         windowHeight: windowHeight,
         getThumbphoto: getThumbphoto,
@@ -147,6 +149,7 @@
 
         //setting the default values based on the module
         if (searchModule === constants.enum.module.patient) {
+            patientSearchInd(true);
             vm.module = patient;
             vm.model = patient.model;
             vm.title(patient.title);
@@ -157,6 +160,7 @@
             vm.detailTemplate(patientDetailTemplate);
         }
         else {
+            patientSearchInd(false);
             vm.module = user;
             vm.model = user.model;
             vm.title(user.title);

@@ -17,19 +17,19 @@ namespace epos.Controllers
 {
     public class PatientSearchController : ApiController
     {
-        public AjaxModel<List<PatientSearchResultModel>> Post([FromBody] string criteria)
+        public AjaxModel<List<SearchResultModel>> Post([FromBody] string criteria)
         {
-            AjaxModel<List<PatientSearchResultModel>> ajax = null;
+            AjaxModel<List<SearchResultModel>> ajax = null;
 
-            List<PatientSearchResultModel> result = PatientRepository.PatientSearch(criteria.Trim());
+            List<SearchResultModel> result = PatientRepository.PatientSearch(criteria.Trim());
 
             if (result.Count == 0)
             {
-                ajax = new AjaxModel<List<PatientSearchResultModel>>() { Success = false, Message = PosMessage.PatientSearchNoRecords, Model = null };
+                ajax = new AjaxModel<List<SearchResultModel>>() { Success = false, Message = PosMessage.PatientSearchNoRecords, Model = null };
             }
             else
             {
-                ajax = new AjaxModel<List<PatientSearchResultModel>>() { Success = true, Message = "", Model = result };
+                ajax = new AjaxModel<List<SearchResultModel>>() { Success = true, Message = "", Model = result };
             }
 
             return ajax;

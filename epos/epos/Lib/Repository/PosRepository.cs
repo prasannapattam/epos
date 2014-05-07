@@ -65,7 +65,7 @@ namespace epos.Lib.Repository
             }
         }
 
-        public static List<UserModel> UserSearch(string criteria)
+        public static List<SearchResultModel> UserSearch(string criteria)
         {
             string firstName = criteria;
             string lastName = criteria;
@@ -83,11 +83,10 @@ namespace epos.Lib.Repository
                                 where dbUser.FirstName.StartsWith(firstName)
                                 && dbUser.LastName.StartsWith(lastName)
                                 orderby dbUser.FirstName ascending
-                                select new UserModel
+                                select new SearchResultModel
                                 {
-                                    UserID = dbUser.UserID,
-                                    FirstName = dbUser.FirstName,
-                                    LastName = dbUser.LastName,
+                                    ID = dbUser.UserID,
+                                    FullName = dbUser.FirstName + " " + dbUser.LastName,
                                     UserName = dbUser.UserName,
                                     PhotoUrl = dbUser.PhotoUrl
                                 };
@@ -105,11 +104,10 @@ namespace epos.Lib.Repository
                                 || dbUser.FirstName.StartsWith(firstName)
                                 || dbUser.LastName.StartsWith(lastName)
                                 orderby dbUser.FirstName ascending
-                                select new UserModel
+                                select new SearchResultModel
                                 {
-                                    UserID = dbUser.UserID,
-                                    FirstName = dbUser.FirstName,
-                                    LastName = dbUser.LastName,
+                                    ID = dbUser.UserID,
+                                    FullName = dbUser.FirstName + " " + dbUser.LastName,
                                     UserName = dbUser.UserName,
                                     PhotoUrl = dbUser.PhotoUrl
                                 };

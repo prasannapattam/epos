@@ -10,7 +10,7 @@ namespace epos.Lib.Repository
 {
     public class PatientRepository
     {
-        public static List<PatientSearchResultModel> PatientSearch(string criteria)
+        public static List<SearchResultModel> PatientSearch(string criteria)
         {
             string patientNumber = criteria;
             string firstName = criteria;
@@ -28,9 +28,9 @@ namespace epos.Lib.Repository
                                 where dbPatient.FirstName.StartsWith(firstName)
                                 && dbPatient.LastName.StartsWith(lastName)
                                 orderby dbPatient.LastExamDate descending
-                                select new PatientSearchResultModel
+                                select new SearchResultModel
                                 {
-                                    PatientID = dbPatient.PatientID,
+                                    ID = dbPatient.PatientID,
                                     PatientNumber = dbPatient.PatientNumber,
                                     PatientName = dbPatient.FirstName + " " + dbPatient.LastName,
                                     DateOfBirth = dbPatient.DateOfBirth,
@@ -50,9 +50,9 @@ namespace epos.Lib.Repository
                                 || dbPatient.FirstName.StartsWith(firstName)
                                 || dbPatient.LastName.StartsWith(lastName)
                                 orderby dbPatient.LastExamDate descending
-                                select new PatientSearchResultModel
+                                select new SearchResultModel
                                 {
-                                    PatientID = dbPatient.PatientID,
+                                    ID = dbPatient.PatientID,
                                     PatientNumber = dbPatient.PatientNumber,
                                     PatientName = dbPatient.FirstName + " " + dbPatient.LastName,
                                     DateOfBirth = dbPatient.DateOfBirth,

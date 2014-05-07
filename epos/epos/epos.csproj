@@ -214,9 +214,9 @@
     <Compile Include="Models\NotesModel.cs" />
     <Compile Include="Models\PatientHistoryModel.cs" />
     <Compile Include="Models\PatientModel.cs" />
-    <Compile Include="Models\PatientSearchResultModel.cs" />
     <Compile Include="Models\PrintQueueModel.cs" />
     <Compile Include="Models\ProfileModel.cs" />
+    <Compile Include="Models\SearchResultModel.cs" />
     <Compile Include="Models\UserModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

@@ -11,19 +11,19 @@ namespace epos.Controllers
 {
     public class UserSearchController : ApiController
     {
-        public AjaxModel<List<UserModel>> Post([FromBody] string criteria)
+        public AjaxModel<List<SearchResultModel>> Post([FromBody] string criteria)
         {
-            AjaxModel<List<UserModel>> ajax = null;
+            AjaxModel<List<SearchResultModel>> ajax = null;
 
-            List<UserModel> result = PosRepository.UserSearch(criteria.Trim());
+            List<SearchResultModel> result = PosRepository.UserSearch(criteria.Trim());
 
             if (result.Count == 0)
             {
-                ajax = new AjaxModel<List<UserModel>>() { Success = false, Message = PosMessage.UserSearchNoRecords, Model = null };
+                ajax = new AjaxModel<List<SearchResultModel>>() { Success = false, Message = PosMessage.UserSearchNoRecords, Model = null };
             }
             else
             {
-                ajax = new AjaxModel<List<UserModel>>() { Success = true, Message = "", Model = result };
+                ajax = new AjaxModel<List<SearchResultModel>>() { Success = true, Message = "", Model = result };
             }
 
             return ajax;
