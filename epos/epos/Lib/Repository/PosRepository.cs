@@ -156,12 +156,6 @@ namespace epos.Lib.Repository
                 var dbUser = (from dbusr in db.Users where dbusr.UserID == user.UserID select dbusr).FirstOrDefault();
                 if (dbUser == null)
                 {
-                    //checking for unique patient number
-                    dbUser = (from dbusr in db.Users where dbusr.UserName == user.UserName select dbusr).FirstOrDefault();
-                    if (dbUser != null)
-                    {
-                        throw new ApplicationException(PosMessage.UserNameExists);
-                    }
                     dbUser = new User();
                     db.Users.Add(dbUser);
                 }
@@ -175,6 +169,18 @@ namespace epos.Lib.Repository
                     return true;
                 else
                     return false;
+            }
+        }
+
+        public static bool UserExists(UserModel user)
+        {
+            using(var db = new PosEntities())
+            {
+                var dbUser = (from dbusr in db.Users where dbusr.UserName.ToLower() == user.UserName.ToLower() && dbusr.UserID != user.UserID select dbusr.UserName).FirstOrDefault();
+                if (dbUser == null)
+                    return false;
+                else
+                    return true;
             }
         }
 

@@ -55,35 +55,44 @@ namespace epos.Controllers
                 model.PhotoUrl = provider.FormData["PhotoUrl"];
                 model.PhotoUrl = model.PhotoUrl == "" ? null : model.PhotoUrl;
 
-                if (provider.FileData.Count > 0)
+                //checking whether the user exists
+                if (PosRepository.UserExists(model))
                 {
-                    MultipartFileData fileData = provider.FileData[0];
-                    FileInfo fi = new FileInfo(fileData.LocalFileName);
-
-                    //getting the file saving path
-                    string clientFileName = fileData.Headers.ContentDisposition.FileName.Replace(@"""", "");
-                    if (clientFileName != "")
-                    {
-                        string clientExtension = clientFileName.Substring(clientFileName.LastIndexOf('.'));
-                        string serverFileName = fi.DirectoryName + @"\" + model.UserName + clientExtension;
-                        model.PhotoUrl = model.UserName;
-
-                        FileInfo fiOld = new FileInfo(serverFileName);
-                        if (fiOld.Exists)
-                            fiOld.Delete();
-                        //if (File.Exists())
-                        fi.MoveTo(serverFileName);
-                    }
-                    else
-                    {
-                        if(fi.Exists)
-                            fi.Delete();
-                    }
+                    ajax.Success = false;
+                    ajax.Message = PosMessage.UserNameExists;
                 }
+                else
+                {
+                    if (provider.FileData.Count > 0)
+                    {
+                        MultipartFileData fileData = provider.FileData[0];
+                        FileInfo fi = new FileInfo(fileData.LocalFileName);
 
-                PosRepository.UserSave(model);
+                        //getting the file saving path
+                        string clientFileName = fileData.Headers.ContentDisposition.FileName.Replace(@"""", "");
+                        if (clientFileName != "")
+                        {
+                            string clientExtension = clientFileName.Substring(clientFileName.LastIndexOf('.'));
+                            string serverFileName = fi.DirectoryName + @"\" + model.UserName + clientExtension;
+                            model.PhotoUrl = model.UserName;
+
+                            FileInfo fiOld = new FileInfo(serverFileName);
+                            if (fiOld.Exists)
+                                fiOld.Delete();
+                            //if (File.Exists())
+                            fi.MoveTo(serverFileName);
+                        }
+                        else
+                        {
+                            if (fi.Exists)
+                                fi.Delete();
+                        }
+                    }
+
+                    PosRepository.UserSave(model);
+                }
             }
-            catch(Exception exp)
+            catch (Exception exp)
             {
                 ajax.Success = false;
                 ajax.Message = exp.Message;
