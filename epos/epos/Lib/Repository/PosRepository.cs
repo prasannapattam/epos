@@ -77,6 +77,31 @@ namespace epos.Lib.Repository
             return isSaved;
         }
 
+        public static bool RemoveLookUpModel(int lookUpID)
+        {
+            bool isSaved = false;
+            try
+            {
+                using (var db = new PosEntities())
+                {
+                    var lookUpModel = db.LookUps.FirstOrDefault(l => l.LookupID == lookUpID);
+
+                    if (lookUpModel != null)
+                    {
+                        db.LookUps.Remove(lookUpModel);
+                        var result = db.SaveChanges();
+                        isSaved = result > 0 ? true : false;
+                    }
+                }
+            }
+            catch (Exception)
+            {
+                isSaved = false;
+                //throw;
+            }
+            return isSaved;
+        }
+
         public static List<SelectListItem> ExamLookUpGet()
         {
             using(var db = new PosEntities())
