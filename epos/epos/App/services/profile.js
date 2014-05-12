@@ -3,7 +3,7 @@
     var firstName = ko.observable();
     var lastName = ko.observable();
     var userName = ko.observable('prasanna');
-    var photoUrl = ko.observable('/data/prasanna.jpg');
+    var photoUrl = ko.observable('/pos/data/prasanna.jpg');
     var isAuthenticated = ko.observable(utility.isAuthenticated);
 
 
