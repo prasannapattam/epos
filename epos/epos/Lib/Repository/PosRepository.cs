@@ -49,6 +49,59 @@ namespace epos.Lib.Repository
             }
         }
 
+
+        
+        public static bool  AddLookUpModel(LookUpModel lookUpModel)
+        {
+            bool isSaved = false ;
+            try
+            {
+                using (var db = new PosEntities())
+                {
+                    if (lookUpModel != null)
+                    {
+                        db.LookUps.Add(new LookUp { FieldDescription = lookUpModel.FieldDescription, FieldName = lookUpModel.FieldName, FieldValue = lookUpModel.FieldValue, LookupID = lookUpModel.LookUpID, SortOrder = lookUpModel.SortOrder });
+                       var result =  db.SaveChanges();
+
+                        isSaved = result > 0 ?  true  : false  ;
+                    }
+                }
+                
+               
+            }
+            catch (Exception)
+            {
+                isSaved = false;
+                //throw;
+            }
+            return isSaved;
+        }
+
+        public static bool RemoveLookUpModel(int lookUpID)
+        {
+            bool isSaved = false;
+            try
+            {
+                using (var db = new PosEntities())
+                {
+                    var lookUpModel = db.LookUps.FirstOrDefault(l => l.LookupID == lookUpID);
+
+                    if (lookUpModel != null)
+                    {
+                        db.LookUps.Remove(lookUpModel);
+                        var result = db.SaveChanges();
+                        isSaved = result > 0 ? true : false;
+                    }
+                }
+            }
+            catch (Exception)
+            {
+                isSaved = false;
+                //throw;
+            }
+            return isSaved;
+        }
+
         public static List<SelectListItem> ExamLookUpGet()
         {
             using(var db = new PosEntities())
