@@ -1,9 +1,11 @@
 ﻿define(['plugins/router', 'services/profile'], function (router, profile) {
 
     var model;
+    var doctors;
 
     var vm = {
         model: model,
+        doctors: doctors,
         resetColour: resetColour,
         scrollToHeader: scrollToHeader,
         activate: activate,
@@ -31,7 +33,8 @@
             var getdata = { "doctorUserID": id, "examDefaultID": examid };
             return utility.httpGet('api/examdefault', getdata).then(function (data) {
                 if (data.Success === true) {
-                    vm.model = ko.viewmodel.fromModel(data.Model);
+                    vm.model = ko.viewmodel.fromModel(data.Model.Notes);
+                    vm.doctors = ko.viewmodel.fromModel(data.Model.Doctors);
                     addComputedProperties();
                 }
 
@@ -43,21 +46,24 @@
             return utility.httpGet('api/notes', getdata).then(function (data) {
                 if (data.Success === true) {
 
-                    data.Model.HxFromList = {
+                    var model = data.Model.Notes;
+                    model.HxFromList = {
                         Name: 'HxFromList',
-                        Value: data.Model.HxFrom.Value,
-                        LookUpFieldName: data.Model.HxFrom.LookUpFieldName,
-                        ColourType: data.Model.HxFrom.ColourType
+                        Value: model.HxFrom.Value,
+                        LookUpFieldName: model.HxFrom.LookUpFieldName,
+                        ColourType: model.HxFrom.ColourType
                     };
 
-                    data.Model.HxFromOther = {
+                    model.HxFromOther = {
                         Name: 'HxFromOther',
-                        Value: data.Model.HxFrom.Value,
-                        LookUpFieldName: data.Model.HxFrom.LookUpFieldName,
-                        ColourType: data.Model.HxFrom.ColourType
+                        Value: model.HxFrom.Value,
+                        LookUpFieldName: model.HxFrom.LookUpFieldName,
+                        ColourType: model.HxFrom.ColourType
                     }
 
-                    vm.model = ko.viewmodel.fromModel(data.Model);
+                    vm.model = ko.viewmodel.fromModel(model);
+                    vm.doctors = ko.viewmodel.fromModel(data.Model.Doctors);
+                    window.autoComplete = data.Model.AutoComplete;
                     addComputedProperties();
                     setOverrides();
                 }
@@ -403,7 +409,16 @@
         }
     }
 
-    function doctorChange() {
-        alert('doctor change')
+    function doctorChange(item) {
+        //var getdata = { "userName": item.Value()};
+        //return utility.httpGet('api/examdefault', getdata).then(function (data) {
+        //    if (data.Success === true) {
+        //        vm.model = ko.viewmodel.fromModel(data.Model.Notes);
+        //        vm.doctors = ko.viewmodel.fromModel(data.Model.Doctors);
+        //        addComputedProperties();
+        //    }
+
+        //    return data;
+        //});
     }
 });

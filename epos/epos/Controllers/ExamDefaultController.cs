@@ -14,9 +14,9 @@ namespace epos.Controllers
 {
     public class ExamDefaultController : ApiController
     {
-        public AjaxModel<NotesModel> Get(int doctorUserID, int? examDefaultID)
+		public AjaxModel<NotesViewModel> Get(int doctorUserID, int? examDefaultID)
         {
-            AjaxModel<NotesModel> ajax = new AjaxModel<NotesModel>() { Success = true };
+		AjaxModel<NotesViewModel> ajax = new AjaxModel<NotesViewModel>() { Success = true };
 
             try
             {

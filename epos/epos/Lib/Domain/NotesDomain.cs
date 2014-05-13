@@ -16,7 +16,7 @@ namespace epos.Lib.Domain
     {
         private string[] patientFields =  { "patientID", "hdnPatientID", "Greeting", "FirstName", "MiddleName", "LastName", "PatientName", "NickName", "DOB", "Sex", "PrematureBirth", "HxFrom", "RefDoctor", "Refd", "Allergies", "Occupation", "tbAge" };
 
-        public NotesModel GetNotes(string userName, int patientID, int? examID)
+        public NotesViewModel GetNotes(string userName, int patientID, int? examID)
         {
             PatientModel patient = PatientRepository.PatientGet(patientID, false);
 
@@ -31,7 +31,8 @@ namespace epos.Lib.Domain
 
             PosConstants.NotesType notesType = GetNotesType(exam, examID);
 
-            NotesModel notes = GetNotesFromXml(exam.ExamText, notesType);
+			NotesViewModel notesVM = GetNotesFromXml(exam.ExamText, notesType, userName);
+			NotesModel notes = notesVM.Notes;
 
             SetIdDates(exam, notes, patientID);
             if (notes.NotesType == PosConstants.NotesType.New)
@@ -40,14 +41,15 @@ namespace epos.Lib.Domain
                 //SetOverides(notes);
             }
 
-            return notes;
+			return notesVM;
         }
 
-        public NotesModel GetDefaultNotes(int doctorUserID, int? examDefaultID)
+        public NotesViewModel GetDefaultNotes(int doctorUserID, int? examDefaultID)
         {
             ExamDefaultModel examDefault = PatientRepository.ExamDefaultGet(examDefaultID.Value);
 
-            NotesModel notes = GetNotesFromXml(examDefault.ExamText, PosConstants.NotesType.Default);
+			NotesViewModel notesVM = GetNotesFromXml(examDefault.ExamText, PosConstants.NotesType.Default, string.Empty);
+			NotesModel notes = notesVM.Notes;
 
             notes.hdnExamDefaultID = new Field() { Name = "hdnExamDefaultID", Value = examDefault.ExamDefaultID.ToString() };
             notes.DefaultName = new Field() { Name = "DefaultName", Value = examDefault.DefaultName };
@@ -56,7 +58,7 @@ namespace epos.Lib.Domain
             notes.PrematureBirth = new Field() { Name = "PrematureBirth", Value = examDefault.PrematureBirth.ToString(), LookUpFieldName = "Premature" };
             notes.DoctorName = new Field() { Name = "DoctorName", Value = examDefault.DoctorName };
 
-            return notes;
+			return notesVM;
         }
 
         private PosConstants.NotesType GetNotesType(ExamModel exam, int? examID)
@@ -149,11 +151,12 @@ namespace epos.Lib.Domain
             field.FieldType = (int)PosConstants.FieldType.Patient;
         }
 
-        private NotesModel GetNotesFromXml(string examText, PosConstants.NotesType notesType)
+        private NotesViewModel GetNotesFromXml(string examText, PosConstants.NotesType notesType, string userName)
         {
-            NotesModel notes = GetBlankNotes();
+			NotesViewModel notesVM = GetBlankNotes(userName);
+			NotesModel notes = notesVM.Notes;
             if (examText == null)
-                return notes;
+				return notesVM;
 
             notes.NotesType = notesType;
 
@@ -202,13 +205,16 @@ namespace epos.Lib.Domain
             stringReader.Close();
             stringReader.Dispose();
 
-            return notes;
+			return notesVM;
         }
 
-        private NotesModel GetBlankNotes()
+        private NotesViewModel GetBlankNotes(string userName)
         {
+			NotesViewModel notesVM = new NotesViewModel();
             NotesModel notes = new NotesModel() { NotesType = PosConstants.NotesType.New };
-            notes.Doctors = PosRepository.DoctorsGet();
+			notesVM.Notes = notes;
+			notesVM.Doctors = PosRepository.DoctorsGet();
+			notesVM.AutoComplete = PosRepository.AutoCorrectGet(userName);
             List<SelectListItem> examLookUp = PosRepository.ExamLookUpGet();
 
             PropertyInfo[] notesFields = notes.GetType().GetProperties();
@@ -217,7 +223,7 @@ namespace epos.Lib.Domain
                 SetProperty(notes, pi, pi.Name, "", (int)PosConstants.ColourType.Normal, examLookUp);
             }
 
-            return notes;
+			return notesVM;
         }
 
         private void SetProperty(NotesModel notes, PropertyInfo pi, string fieldName, string fieldValue, int colourType, List<SelectListItem> examLookUp)

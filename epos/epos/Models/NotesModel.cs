@@ -322,8 +322,6 @@ namespace epos.Models
         public PosConstants.NotesType NotesType { get; set; }
         public Field PatientName { get; set; }
 
-        //dropdowns
-        public List<SelectListItem> Doctors { get; set; }
     }
 
     public class Field

@@ -48,8 +48,6 @@ namespace epos.Lib.Repository
                 return query.ToList();
             }
         }
-
-
         
         public static bool  AddLookUpModel(LookUpModel lookUpModel)
         {
@@ -317,6 +315,15 @@ namespace epos.Lib.Repository
                 db.SaveChanges();
             }
         }
+
+		public static string[] AutoCorrectGet(string userName)
+		{
+			using(var db = new PosEntities())
+			{
+				var query = from auto in db.AutoCorrects where auto.UserName.ToLower() == userName.ToLower() select auto.Name + " - " + auto.Value;
+				return query.ToArray();
+			}
+		}
 
     }
 }
