@@ -16,7 +16,8 @@
         save: save,
         defaultSave: defaultSave,
         cancel: cancel,
-        savePatient: savePatient
+        savePatient: savePatient,
+        doctorChange: doctorChange
 };
 
     return vm;
@@ -400,5 +401,9 @@
         else {
             return true;
         }
+    }
+
+    function doctorChange() {
+        alert('doctor change')
     }
 });

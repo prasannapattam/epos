@@ -265,6 +265,7 @@
     <Content Include="Content\Images\texture.png" />
     <Content Include="Content\Images\username-icon.jpg" />
     <Content Include="Content\Images\WordImage.jpg" />
+    <Content Include="Content\jquery.textcomplete.css" />
     <Content Include="Content\normalize.css" />
     <Content Include="Content\toastr.css" />
     <Content Include="Data\NoPhoto.jpg" />
@@ -317,6 +318,7 @@
     <Content Include="Scripts\foundation\foundation.topbar.js" />
     <Content Include="Scripts\jquery-2.0.3.js" />
     <Content Include="Scripts\jquery-2.1.0.min.js" />
+    <Content Include="Scripts\jquery.textcomplete.js" />
     <Content Include="Scripts\knockout-3.0.0.js" />
     <Content Include="Scripts\knockout-3.1.0.js" />
     <Content Include="Scripts\knockout.validation.js" />

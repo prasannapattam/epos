@@ -1,5 +1,4 @@
 ﻿<div>
-    <!--http://tech.pro/blog/1863/10-knockout-binding-handlers-i-don-t-want-to-live-without-->   
     <div class="full-width notes-header">
         <div class="row row-narrow title">
             <div class="small-8 columns col-narrow" data-bind = "text: model.HeaderText"></div>
@@ -53,7 +52,7 @@
         <div class="tiny-16 columns">&nbsp;</div>
         <div class="tiny-3 columns tight text-right"><br />Doctor:</div>
         <div class="tiny-5 columns right col-narrow">
-            <select data-bind="options: model.Doctors, optionsValue: 'Value' , optionsText:'Text', value: model.User.Value, optionsCaption: ''"></select>
+            <select data-bind="options: model.Doctors, optionsValue: 'Value' , optionsText:'Text', value: model.User.Value, optionsCaption: '', event: { change: doctorChange }"></select>
         </div>
     </div>
     <div class="row row-narrow">

@@ -122,6 +122,23 @@ define(['durandal/system', 'durandal/app', 'durandal/viewLocator', 'durandal/com
                     } 
                 }
             });
+
+            $(element).textcomplete([
+                { // tech companies
+                    words: ['app-apple', '1abt-apple1', '.abbc-apple2', 'apple3', 'apple4', 'apple5', 'google', 'facebook', 'github'],
+                    match: /\b(\w{2,})$/,
+                    search: function (term, callback) {
+                        callback($.map(this.words, function (word) {
+                            return word.indexOf(term) === 0 ? word : null;
+                        }));
+                    },
+                    index: 1,
+                    replace: function (word) {
+                        return word + ' ';
+                    }
+                }
+            ]);
+
         }
     };
 

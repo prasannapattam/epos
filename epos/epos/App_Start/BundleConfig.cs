@@ -20,8 +20,9 @@ namespace epos.App_Start
                     .Include("~/scripts/modernizr-2.7.1.js")
                     .Include("~/scripts/foundation/foundation.js")
                     .IncludeDirectory("~/scripts/foundation", "*.js")
-                    .Include("~/scripts/moment-with-langs.js")
-                );
+					.Include("~/scripts/moment-with-langs.js")
+					.Include("~/scripts/jquery.textcomplete.js")
+				);
 
             bundles.Add(
                 new StyleBundle("~/content/css")
@@ -31,8 +32,9 @@ namespace epos.App_Start
                     .Include("~/content/foundation-datepicker.css")
                     .Include("~/content/durandal.css")
                     .Include("~/content/toastr.css")
-                    .Include("~/content/app.css")
-                );
+					.Include("~/content/jquery.textcomplete.css")
+					.Include("~/content/app.css")
+				);
         }
     }
 }
