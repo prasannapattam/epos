@@ -410,6 +410,7 @@
     }
 
     function doctorChange(item) {
+       
         //var getdata = { "userName": item.Value()};
         //return utility.httpGet('api/examdefault', getdata).then(function (data) {
         //    if (data.Success === true) {
