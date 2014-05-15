@@ -33,6 +33,7 @@
 
         notespatientid = id;
         notesexamid = examid;
+        vm.model = undefined;
 
         if (parseInt(notestype) === constants.enum.notesType.Default) {
             var getdata = { "doctorUserID": id, "examDefaultID": examid };
@@ -364,7 +365,7 @@
     }
 
     function saveNotes(saveType) {
-        if (!session.isDirty())
+        if (!session.isDirty() || !validateNotes())
             return;
         deleteComputedProperties();
         return utility.httpPost('api/notes?type=' + saveType.toString(), vm.model).then(function (data) {
@@ -376,6 +377,37 @@
             return data;
         });
     }
+
+    function validateNotes() {
+        var ret = CheckNoPref();
+
+        if (ret) {
+            if ((vm.model.SLE.Value() === true || vm.model.SLE.Value() === true) && vm.model.Dilate3.Value() !== undefined)
+                ret = true;
+            else {
+                toastr.error('SLE/Pen-light options and dilated options are required');
+                ret = false;
+            }
+        }
+
+        return ret;
+    }
+
+    function CheckNoPref() {
+        var noprefchecked = vm.model.NoPref.Value();
+        if (noprefchecked) {
+            var od = vm.model.VAscOD1.Value() + ' ' + vm.model.VAscOD2.Value();
+            var os = vm.model.DistOS1.Value() + ' ' + vm.model.DistOS2.Value();
+
+            if (od != os) {
+                toastr.error('VA sc Dist OD and OS should be equal when No Pref checkbox is checked');
+                return false;
+            }
+        }
+
+        return true;
+    }
+
 
     function savePatient() {
         if (!session.isNotesPatientDirty())
