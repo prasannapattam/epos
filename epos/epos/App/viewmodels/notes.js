@@ -409,17 +409,15 @@
         }
     }
 
-    function doctorChange(item) {
+    function doctorChange() {
        
-        //var getdata = { "userName": item.Value()};
-        //return utility.httpGet('api/examdefault', getdata).then(function (data) {
-        //    if (data.Success === true) {
-        //        vm.model = ko.viewmodel.fromModel(data.Model.Notes);
-        //        vm.doctors = ko.viewmodel.fromModel(data.Model.Doctors);
-        //        addComputedProperties();
-        //    }
+        var getdata = { "userName": vm.model.User.Value() };
+        return utility.httpGet('api/notesautocomplete', getdata).then(function (data) {
+            if (data.Success === true) {
+                window.autoComplete = data.Model;
+            }
 
-        //    return data;
-        //});
+            return data;
+        });
     }
 });

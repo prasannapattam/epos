@@ -13,21 +13,21 @@ namespace epos.Controllers
     {
 		public AjaxModel<string[]> Get(string userName)
 		{
-		AjaxModel<string[]> ajax = new AjaxModel<string[]>() { Success = true };
+            AjaxModel<string[]> ajax = new AjaxModel<string[]>() { Success = true };
 
-			try
-				{
-				ajax.Model = PosRepository.AutoCorrectGet(userName);
-				}
-			catch (Exception exp)
-				{
-				ajax.Success = false;
-				ajax.Message = exp.Message;
-				ajax.Model = null;
-				}
+            try
+            {
+                ajax.Model = PosRepository.AutoCorrectGet(userName);
+            }
+            catch (Exception exp)
+            {
+                ajax.Success = false;
+                ajax.Message = exp.Message;
+                ajax.Model = null;
+            }
 
-			return ajax;
-		}
+            return ajax;
+        }
 
 	}
 }
