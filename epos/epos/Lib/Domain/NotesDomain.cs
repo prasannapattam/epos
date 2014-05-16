@@ -20,6 +20,8 @@ namespace epos.Lib.Domain
         {
             PatientModel patient = PatientRepository.PatientGet(patientID, false);
 
+            bool defaultNotes = false;
+
             //get the last examid or the passed in exam id
             ExamModel exam = PatientRepository.ExamGet(patientID, examID);
             if (exam == null)
@@ -27,6 +29,7 @@ namespace epos.Lib.Domain
                 exam = new ExamModel();
                 //getting the defaults if exists
                 exam.ExamText = GetDefaultNotesText(userName, patient);
+                defaultNotes = true;
             }
 
             PosConstants.NotesType notesType = GetNotesType(exam, examID);
@@ -35,10 +38,16 @@ namespace epos.Lib.Domain
 			NotesModel notes = notesVM.Notes;
 
             SetIdDates(exam, notes, patientID);
+
+            if (defaultNotes)
+                notes.DefaultInd = true;
+            else
+                notes.DefaultInd = false;
             if (notes.NotesType == PosConstants.NotesType.New)
             {
                 SetPatientInfo(patient, notes);
                 //SetOverides(notes);
+                notes.User.Value = userName;
             }
 
 			return notesVM;
@@ -141,7 +150,6 @@ namespace epos.Lib.Domain
             SetPatientField(notes.Allergies, patient.Allergies);
             SetPatientField(notes.Occupation, patient.Occupation);
             notes.tbAge.ColourType = (int)PosConstants.ColourType.Normal;
-            //notes.Age.Value = GetPatientAge(patient.DateOfBirth.Value);
         }
 
         private void SetPatientField(Field field, string value)
@@ -278,12 +286,14 @@ namespace epos.Lib.Domain
             string examText = PatientRepository.ExamDefaultNotesText(userName, patientAge, prematureBirth);
 
             //replacing the special fields
-            examText = examText.Replace("[PatientName]", patient.PatientName);
-            examText = examText.Replace("[FirstName]", patient.FirstName);
-            examText = examText.Replace("[LastName]", patient.LastName);
-            examText = examText.Replace("[Age]", GetPatientAge(patient.DateOfBirth.Value));
-            examText = examText.Replace("[Sex]", GetSex(patient.DateOfBirth.Value, patient.Sex));
-
+            if (examText != null)
+            {
+                examText = examText.Replace("[PatientName]", patient.PatientName);
+                examText = examText.Replace("[FirstName]", patient.FirstName);
+                examText = examText.Replace("[LastName]", patient.LastName);
+                examText = examText.Replace("[Age]", GetPatientAge(patient.DateOfBirth.Value));
+                examText = examText.Replace("[Sex]", GetSex(patient.DateOfBirth.Value, patient.Sex));
+            }
             return examText;
         }
 

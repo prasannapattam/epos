@@ -319,9 +319,10 @@ namespace epos.Models
         public Field ExamDate { get; set; }
         public Field ExamCorrectDate { get; set; }
         public Field ExamSaveDate { get; set; }
-        public PosConstants.NotesType NotesType { get; set; }
         public Field PatientName { get; set; }
 
+        public PosConstants.NotesType NotesType { get; set; }
+        public bool DefaultInd { get; set; }
     }
 
     public class Field

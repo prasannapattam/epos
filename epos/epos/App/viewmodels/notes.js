@@ -1,7 +1,9 @@
 ﻿define(['plugins/router', 'services/profile'], function (router, profile) {
 
-    var model;
+    var model
     var doctors;
+    var notespatientid;
+    var notesexamid;
 
     var vm = {
         model: model,
@@ -29,6 +31,9 @@
         session.isNotesPatientDirty(false);
         session.trackDirty(false);
 
+        notespatientid = id;
+        notesexamid = examid;
+
         if (parseInt(notestype) === constants.enum.notesType.Default) {
             var getdata = { "doctorUserID": id, "examDefaultID": examid };
             return utility.httpGet('api/examdefault', getdata).then(function (data) {
@@ -42,37 +47,45 @@
             });
         }
         else {
-            var getdata = { "userName": profile.userName(), "patientid": id, "examid": examid };
-            return utility.httpGet('api/notes', getdata).then(function (data) {
-                if (data.Success === true) {
-
-                    var model = data.Model.Notes;
-                    model.HxFromList = {
-                        Name: 'HxFromList',
-                        Value: model.HxFrom.Value,
-                        LookUpFieldName: model.HxFrom.LookUpFieldName,
-                        ColourType: model.HxFrom.ColourType
-                    };
-
-                    model.HxFromOther = {
-                        Name: 'HxFromOther',
-                        Value: model.HxFrom.Value,
-                        LookUpFieldName: model.HxFrom.LookUpFieldName,
-                        ColourType: model.HxFrom.ColourType
-                    }
-
-                    vm.model = ko.viewmodel.fromModel(model);
-                    vm.doctors = ko.viewmodel.fromModel(data.Model.Doctors);
-                    window.autoComplete = data.Model.AutoComplete;
-                    addComputedProperties();
-                    setOverrides();
-                }
-
-                return data;
-            });
+            return getNotes(profile.userName());
         }
 
     };
+
+    function getNotes(doctorUserName) {
+        var getdata = { "userName": doctorUserName, "patientid": notespatientid, "examid": notesexamid };
+        return utility.httpGet('api/notes', getdata).then(function (data) {
+            if (data.Success === true) {
+
+                var model = data.Model.Notes;
+                model.HxFromList = {
+                    Name: 'HxFromList',
+                    Value: model.HxFrom.Value,
+                    LookUpFieldName: model.HxFrom.LookUpFieldName,
+                    ColourType: model.HxFrom.ColourType
+                };
+
+                model.HxFromOther = {
+                    Name: 'HxFromOther',
+                    Value: model.HxFrom.Value,
+                    LookUpFieldName: model.HxFrom.LookUpFieldName,
+                    ColourType: model.HxFrom.ColourType
+                }
+
+                if (vm.model !== undefined)
+                    ko.viewmodel.updateFromModel(vm.model, model);
+                else
+                    vm.model = ko.viewmodel.fromModel(model);
+                vm.doctors = ko.viewmodel.fromModel(data.Model.Doctors);
+                window.autoComplete = data.Model.AutoComplete;
+                addComputedProperties();
+                setOverrides();
+            }
+
+            return data;
+        });
+
+    }
 
     function canReuseForRoute() {
         return false;
@@ -246,7 +259,8 @@
             var oldAge = vm.model.Age.Value();
             var newAge = vm.model.tbAge.Value();
             if (oldAge !== newAge) {
-                summary = summary.replace(oldAge, newAge);
+                if (oldAge !== "")
+                    summary = summary.replace(oldAge, newAge);
                 vm.model.Age.Value(newAge)
             }
                
@@ -293,9 +307,9 @@
     }
 
     function setOverrides() {
-        if (profile.userName() !== undefined) {
-            vm.model.User.Value = profile.userName;
-        }
+        //if (profile.userName() !== undefined) {
+        //    vm.model.User.Value = profile.userName;
+        //}
     }
 
     function deleteComputedProperties() {
@@ -410,14 +424,31 @@
     }
 
     function doctorChange() {
-       
-        var getdata = { "userName": vm.model.User.Value() };
-        return utility.httpGet('api/notesautocomplete', getdata).then(function (data) {
+        var doctorUserName = vm.model.User.Value();
+        if (vm.model.DefaultInd() === true) {
+            utility.showMessage('Do you want to loose your changes and load defaults for ' + doctorUserName + ' ?', 'Defaults').then(function (dialogResult) {
+                if (dialogResult === 'Yes') {
+                    session.isDirty(false);
+                    session.isNotesPatientDirty(false);
+                    getNotes(doctorUserName);
+                }
+                else {
+                    getAutoComplete(doctorUserName)
+                }
+            });
+        }
+        else
+        {
+            getAutoComplete(doctorUserName)
+        }
+    }
+
+    function getAutoComplete(doctorUserName) {
+        var getdata = { "userName": doctorUserName };
+        utility.httpGet('api/notesautocomplete', getdata).then(function (data) {
             if (data.Success === true) {
                 window.autoComplete = data.Model;
             }
-
-            return data;
         });
     }
 });
