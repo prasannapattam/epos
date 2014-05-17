@@ -652,10 +652,6 @@ hr{
     width: 24px;
 }
 
-/*.button.disabled {
-    background-color: grey;
+.small-font{
+    font-size: 0.75em;
 }
-.button.disabled:hover {
-    background-color: grey;
-}
-*/

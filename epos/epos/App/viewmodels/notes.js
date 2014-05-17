@@ -304,7 +304,9 @@
             vm.model.Discussed.Value(discussed);
         }, vm.model);
 
-        
+        vm.model.PopulateRxGivenCalculation = ko.computed(function () {
+
+        }, vm.model)
     }
 
     function setOverrides() {
