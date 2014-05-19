@@ -4,6 +4,7 @@
     var doctors;
     var notespatientid;
     var notesexamid;
+    var pageloaded = false;
 
     var vm = {
         model: model,
@@ -33,6 +34,7 @@
 
         notespatientid = id;
         notesexamid = examid;
+        pageloaded = false;
         vm.model = undefined;
 
         if (parseInt(notestype) === constants.enum.notesType.Default) {
@@ -98,6 +100,7 @@
     }
     function compositionComplete() {
         session.trackDirty(true);
+        pageloaded = true;
         var notesHeaderDefaultOffset = $("div.notes-header").offset().top;
         var infoOffset = $("#info-header").offset().top;
         var cchistoryOffset = $("#cc-history-header").offset().top;
@@ -306,7 +309,62 @@
 
         vm.model.PopulateRxGivenCalculation = ko.computed(function () {
 
+            var populate = vm.model.PopulateRxGiven.Value();
+
+            if (populate && pageloaded) {
+                var manod = vm.model.ManRfxOD1.Value.peek();
+                var cycod = vm.model.CycRfxOD.Value.peek();
+
+                if (cycod != '')
+                    vm.model.RxOD1.Value(cycod);
+                else
+                    vm.model.RxOD1.Value(manod);
+
+                var manos = vm.model.ManRfxOS1.Value.peek();
+                var cycos = vm.model.CycRfxOS.Value.peek();
+
+                if (cycos != '')
+                    vm.model.RXOS1.Value(cycos);
+                else
+                    vm.model.RXOS1.Value(manos);
+
+                var manod2 = vm.model.ManRfxOD2.Value.peek();
+                vm.model.RxOD2.Value(manod2);
+
+                var manos2 = vm.model.ManRfxOS2.Value.peek();
+                vm.model.RXOS2.Value(manos2);
+            }
         }, vm.model)
+
+        vm.model.PopulateCtlRxCalculation = ko.computed(function () {
+
+            var populate = vm.model.PopulateCtlRx.Value();
+
+            if (populate && pageloaded) {
+                var manod = vm.model.ManRfxOD1.Value.peek();
+                var cycod = vm.model.CycRfxOD.Value.peek();
+
+                if (cycod != '')
+                    vm.model.CTLRxOD1.Value(cycod);
+                else
+                    vm.model.CTLRxOD1.Value(manod);
+
+                var manos = vm.model.ManRfxOS1.Value.peek();
+                var cycos = vm.model.CycRfxOS.Value.peek();
+
+                if (cycos != '')
+                    vm.model.CTLRxOS1.Value(cycos);
+                else
+                    vm.model.CTLRxOS1.Value(manos);
+
+                var manod2 = vm.model.ManRfxOD2.Value.peek();
+                vm.model.CTLRxOD2.Value(manod2);
+
+                var manos2 = vm.model.ManRfxOS2.Value.peek();
+                vm.model.CTLRxOS2.Value(manos2);
+            }
+        }, vm.model)
+
     }
 
     function setOverrides() {
