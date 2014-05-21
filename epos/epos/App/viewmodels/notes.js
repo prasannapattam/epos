@@ -425,8 +425,12 @@
     }
 
     function saveNotes(saveType) {
-        if (!session.isDirty() || !validateNotes())
+        if (!session.isDirty())
             return;
+        
+        if ((saveType === constants.enum.notesSaveType.SignOff || saveType === constants.enum.notesSaveType.Correct) && !validateNotes())
+            return;
+
         deleteComputedProperties();
         return utility.httpPost('api/notes?type=' + saveType.toString(), vm.model).then(function (data) {
             if (data.Success === true) {
