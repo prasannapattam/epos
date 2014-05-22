@@ -75,6 +75,16 @@
                     ColourType: model.HxFrom.ColourType
                 }
 
+                //removing the weeks (fix for old data)
+                if (model.GA.Value === "weeks") {
+                    model.GA.Value = "";
+                    model.GA.ColourType = 0;
+                }
+                if (model.PCA.Value === "weeks") {
+                    model.PCA.Value = "";
+                    model.PCA.ColourType = 0;
+                }
+
                 if (vm.model !== undefined)
                     ko.viewmodel.updateFromModel(vm.model, model);
                 else

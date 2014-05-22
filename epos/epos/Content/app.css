@@ -498,10 +498,6 @@ select{
     font-weight: bold;
 }
 
-select:disabled{
-    background-color: #ffffff;
-    color: rgba(0, 0, 0, 0.75);
-}
 
 .modalBlockout{
     opacity: 0.6 !important;
@@ -681,4 +677,9 @@ hr{
     height: 50px;
 }
 
-
+input[type="text"][disabled], textarea[disabled], select:disabled {
+    background-color: transparent;
+}
+select:disabled{
+    color: rgba(0, 0, 0, 0.75);
+}

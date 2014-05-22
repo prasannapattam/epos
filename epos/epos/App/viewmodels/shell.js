@@ -39,6 +39,8 @@
         //setting up the guardRoute
         router.guardRoute = function (instance, instruction) {
             if (session.profile.isAuthenticated() === false && instruction.config.route !== "login") {
+                //removing the degging values
+                session.profile.photoUrl(undefined);
                 return 'login';
             }
 
