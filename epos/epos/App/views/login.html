@@ -1,10 +1,11 @@
 ﻿<div>
+    <form method="post" data-bind="enterkey: validate">
     <div class="row">
         <div class="small-2 columns">
                 <div class="row">
                     <div class="row">
                         <br />
-                        <div class="small-12 columns"><input type="text" maxlength="15" placeholder="Username" data-bind="value: model.UserName" /></div>
+                        <div class="small-12 columns"><input type="text" maxlength="15" placeholder="Username" data-bind="value: model.UserName, valueUpdate: 'afterkeydown'" /></div>
                     </div>
                     <div class="row">
                         <br />
@@ -20,4 +21,5 @@
         </div>
         <div class="small-10 columns">&nbsp;</div>
     </div>
+    </form>
 </div>

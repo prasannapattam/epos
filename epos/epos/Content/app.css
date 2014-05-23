@@ -191,7 +191,7 @@ input.inline-block{
 .validationMessage{ 
     display: block; 
     padding: 6px 4px; 
-    margin-top: -18px; 
+    margin-top: -2px; 
     margin-bottom: 12px; 
     background: #c60f13; 
     color: #fff; 
