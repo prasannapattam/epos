@@ -5,11 +5,11 @@
                 <div class="row">
                     <div class="row">
                         <br />
-                        <div class="small-12 columns"><input type="text" maxlength="15" placeholder="Username" data-bind="value: model.UserName, valueUpdate: 'afterkeydown'" /></div>
+                        <div class="small-12 columns"><input type="text" maxlength="15" placeholder="Username" data-bind="value: model.UserName, hasFocus: userNameFocus, valueUpdate: 'keyup'"/></div>
                     </div>
                     <div class="row">
                         <br />
-                        <div class="small-12 columns"><input type="password" maxlength="15" placeholder="Password" data-bind="value: model.UserPassword" /></div>
+                        <div class="small-12 columns"><input type="password" maxlength="15" placeholder="Password" data-bind="value: model.UserPassword, hasFocus: passwordFocus, valueUpdate: 'keyup'" /></div>
                     </div>
                     <div class="row">
                         <br />

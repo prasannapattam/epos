@@ -93,6 +93,9 @@
                 window.autoComplete = data.Model.AutoComplete;
                 addComputedProperties();
                 setOverrides();
+                if (model.NotesType === constants.enum.notesType.Saved) {
+                    session.isDirty(true);
+                }
             }
 
             return data;

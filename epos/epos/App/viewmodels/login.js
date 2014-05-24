@@ -12,8 +12,11 @@
         title: title,
         model: model,
         activate: activate,
-        validate: validate
-    };
+        compositionComplete: compositionComplete,
+        validate: validate,
+        userNameFocus: ko.observable(true),
+        passwordFocus: ko.observable(true)
+};
 
     vm.model.errors = ko.validation.group(vm.model);
 
@@ -27,13 +30,16 @@
         vm.model.UserName('');
         vm.model.UserPassword('');
         vm.model.errors.showAllMessages(false);
+        session.profile.photoUrl(undefined);
         return true;
     }
-
+    function compositionComplete() {
+        vm.userNameFocus(true);
+        return true;
+    }
     function validate() {
-        var self = this;
-        if (self.model.isValid()) {
-            utility.httpPost('api/login', self.model).then(function (data) {
+        if (vm.model.isValid()) {
+            utility.httpPost('api/login', vm.model).then(function (data) {
                 if (data.Success === true){
                     session.profile.populate(data.Model);
                     router.navigate('home');
@@ -42,10 +48,14 @@
         }
         else {
             toastr.error('Username and Password is required');
-            self.model.errors.showAllMessages();
+            vm.model.errors.showAllMessages();
+            if (!vm.model.UserName.isValid()) {
+                vm.userNameFocus(true);
+            }
+            if (!vm.model.UserPassword.isValid()) {
+                vm.passwordFocus(true);
+            }
         }
     }
-
-
 });
 

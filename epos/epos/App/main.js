@@ -206,44 +206,15 @@ define(['durandal/system', 'durandal/app', 'durandal/viewLocator', 'durandal/com
         }
     };
 
-    //// a custom binding to handle the enter key (could go in a separate library)
-    //ko.bindingHandlers.enterKey = {
-    //    init: function (element, valueAccessor, allBindingsAccessor, data) {
-    //        var wrappedHandler, newValueAccessor;
-
-    //        // wrap the handler with a check for the enter key
-    //        wrappedHandler = function (data, event) {
-    //            if (event.keyCode === '13') {
-    //                valueAccessor().call(this, data, event);
-    //            }
-    //        };
-
-    //        // create a valueAccessor with the options that we would want to pass to the event binding
-    //        newValueAccessor = function () {
-    //            return {
-    //                keyup: wrappedHandler
-    //            };
-    //        };
-
-    //        // call the real event binding's init function
-    //        ko.bindingHandlers.event.init(element, newValueAccessor, allBindingsAccessor, data);
-    //    }
-    //};
-
     ko.bindingHandlers.enterkey = {
-        init: function (element, valueAccessor, allBindingsAccessor, data, context) {
-            var allBindings = allBindingsAccessor();
+        init: function (element, valueAccessor, allBindingsAccessor, data) {
 
-            $(element).on('keypress', 'input, textarea, select', function (e) {
-                var keyCode = e.which || e.keyCode;
-                if (keyCode !== 13) {
-                    return true;
+            ko.utils.registerEventHandler(element, "keyup", function (e) {
+                if (e.keyCode === 13) {
+                    //return true;
+                    valueAccessor().call(data);
                 }
 
-                allBindings.enterkey.call(data);
-                //ko.bindingHandlers.submit.init(element, valueAccessor, allBindingsAccessor, data, context);
-
-                return false;
             });
         }
     };
