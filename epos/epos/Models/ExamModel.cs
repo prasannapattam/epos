@@ -21,7 +21,7 @@ namespace epos.Models
         public ExamModel()
         {
             ExamID = 0;
-            ExamDate = DateTime.Now;
+            ExamDate = DateTime.MinValue;
         }
     }
 }

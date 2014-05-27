@@ -108,7 +108,7 @@ namespace epos.Lib.Domain
             else
             {
                 notes.ExamDate = new Field() { Name = "ExamDate", Value = DateTime.Now.ToShortDateString() };
-                notes.LastExam = new Field() { Name = "LastExam", Value = exam.ExamDate.ToShortDateString() };
+                notes.LastExam = new Field() { Name = "LastExam", Value = exam.ExamDate != DateTime.MinValue ? exam.ExamDate.ToShortDateString() : null };
                 notes.hdnExamID = null;
             }
             //setting ExamDate & Correct Date
