@@ -233,6 +233,18 @@ namespace epos.Lib.Repository
             }
         }
 
+        public static bool PatientExists(PatientModel patient)
+        {
+            using (var db = new PosEntities())
+            {
+                var dbPatient = (from dbpnt in db.Patients where dbpnt.PatientNumber == patient.PatientNumber && dbpnt.PatientID != patient.PatientID select dbpnt.PatientNumber).FirstOrDefault();
+                if (dbPatient == null)
+                    return false;
+                else
+                    return true;
+            }
+        }
+
         public static List<SelectListItem> DoctorsGet()
         {
             using (var db = new PosEntities())

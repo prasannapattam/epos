@@ -664,6 +664,7 @@ hr{
     padding: 0;
     background-color: #dfebf5;
     padding-left: 0.5rem;
+    border: none;
 }
 
 .h-table tbody tr:hover {
@@ -677,9 +678,19 @@ hr{
     height: 50px;
 }
 
-input[type="text"][disabled], textarea[disabled], select:disabled {
+input[type="text"][disabled], textarea[disabled], select:disabled, input[type="password"][disabled] {
     background-color: transparent;
 }
 select:disabled{
     color: rgba(0, 0, 0, 0.75);
+}
+
+.table-display th, .table-display td
+{
+    border: 1px solid white;
+}
+
+.table-display{
+    border: 1px solid black;
+    border-right: 1px solid black;
 }

@@ -62,6 +62,8 @@
     }
 
     function navigateNotes(item) {
+        alert('This feature is being implemented');
+        return;
         var hash = '#notes/4/' + vm.model.UserID();
         if (item.ExamDefaultID !== undefined) {
             hash += '/' + item.ExamDefaultID

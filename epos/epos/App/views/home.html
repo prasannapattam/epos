@@ -197,6 +197,9 @@
 </script>
 <script type="text/html" id="user-default-template">
     <table class="full-width">
+        <tr>
+            <td>
+    <table class="full-width table-display">
         <thead>
             <tr>
                 <th>Default Name</th>
@@ -217,12 +220,15 @@
                 <td class="text-center" data-bind="text: AgeStart"></td>
                 <td class="text-center" data-bind="text: AgeEnd"></td>
                 <td class="text-center" data-bind="text: (PrematureBirth ? 'Yes' : 'No')"></td>
-                <td align="right">
+                <td class="text-right">
                     <a href="#" title="Edit" class="grid-icon" data-bind="click: $parent.navigateNotes"><i class="fi-clipboard-pencil"></i></a>
                     <a href="#" title="Delete" class="grid-icon" data-bind="click: $parent.deleteDefault"><i class="fi-x"></i></a>
                 </td>
             </tr>
         </tbody>
+    </table>
+            </td>
+        </tr>
     </table>
 </script>
 <script type="text/html" id="user-detail-template">

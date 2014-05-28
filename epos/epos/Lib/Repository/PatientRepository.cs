@@ -98,17 +98,17 @@ namespace epos.Lib.Repository
 
         public static bool PatientSave(PatientModel patient)
         {
+            if(PosRepository.PatientExists(patient))
+            {
+                throw new ApplicationException(PosMessage.PatientNumberExists);
+            }
+
             using (var db = new PosEntities())
             {
                 var dbPatient = (from dbPat in db.Patients where dbPat.PatientID == patient.PatientID select dbPat).FirstOrDefault();
                 if (dbPatient == null)
                 {
                     //checking for unique patient number
-                    dbPatient = (from dbPat in db.Patients where dbPat.PatientNumber == patient.PatientNumber select dbPat).FirstOrDefault();
-                    if (dbPatient != null)
-                    {
-                        throw new ApplicationException(PosMessage.PatientNumberExists);
-                    }
                     dbPatient = new Patient();
                     db.Patients.Add(dbPatient);
                 }
