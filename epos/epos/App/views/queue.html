@@ -36,7 +36,7 @@
                                             <a title="Letter" class="grid-icon" data-bind="css: { display_none: PrintExamNote !== null }, attr: { href: utility.virtualDirectory + '/api/print/' + ExamID + '/1' }"><i class="fi-mail"></i></a>
                                             <a title="Print" class="grid-icon" data-bind="css: { display_none: PrintExamNote === null }, attr: { href: utility.virtualDirectory + '/api/print/' + ExamID + '/2' }"><i class=" fi-print"></i></a>
                                         </td>
-                                        <td data-bind="text: moment(LastUpdatedDate).format('M/d/YY h:mm a')"></td>
+                                        <td data-bind="text: moment(LastUpdatedDate).format('L h:mm a')"></td>
                                         <td>
                                             <a title="Remove" class="grid-icon" data-bind="click: $root.remove"><i class="fi-x"></i></a>
                                         </td>

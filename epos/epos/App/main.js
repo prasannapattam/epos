@@ -211,7 +211,6 @@ define(['durandal/system', 'durandal/app', 'durandal/viewLocator', 'durandal/com
 
             ko.utils.registerEventHandler(element, "keyup", function (e) {
                 if (e.keyCode === 13) {
-                    //return true;
                     valueAccessor().call(data);
                 }
 

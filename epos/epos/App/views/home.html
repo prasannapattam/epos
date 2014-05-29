@@ -56,7 +56,7 @@
         <td data-bind="click: $root.show, css: { selected: (ID() == $root.currentID()) }">
             <div data-bind="attr: { id: ID }">
                 <span data-bind="text: PatientName"></span><br />
-                #: <span data-bind="text: PatientNumber"></span><br />
+                Patient #: <span data-bind="text: PatientNumber"></span><br />
                 DOB: <span data-bind="text: moment(DateOfBirth()).format('L')"></span><br />
                 <span data-bind="css: {display_none: LastExamDate() == null}, text: 'Last Visit: ' +  moment(LastExamDate()).format('L')"></span>
             </div>
@@ -81,7 +81,7 @@
                 <td>
                     <span data-bind="text: moment(ExamDate).format('L')"></span>
                     <span data-bind="css: {display_none : CorrectExamID === null}, text: '(Corrected on ' + moment(ExamCorrectDate).format('L') + ')'"></span>
-                    <span data-bind="css: {display_none : SavedInd != 1}, text: '(Saved on ' + moment(LastUpdatedDate).format('L h:mm:ss a') + ')'"></span>
+                    <span data-bind="css: {display_none : SavedInd != 1}, text: '(Saved on ' + moment(LastUpdatedDate).format('L h:mm a') + ')'"></span>
                 </td>
                 <td class="text-right">
                     <a href="#" title="Correct" class="grid-icon" data-bind="click: $parent.navigateNotes"><i class="fi-clipboard-pencil"></i></a>

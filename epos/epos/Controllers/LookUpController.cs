@@ -34,6 +34,8 @@ namespace epos.Controllers
             var dic = new Dictionary<string, List<LookUpModel>>();
 
             string fieldName = String.Empty;
+            int dupCount = 1;
+
             List<LookUpModel> fieldList = new List<LookUpModel>();
             foreach(var item in list)
             {
@@ -42,6 +44,13 @@ namespace epos.Controllers
                     fieldName = item.FieldName;
                     fieldList = new List<LookUpModel>();
                     dic[fieldName] = fieldList;
+                    dupCount = 1;
+                }
+
+                if(fieldList.Exists(listItem => listItem.FieldDescription == item.FieldDescription))
+                {
+                    item.FieldDescription += "~" + dupCount.ToString();
+                    dupCount++;
                 }
 
                 fieldList.Add(item);
