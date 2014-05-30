@@ -198,35 +198,35 @@
 <script type="text/html" id="user-default-template">
     <table class="full-width">
         <tr>
-            <td>
-    <table class="full-width table-display">
-        <thead>
-            <tr>
-                <th>Default Name</th>
-                <th>Age Start<br />(months)</th>
-                <th>Age End<br />(months)</th>
-                <th>Premature Birth</th>
-                <th>&nbsp;</th>
-            </tr>
-        </thead>
-        <tbody data-bind='css: { display_none: defaults().length > 0 }'>
-            <tr>
-                <td colspan="5" data-bind="text: noDefault"></td>
-            </tr>
-        </tbody>
-        <tbody data-bind='foreach: defaults'>
-            <tr>
-                <td data-bind="text: DefaultName"></td>
-                <td class="text-center" data-bind="text: AgeStart"></td>
-                <td class="text-center" data-bind="text: AgeEnd"></td>
-                <td class="text-center" data-bind="text: (PrematureBirth ? 'Yes' : 'No')"></td>
-                <td class="text-right">
-                    <a href="#" title="Edit" class="grid-icon" data-bind="click: $parent.navigateNotes"><i class="fi-clipboard-pencil"></i></a>
-                    <a href="#" title="Delete" class="grid-icon" data-bind="click: $parent.deleteDefault"><i class="fi-x"></i></a>
-                </td>
-            </tr>
-        </tbody>
-    </table>
+            <td class="tight">
+                <table class="full-width table-display">
+                    <thead>
+                        <tr>
+                            <th>Default Name</th>
+                            <th>Age Start<br />(months)</th>
+                            <th>Age End<br />(months)</th>
+                            <th>Premature Birth</th>
+                            <th>&nbsp;</th>
+                        </tr>
+                    </thead>
+                    <tbody data-bind='css: { display_none: defaults().length > 0 }'>
+                        <tr>
+                            <td colspan="5" data-bind="text: noDefault"></td>
+                        </tr>
+                    </tbody>
+                    <tbody data-bind='foreach: defaults'>
+                        <tr>
+                            <td data-bind="text: DefaultName"></td>
+                            <td class="text-center" data-bind="text: AgeStart"></td>
+                            <td class="text-center" data-bind="text: AgeEnd"></td>
+                            <td class="text-center" data-bind="text: (PrematureBirth ? 'Yes' : 'No')"></td>
+                            <td class="text-right">
+                                <a href="#" title="Edit" class="grid-icon" data-bind="click: $parent.navigateNotes"><i class="fi-clipboard-pencil"></i></a>
+                                <a href="#" title="Delete" class="grid-icon" data-bind="click: $parent.deleteDefault"><i class="fi-x"></i></a>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
             </td>
         </tr>
     </table>

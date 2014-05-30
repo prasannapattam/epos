@@ -37,26 +37,21 @@ body.main
    
 }
    
-div.notes_heading
+h5.notes_heading
 {
-	background-color: #8f282b;
-	font-size: 9pt !important;
-    	font-family: Verdana, Geneva, sans-serif;
-	
+    background-color: #8f282b;
+    color: #ffffff;
+    text-rendering: optimizeLegibility;
+    margin-top: 0.08rem;
+    margin-bottom: 0.06rem;
+    line-height: 1.3;
+    font-size: 1rem;
+    font-weight: bold;
 }
 
-h6.notes_heading1
-{
-font-family: Verdana,Geneva,sans-serif;
-font-weight: 300;
-font-style: normal;
-color: #ffffff;
-text-rendering: optimizeLegibility;
-margin-top: 0.08rem;
-margin-bottom: 0.08rem;
-line-height: 1.2;
+fieldset.notes-box{
+    padding: 3px 0px 2px 5px;
 }
-
 
 img.top-header{
     height: 65px;
@@ -247,6 +242,10 @@ fieldset legend {
     background-color: transparent;
 }
 
+fieldset.no-bottom-border{
+    border-bottom-style: none
+}
+
 table{
     border: 1px solid black;
     border-right: 1px solid black;
@@ -336,8 +335,6 @@ td.selected {
 	z-index: 2;
 	border-bottom-color: white;
     background: white;
-    /*background-color: #e9e9e9;*/
-   /* background-image: url('images/texture.png');*/
 }
 .tabrow:before {
 	position: absolute;
@@ -615,6 +612,22 @@ select{
     position: relative;
     width: 100%; }
 
+.tic-tac-outer {
+    position: relative !important;
+    width: 0.5% !important; 
+}
+.tic-tac-center {
+    position: relative;
+    width: 3%; 
+}
+
+.tic-tac-data {
+    position;: relative;
+    width: 31%; 
+}
+
+
+
 hr{
     border-color: black;
 }
@@ -695,4 +708,3 @@ select:disabled{
     border-right: 1px solid black;
 }
 
-.table-testing{}
