@@ -422,11 +422,12 @@ td.selected {
 }
 
 label{
+    font-size: 9pt;
     margin-bottom: 0.2rem;
 }
 
 input[type="text"], input[type="password"], select{
-    height: 1.8rem;
+    height: 1.4rem;
     font-size: 9pt;
     margin-bottom: 0.1rem;
 }
@@ -440,12 +441,14 @@ fieldset{
 }
 
 textarea{
-    height: 4.05rem;
-    font-size: 9pt
+    height: 3rem;
+    font-size: 9pt;
+    margin-bottom: 0px;
+
 }
 
 select{
-    padding-top: 0.4rem;
+    padding-top: 0.1rem;
     padding-left: 0.2rem;
     padding-bottom: 0.1rem;
 }

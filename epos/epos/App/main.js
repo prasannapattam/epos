@@ -123,17 +123,20 @@ define(['durandal/system', 'durandal/app', 'durandal/viewLocator', 'durandal/com
                 }
             });
 
+            //match: /\b(\w{1,}-?\w*)$/,
             $(element).textcomplete([
                 { // tech companies
-                    match: /\b(\w{2,})$/,
+                    match: /([^:\., ]+)$/,
                     search: function (term, callback) {
                         callback($.map(window.autoComplete, function (word) {
                             return word.indexOf(term) === 0 ? word : null;
                         }));
                     },
                     index: 1,
-                    replace: function (word) {
-                        return word.slice(word.indexOf('-') + 1).trim() + ' ';
+                    replace: function (word, delimiter) {
+                        if (delimiter === undefined)
+                            delimiter = ' ';
+                        return word.slice(word.indexOf(':') + 1).trim() + delimiter;
                     }
                 }
             ]);

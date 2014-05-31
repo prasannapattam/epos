@@ -256,7 +256,7 @@
         }
       },
 
-      onSelect: function (value) {
+      onSelect: function (value, delimiter) {
         var pre, post, newSubStr, sel, range, selection;
         pre = this.getTextFromHeadToCaret();
 
@@ -271,7 +271,7 @@
           post = this.el.value.substring(this.el.selectionEnd);
         }
 
-        newSubStr = this.strategy.replace(value);
+        newSubStr = this.strategy.replace(value, delimiter);
         
         if ($.isArray(newSubStr)) {
           post = newSubStr[1] + post;
@@ -550,9 +550,9 @@
         return this;
       },
 
-      select: function (index) {
+      select: function (index, delimiter) {
         var self = this;
-        this.completer.onSelect(this.data[index]);
+        this.completer.onSelect(this.data[index], delimiter);
         // Deactive at next tick to allow other event handlers to know whether
         // the dropdown has been shown or not.
         setTimeout(function () { self.deactivate(); }, 0);
@@ -576,9 +576,17 @@
             this.index += 1;
           }
           this.activateIndexedItem();
-        } else if (e.keyCode === 13 || e.keyCode === 9) {  // ENTER or TAB
-          e.preventDefault();
-          this.select(parseInt(this.getActiveItem().data('index'), 10));
+        } else if (e.keyCode === 13 || e.keyCode === 9 || e.keyCode === 32 || e.keyCode === 188 || e.keyCode === 190 ) {  // ENTER or TAB
+            e.preventDefault();
+            var delimiter;
+            if (e.keyCode !== 13 && e.keyCode !== 9) {
+                //delimiter = String.fromCharCode(e.keyCode);
+                if (e.keyCode === 188)
+                    delimiter = ', ';
+                else if (e.keyCode === 190)
+                    delimiter = '. ';
+            }
+            this.select(parseInt(this.getActiveItem().data('index'), 10), delimiter);
         }
       },
 

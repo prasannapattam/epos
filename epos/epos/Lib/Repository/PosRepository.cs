@@ -332,7 +332,10 @@ namespace epos.Lib.Repository
 		{
 			using(var db = new PosEntities())
 			{
-				var query = from auto in db.AutoCorrects where auto.UserName.ToLower() == userName.ToLower() select auto.Name + " - " + auto.Value;
+				var query = from auto in db.AutoCorrects 
+                            where auto.UserName.ToLower() == userName.ToLower()
+                            orderby auto.Name
+                            select auto.Name + ": " + auto.Value;
 				return query.ToArray();
 			}
 		}
