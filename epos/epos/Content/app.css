@@ -49,6 +49,11 @@ h5.notes_heading
     font-weight: bold;
 }
 
+h6 {
+    font-size: 0.9rem;
+    margin: 0;
+}
+
 fieldset.notes-box{
     padding: 3px 0px 2px 5px;
 }
@@ -423,7 +428,8 @@ td.selected {
 
 label{
     font-size: 9pt;
-    margin-bottom: 0.2rem;
+    margin-bottom: 0.1rem;
+    margin-left: 0.1rem;
 }
 
 input[type="text"], input[type="password"], select{
@@ -434,6 +440,10 @@ input[type="text"], input[type="password"], select{
 
 input[type="password"] {
     padding-bottom: 0.1rem;
+}
+
+input[type="checkbox"]{
+    margin-bottom: 0.1rem;
 }
 
 fieldset{
@@ -621,14 +631,18 @@ select{
 }
 .tic-tac-center {
     position: relative;
-    width: 3%; 
+    width: 2%; 
 }
 
-.tic-tac-data {
-    position;: relative;
-    width: 31%; 
+.tic-tac-data-side {
+    position: relative;
+    width: 25%; 
 }
 
+.tic-tac-data-center {
+    position: relative;
+    width: 45%; 
+}
 
 
 hr{
@@ -663,7 +677,19 @@ hr{
 }
 
 .odos{
-    width: 24px;
+    width: 23px;
+    margin-top: 0.4rem !important;
+    padding: 0;
+}
+
+div.side-label{
+    margin-top: 0.3rem !important;
+    text-align: right;
+}
+
+div.side-label-left{
+    margin-top: 0.3rem !important;
+    text-align: left;
 }
 
 .small-font{
