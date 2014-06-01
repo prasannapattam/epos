@@ -34,5 +34,11 @@ namespace epos.Lib.Shared
         public const string LookUpGetError = "Unable to retrieve Drop Down data";
 
         public const string Blank = "There is no data to pass back to the client";
+
+
+        //Lookups
+        public const string LookupsSavedSuccessfully = "Lookups saved successfully";
+        public const string LookUpsSaveError = "Unable saved Lookups";
+     
     }
 }
