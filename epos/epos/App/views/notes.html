@@ -50,8 +50,8 @@
     <fieldset>
     <div class="row row-narrow">
         <div class="tiny-16 columns">&nbsp;</div>
-        <div class="tiny-3 columns tight text-right"><br />Doctor:</div>
-        <div class="tiny-5 columns right col-narrow">
+        <div class="tiny-3 columns tight text-right side-label">Doctor:</div>
+        <div class="tiny-5 columns right tight">
             <select data-bind="options: $root.doctors, optionsValue: 'Value' , optionsText:'Text', value: model.User.Value, optionsCaption: '', event: { change: doctorChange }"></select>
         </div>
     </div>
@@ -117,11 +117,11 @@
         <div class="small-3 columns col-narrow">
             <label>&nbsp;</label>
             <div class="row full-width row-narrow">
-                <div class="tiny-2 columns tight">(Dr.</div>
+                <div class="tiny-2 columns tight side-label">(Dr.</div>
                 <div class="tiny-21 columns left tight">
                     <input type="text" data-bind="notesvalue: model.RefDoctor" />
                 </div>
-                <div class="tiny-1 columns tight">)</div>
+                <div class="tiny-1 columns tight side-label-left">)</div>
             </div>
         </div>
         <div class="small-2 columns col-narrow">&nbsp;</div>
@@ -382,7 +382,7 @@
                     </div>
                 </div>
                 <div class="row row-narrow">
-                    <div class="small-1 columns tight odos">
+                    <div class="small-1 columns odos">
                         OD:
                     </div>
                     <div class="small-6 columns tight">
@@ -393,7 +393,7 @@
                     </div>
                 </div>
                 <div class="row row-narrow">
-                    <div class="small-1 columns tight odos">
+                    <div class="small-1 columns odos">
                         OS:
                     </div>
                     <div class="small-6 columns tight">
@@ -407,7 +407,7 @@
             <div class="small-4 columns col-narrow">
                 <label>VA cc Dist</label>
                 <div class="row row-narrow">
-                    <div class="small-1 columns tight odos">
+                    <div class="small-1 columns odos">
                         OD:
                     </div>
                     <div class="small-6 columns tight">
@@ -418,7 +418,7 @@
                     </div>
                 </div>
                 <div class="row row-narrow">
-                    <div class="small-1 columns tight odos">
+                    <div class="small-1 columns odos">
                         OS:
                     </div>
                     <div class="small-6 columns tight">
@@ -432,7 +432,7 @@
             <div class="small-4 columns col-narrow">
                 <label>VA Near</label>
                 <div class="row row-narrow">
-                    <div class="small-1 columns tight odos">
+                    <div class="small-1 columns odos">
                         OD:
                     </div>
                     <div class="small-6 columns tight">
@@ -443,7 +443,7 @@
                     </div>
                 </div>
                 <div class="row row-narrow">
-                    <div class="small-1 columns tight odos">
+                    <div class="small-1 columns odos">
                         OS:
                     </div>
                     <div class="small-6 columns tight">
@@ -460,7 +460,7 @@
         <div class="small-4 columns col-narrow">
             <label>Spc Wr1</label>
             <div class="row row-narrow">
-                <div class="small-1 columns tight">
+                <div class="small-1 columns odos">
                     OD:
                 </div>
                 <div class="small-11 columns tight">
@@ -468,7 +468,7 @@
                 </div>
             </div>
             <div class="row row-narrow">
-                <div class="small-1 columns tight">
+                <div class="small-1 columns odos">
                     OS:
                 </div>
                 <div class="small-11 columns tight">
@@ -479,7 +479,7 @@
         <div class="small-4 columns col-narrow">
             <label>Spc Wr2</label>
             <div class="row row-narrow">
-                <div class="small-1 columns tight">
+                <div class="small-1 columns odos">
                     OD:
                 </div>
                 <div class="small-11 columns tight">
@@ -487,7 +487,7 @@
                 </div>
             </div>
             <div class="row row-narrow">
-                <div class="small-1 columns tight">
+                <div class="small-1 columns odos">
                     OS:
                 </div>
                 <div class="small-11 columns tight">
@@ -498,7 +498,7 @@
         <div class="small-4 columns col-narrow">
             <label>Spc Wr3</label>
             <div class="row row-narrow">
-                <div class="small-1 columns tight">
+                <div class="small-1 columns odos">
                     OD:
                 </div>
                 <div class="small-11 columns tight">
@@ -506,7 +506,7 @@
                 </div>
             </div>
             <div class="row row-narrow">
-                <div class="small-1 columns tight">
+                <div class="small-1 columns odos">
                     OS:
                 </div>
                 <div class="small-11 columns tight">
@@ -519,7 +519,7 @@
         <div class="small-4 columns col-narrow">
             <label>Man Rfx</label>
             <div class="row row-narrow">
-                <div class="small-1 columns tight">
+                <div class="small-1 columns odos">
                     OD:
                 </div>
                 <div class="small-6 columns tight">
@@ -530,7 +530,7 @@
                 </div>
             </div>
             <div class="row row-narrow">
-                <div class="small-1 columns tight">
+                <div class="small-1 columns odos">
                     OS:
                 </div>
                 <div class="small-6 columns tight">
@@ -544,7 +544,7 @@
         <div class="small-3 columns col-narrow">
             <label>VA</label>
             <div class="row row-narrow">
-                <div class="tiny-3 columns tight">
+                <div class="tiny-3 columns odos">
                     OD:
                 </div>
                 <div class="tiny-9 columns tight">
@@ -555,7 +555,7 @@
                 </div>
             </div>
             <div class="row row-narrow">
-                <div class="tiny-3 columns tight">
+                <div class="tiny-3 columns odos">
                     OS:
                 </div>
                 <div class="tiny-9 columns tight">
@@ -569,7 +569,7 @@
         <div class="small-2 columns col-narrow">
             <label>Cyc Rfx</label>
             <div class="row row-narrow">
-                <div class="small-2 columns tight">
+                <div class="small-2 columns odos">
                     OD:
                 </div>
                 <div class="small-10 columns tight">
@@ -577,7 +577,7 @@
                 </div>
             </div>
             <div class="row row-narrow">
-                <div class="small-2 columns tight">
+                <div class="small-2 columns odos">
                     OS:
                 </div>
                 <div class="small-10 columns tight">
@@ -588,7 +588,7 @@
         <div class="small-3 columns col-narrow">
             <label>VA</label>
             <div class="row row-narrow">
-                <div class="tiny-3 columns tight">
+                <div class="tiny-3 columns odos">
                     OD:
                 </div>
                 <div class="tiny-9 columns tight">
@@ -599,7 +599,7 @@
                 </div>
             </div>
             <div class="row row-narrow">
-                <div class="tiny-3 columns tight">
+                <div class="tiny-3 columns odos">
                     OS:
                 </div>
                 <div class="tiny-9 columns tight">
@@ -717,7 +717,7 @@
                 <div class="small-1 columns tight odos">OD:</div>
                 <div class="small-3 columns tight"><input type="text" data-bind="notesvalue: model.RxOD1" /></div>
                 <div class="small-3 columns tight"><input type="text" data-bind="notesvalue: model.RxOD2" /></div>
-                <div class="small-3 columns tight small-font"><input type="checkbox" data-bind="notescheck: model.PopulateRxGiven" />Populate</div>
+                <div class="small-3 columns tight small-font side-label-left left">&nbsp;<input type="checkbox" data-bind="notescheck: model.PopulateRxGiven" />Populate</div>
                 <div class="small-2 columns tight">&nbsp;</div>
             </div>
             <div class="row row-narrow">
@@ -725,7 +725,7 @@
                 <div class="small-3 columns tight"><input type="text" data-bind="notesvalue: model.RXOS1" /></div>
                 <div class="small-3 columns tight"><input type="text" data-bind="notesvalue: model.RXOS2" /></div>
                 <div class="small-3 columns tight"><input type="text" data-bind="notesvalue: model.RXOS3" /></div>
-                <div class="small-2 columns tight"><input type="text" data-bind="notesvalue: model.RXOS4" /></div>
+                <div class="small-2 columns tight left"><input type="text" data-bind="notesvalue: model.RXOS4" /></div>
             </div>
         </div>
         <div class="small-5 columns col-narrow">
@@ -735,39 +735,32 @@
                 <div class="small-3 columns tight"><input type="text" data-bind="notesvalue: model.CTLRxOD1" /></div>
                 <div class="small-3 columns tight"><input type="text" data-bind="notesvalue: model.CTLRxOD2" /></div>
                 <div class="small-3 columns tight"><input type="text" data-bind="notesvalue: model.CTLRxOD3" /></div>
-                <div class="tiny-4 columns tight small-font"><input type="checkbox" data-bind="notescheck: model.PopulateCtlRx"  />Populate</div>
+                <div class="small-2 columns tight small-font side-label-left">&nbsp;<input type="checkbox" data-bind="notescheck: model.PopulateCtlRx"  />Populate</div>
             </div>
-            <div class="row row-narrow">
-                <div class="tiny-2 columns tight odos">OS:</div>
+            <div class="row row-narrow tight">
+                <div class="small-1 columns tight odos">OS:</div>
                 <div class="small-3 columns tight"><input type="text" data-bind="notesvalue: model.CTLRxOS1" /></div>
                 <div class="small-3 columns tight"><input type="text" data-bind="notesvalue: model.CTLRxOS2" /></div>
                 <div class="small-3 columns tight"><input type="text" data-bind="notesvalue: model.CTLRxOS3" /></div>
-                <div class="tiny-4 columns tight">&nbsp;</div>
+                <div class="small-2 columns tight small-font side-label-left">&nbsp;</div>
             </div>
         </div>
     </fieldset>
     <fieldset>
         <div class="row row-narrow">
-            <div class="small-8 columns tight">
-                <label>Visual Fields</label>
-                <div class="row row-narrow">
-                    <div class="small-5 columns tight"><select data-bind="notesselect: model.Confront1" /></div>
-                    <div class="small-5 columns tight"><select data-bind="notesselect: model.Confront2" /></div>
-                    <div class="small-2 columns tight"><input type="text" data-bind="notesvalue: model.Confront3" /></div>
-                </div>
-            </div>
-            <div class="small-4 columns tight">
-                <label>Pupils</label>
-                <div class="row row-narrow">
-                    <div class="small-2 columns tight"><select data-bind="notesselect: model.PupilOD1" /></div>
-                    <div class="small-10 columns tight"><select data-bind="notesselect: model.PupilOD2" /></div>
-                </div>
-                <div class="row row-narrow">
-                    <div class="small-2 columns tight"><select data-bind="notesselect: model.PupilOS1" /></div>
-                    <div class="small-8 columns tight"><select data-bind="notesselect: model.PupilOS2" /></div>
-                    <div class="small-2 columns tight"><input type="text" data-bind="notesvalue: model.Pupil" /></div>
-                </div>
-            </div>
+            <label>Visual Fields</label>
+            <div class="small-3 columns tight"><select data-bind="notesselect: model.Confront1" /></div>
+            <div class="small-3 columns tight"><select data-bind="notesselect: model.Confront2" /></div>
+            <div class="small-4 columns tight"><input type="text" data-bind="notesvalue: model.Confront3" /></div>
+            <div class="small-2 columns tight">&nbsp;</div>
+        </div>
+        <div class="row row-narrow">
+            <label>Pupils</label>
+            <div class="small-1 columns tight"><select data-bind="notesselect: model.PupilOD1" /></div>
+            <div class="small-4 columns tight"><select data-bind="notesselect: model.PupilOD2" /></div>
+            <div class="small-1 columns tight"><select data-bind="notesselect: model.PupilOS1" /></div>
+            <div class="small-4 columns tight"><select data-bind="notesselect: model.PupilOS2" /></div>
+            <div class="small-2 columns tight"><input type="text" data-bind="notesvalue: model.Pupil" /></div>
         </div>
     </fieldset>
     <h5 class="notes_heading" id="ocular-mot-header">Ocular Motility</h5>
@@ -777,44 +770,44 @@
                 <label>Ocular Motility</label>
                 <select data-bind="notesselect: model.OcularMotility6" />
             </div>
-            <div class="small-2 columns col-narrow">
+            <div class="small-2 columns tight">
                 <label>&nbsp;</label>
                 <select data-bind="notesselect: model.OcularMotility1" />
             </div>
-            <div class="small-3 columns col-narrow">
+            <div class="small-3 columns tight">
                 <label>&nbsp;</label>
                 <input type="text" data-bind="notesvalue: model.OcularMotility5" />
             </div>
-            <div class="small-2 columns col-narrow">
+            <div class="small-2 columns tight">
                 <label>&nbsp;</label>
                 <select data-bind="notesselect: model.OcularMotility2" />
             </div>
-            <div class="small-3 columns col-narrow">
+            <div class="small-3 columns tight">
                 <label>&nbsp;</label>
                 <input type="text" data-bind="notesvalue: model.OcularMotility4" />
             </div>
         </div>
         <div class="row row-narrow">
-            <div class="small-2 columns col-narrow">&nbsp;</div>
-            <div class="small-8 columns col-narrow">
+            <div class="small-1 columns col-narrow">&nbsp;</div>
+            <div class="small-10 columns col-narrow">
                 <fieldset class="notes-box">
                     <div class="row row-narrow">
                         <div class="tic-tac-outer columns col-narrow"></div>
-                        <div class="tic-tac-data columns col-narrow">
+                        <div class="tic-tac-data-side columns col-narrow">
                             <div class="row tight">
                                 <div class="small-6 columns tight"><input type="text" data-bind="notesvalue: model.OcMot1a" /></div>
                                 <div class="small-6 columns tight"><input type="text" data-bind="notesvalue: model.OcMot1b" /></div>
                             </div>
                         </div>
                         <div class="tic-tac-center columns col-narrow">&nbsp;</div>
-                        <div class="tic-tac-data columns col-narrow">
+                        <div class="tic-tac-data-center columns col-narrow">
                             <div class="row tight">
                                 <div class="small-6 columns tight"><input type="text" data-bind="notesvalue: model.OcMot2a" /></div>
                                 <div class="small-6 columns tight"><input type="text" data-bind="notesvalue: model.OcMot2b" /></div>
                             </div>
                         </div>
                         <div class="tic-tac-center columns col-narrow">&nbsp;</div>
-                        <div class="tic-tac-data columns col-narrow">
+                        <div class="tic-tac-data-side columns col-narrow">
                             <div class="row tight">
                                 <div class="small-6 columns tight"><input type="text" data-bind="notesvalue: model.OcMot3a" /></div>
                                 <div class="small-6 columns tight"><input type="text" data-bind="notesvalue: model.OcMot3b" /></div>
@@ -824,21 +817,21 @@
                     </div>
                     <div class="row row-narrow">
                         <div class="tic-tac-outer columns col-narrow"></div>
-                        <div class="tic-tac-data columns col-narrow">
+                        <div class="tic-tac-data-side columns col-narrow">
                             <div class="row tight">
                                 <div class="small-6 columns tight"><input type="text" data-bind="notesvalue: model.OcMot4a" /></div>
                                 <div class="small-6 columns tight"><input type="text" data-bind="notesvalue: model.OcMot4b" /></div>
                             </div>
                         </div>
                         <div class="tic-tac-center columns col-narrow">&nbsp;</div>
-                        <div class="tic-tac-data columns col-narrow">
+                        <div class="tic-tac-data-center columns col-narrow">
                             <div class="row tight">
                                 <div class="small-6 columns tight"><input type="text" data-bind="notesvalue: model.OcMot5a" /></div>
                                 <div class="small-6 columns tight"><input type="text" data-bind="notesvalue: model.OcMot5b" /></div>
                             </div>
                         </div>
                         <div class="tic-tac-center columns col-narrow">&nbsp;</div>
-                        <div class="tic-tac-data columns col-narrow">
+                        <div class="tic-tac-data-side columns col-narrow">
                             <div class="row tight">
                                 <div class="small-6 columns tight"><input type="text" data-bind="notesvalue: model.OcMot6a" /></div>
                                 <div class="small-6 columns tight"><input type="text" data-bind="notesvalue: model.OcMot6b" /></div>
@@ -848,21 +841,21 @@
                     </div>
                     <div class="row row-narrow">
                         <div class="tic-tac-outer columns col-narrow"></div>
-                        <div class="tic-tac-data columns col-narrow">
+                        <div class="tic-tac-data-side columns col-narrow">
                             <div class="row tight">
                                 <div class="small-6 columns tight"><input type="text" data-bind="notesvalue: model.OcMot7a" /></div>
                                 <div class="small-6 columns tight"><input type="text" data-bind="notesvalue: model.OcMot7b" /></div>
                             </div>
                         </div>
                         <div class="tic-tac-center columns col-narrow">&nbsp;</div>
-                        <div class="tic-tac-data columns col-narrow">
+                        <div class="tic-tac-data-center columns col-narrow">
                             <div class="row tight">
                                 <div class="small-6 columns tight"><input type="text" data-bind="notesvalue: model.OcMot8a" /></div>
                                 <div class="small-6 columns tight"><input type="text" data-bind="notesvalue: model.OcMot8b" /></div>
                             </div>
                         </div>
                         <div class="tic-tac-center columns col-narrow">&nbsp;</div>
-                        <div class="tic-tac-data columns col-narrow">
+                        <div class="tic-tac-data-side columns col-narrow">
                             <div class="row tight">
                                 <div class="small-6 columns tight"><input type="text" data-bind="notesvalue: model.OcMot9a" /></div>
                                 <div class="small-6 columns tight"><input type="text" data-bind="notesvalue: model.OcMot9b" /></div>
@@ -872,7 +865,7 @@
                     </div>
                 </fieldset>
             </div>
-            <div class="small-2 columns col-narrow">&nbsp;</div>
+            <div class="small-1 columns col-narrow">&nbsp;</div>
         </div>
         <div class="row row-narrow">
             <div class="small-4 columns col-narrow">
@@ -985,23 +978,23 @@
             <div class="small-6 columns tight">
                 <label>Fusional Amplitudes</label>
                 <div class="row row-narrow">
-                    <div class="tiny-2 columns tight text-right">BO</div>
-                    <div class="tiny-4 columns tight"><input type="text" data-bind="notesvalue: model.FusAmpBO" /></div>
-                    <div class="tiny-2 columns tight text-right">BI</div>
-                    <div class="tiny-4 columns tight"><input type="text" data-bind="notesvalue: model.FusAmpBI" /></div>
-                    <div class="tiny-2 columns tight text-right">BU</div>
-                    <div class="tiny-4 columns tight"><input type="text" data-bind="notesvalue: model.FusAmpBU" /></div>
-                    <div class="tiny-2 columns tight text-right">BD</div>
-                    <div class="tiny-4 columns tight"><input type="text" data-bind="notesvalue: model.FusAmpBD" /></div>
+                    <div class="small-1 columns tight text-right odos">BO</div>
+                    <div class="small-2 columns tight"><input type="text" data-bind="notesvalue: model.FusAmpBO" /></div>
+                    <div class="small-1 columns tight text-right odos">BI</div>
+                    <div class="small-2 columns tight"><input type="text" data-bind="notesvalue: model.FusAmpBI" /></div>
+                    <div class="small-1 columns tight text-right odos">BU</div>
+                    <div class="small-2 columns tight"><input type="text" data-bind="notesvalue: model.FusAmpBU" /></div>
+                    <div class="small-1 columns tight text-right odos">BD</div>
+                    <div class="small-2 columns tight left"><input type="text" data-bind="notesvalue: model.FusAmpBD" /></div>
                 </div>
             </div>
             <div class="small-6 columns tight">
                 <label>Near Point</label>
                 <div class="row row-narrow">
-                    <div class="tiny-6 columns tight text-right">Convergence</div>
-                    <div class="tiny-6 columns tight"><input type="text" data-bind="notesvalue: model.Convergence" /></div>
-                    <div class="tiny-6 columns tight text-right">Accommodation</div>
-                    <div class="tiny-6 columns tight"><input type="text" data-bind="notesvalue: model.Accommodation" /></div>
+                    <div class="small-3 columns tight text-right side-label">Convergence</div>
+                    <div class="small-3 columns tight"><input type="text" data-bind="notesvalue: model.Convergence" /></div>
+                    <div class="small-3 columns tight text-right side-label">Accommodation</div>
+                    <div class="small-3 columns tight"><input type="text" data-bind="notesvalue: model.Accommodation" /></div>
                 </div>
             </div>
         </div>
@@ -1009,36 +1002,34 @@
             <div class="small-6 columns tight">
                 <label>&nbsp;</label>
                 <div class="row row-narrow">
-                    <div class="tiny-2 columns tight text-right">LVR</div>
-                    <div class="tiny-4 columns tight"><input type="text" data-bind="notesvalue: model.LVRR1" /></div>
-                    <div class="tiny-2 columns tight text-right">R</div>
-                    <div class="tiny-4 columns tight"><input type="text" data-bind="notesvalue: model.LVRR2" /></div>
-                    <div class="tiny-2 columns tight">&nbsp;</div>
-                    <div class="tiny-4 columns tight"><input type="text" data-bind="notesvalue: model.LVRL1" /></div>
-                    <div class="tiny-2 columns tight text-right">L</div>
-                    <div class="tiny-4 columns tight"><input type="text" data-bind="notesvalue: model.LVRL2" /></div>
+                    <div class="small-1 columns tight text-right odos">LVR</div>
+                    <div class="small-2 columns tight"><input type="text" data-bind="notesvalue: model.LVRR1" /></div>
+                    <div class="small-1 columns tight text-right odos">R</div>
+                    <div class="small-2 columns tight"><input type="text" data-bind="notesvalue: model.LVRR2" /></div>
+                    <div class="small-1 columns tight odos">&nbsp;</div>
+                    <div class="small-2 columns tight"><input type="text" data-bind="notesvalue: model.LVRL1" /></div>
+                    <div class="small-1 columns tight text-center odos">L</div>
+                    <div class="small-2 columns tight left"><input type="text" data-bind="notesvalue: model.LVRL2" /></div>
                 </div>
             </div>
             <div class="small-6 columns tight">&nbsp;</div>
         </div>
     </fieldset>
     <fieldset>
+        <h6>Binocularity</h6>
         <div class="row row-narrow">
             <div class="small-4 columns col-narrow">
-                <h6>Binocularity</h6>
                 <div class="row row-narrow">
-                    <div class="small-3 columns tight">tested with</div>
+                    <div class="small-3 columns tight side-label">tested with</div>
                     <div class="small-9 columns tight"><select data-bind="notesselect: model.Binocularity1" /></div>
                 </div>
             </div>
             <div class="small-4 columns col-narrow">
-                <label>&nbsp;</label>
                 <div class="row row-narrow">
                     <div class="small-12 columns tight"><select data-bind="notesselect: model.Binocularity2" /></div>
                 </div>
             </div>
             <div class="small-4 columns col-narrow">
-                <label>&nbsp;</label>
                 <div class="row row-narrow">
                     <div class="small-6 columns tight"><input type="text" data-bind="notesvalue: model.Binocularity3" /></div>
                     <div class="small-6 columns tight"><input type="text" data-bind="notesvalue: model.Binocularity4" /></div>
@@ -1072,15 +1063,17 @@
     <h5 class="notes_heading" id="ant-seg-header">Anterior Segment</h5>
     <fieldset class="no-bottom-border">
         <div class="row row-narrow">
-            <div class="small-12 columns col-narrow">
+            <div class="small-6 columns col-narrow">
                 <label>Anterior Segment examination</label>
-                <textarea data-bind="notesvalue: model.AnteriorSegment"></textarea>
+            </div>
+            <div class="small-6 columns col-narrow">
+                SLE: <input type="checkbox" data-bind="notescheck: model.SLE"/> &nbsp;&nbsp;
+                Pen-light: <input type="checkbox" data-bind="notescheck: model.PenLight"/>
             </div>
         </div>
         <div class="row row-narrow">
             <div class="small-12 columns col-narrow">
-                SLE: <input type="checkbox" data-bind="notescheck: model.SLE"/> &nbsp;&nbsp;
-                Pen-light: <input type="checkbox" data-bind="notescheck: model.PenLight"/> &nbsp;&nbsp;
+                <textarea data-bind="notesvalue: model.AnteriorSegment"></textarea>
             </div>
         </div>
     </fieldset>
@@ -1100,34 +1093,34 @@
                 <label>Exophthalmometry</label>
                 <div class="row row-narrow">
                     <div class="tiny-8 columns tight"><select data-bind="notesselect: model.Exophthalmometry" /></div>
-                    <div class="tiny-2 columns tight">OD:</div>
+                    <div class="tiny-2 columns odos">OD:</div>
                     <div class="tiny-6 columns tight"><input type="text" data-bind="notesvalue: model.ExophthalmometryOD" /></div>
-                    <div class="tiny-2 columns tight">OS:</div>
-                    <div class="tiny-6 columns tight"><input type="text" data-bind="notesvalue: model.ExophthalmometryOS" /></div>
+                    <div class="tiny-2 columns odos">OS:</div>
+                    <div class="tiny-6 columns tight left"><input type="text" data-bind="notesvalue: model.ExophthalmometryOS" /></div>
                 </div>
             </div>
         </div>
         <div class="row row-narrow">
             <div class="small-7 columns col-narrow">
                 <div class="row row-narrow">
-                    <div class="small-1 columns tight">OD PF:</div>
+                    <div class="small-1 columns tight side-label">OD PF:</div>
                     <div class="small-1 columns tight"><input type="text" data-bind="notesvalue: model.ODPF" /></div>
-                    <div class="small-1 columns tight">MRD1:</div>
+                    <div class="small-1 columns tight side-label">MRD1:</div>
                     <div class="small-1 columns tight"><input type="text" data-bind="notesvalue: model.ODMRD1" /></div>
-                    <div class="small-1 columns tight">MRD2:</div>
+                    <div class="small-1 columns tight side-label">MRD2:</div>
                     <div class="small-1 columns tight"><input type="text" data-bind="notesvalue: model.ODMRD2" /></div>
-                    <div class="small-2 columns tight">Levator Fxn:</div>
+                    <div class="small-2 columns tight side-label">Levator Fxn:</div>
                     <div class="small-2 columns tight"><select data-bind="notesselect: model.ODLevatorFxn1" /></div>
                     <div class="small-2 columns tight"><input type="text" data-bind="notesvalue: model.ODLevatorFxn2" /></div>
                 </div>
                 <div class="row row-narrow">
-                    <div class="small-1 columns tight">OS PF:</div>
+                    <div class="small-1 columns tight side-label">OS PF:</div>
                     <div class="small-1 columns tight"><input type="text" data-bind="notesvalue: model.OSPF" /></div>
-                    <div class="small-1 columns tight">MRD1:</div>
+                    <div class="small-1 columns tight side-label">MRD1:</div>
                     <div class="small-1 columns tight"><input type="text" data-bind="notesvalue: model.OSMRD1" /></div>
-                    <div class="small-1 columns tight">MRD2:</div>
+                    <div class="small-1 columns tight side-label">MRD2:</div>
                     <div class="small-1 columns tight"><input type="text" data-bind="notesvalue: model.OSMRD2" /></div>
-                    <div class="small-2 columns tight">Levator Fxn:</div>
+                    <div class="small-2 columns tight side-label">Levator Fxn:</div>
                     <div class="small-2 columns tight"><select data-bind="notesselect: model.OSLevatorFxn1" /></div>
                     <div class="small-2 columns tight"><input type="text" data-bind="notesvalue: model.OSLevatorFxn2" /></div>
                 </div>
@@ -1216,9 +1209,9 @@
                 </div>
                 <div class="row row-narrow">
                     <div class="small-5 columns tight"><input type="text" data-bind="notesvalue: model.Tono3" /></div>
-                    <div class="small-1 columns tight">OD</div>
+                    <div class="small-1 columns odos">OD</div>
                     <div class="small-5 columns tight"><input type="text" data-bind="notesvalue: model.Tono4" /></div>
-                    <div class="small-1 columns tight">OS</div>
+                    <div class="small-1 columns odos">OS</div>
                 </div>
             </div>
             <div class="small-4 columns col-narrow">&nbsp;</div>
@@ -1239,11 +1232,11 @@
             <div class="small-8 columns col-narrow">
                 <label>Fundus Exam</label>
                 <div class="row row-narrow">
-                    <div class="small-3 columns tight text-right">Optic nerve heads are</div>
+                    <div class="small-3 columns tight side-label">Optic nerve heads are</div>
                     <div class="small-9 columns tight"><input type="text" data-bind="notesvalue: model.Fundus1" /></div>
                 </div>
                 <div class="row row-narrow">
-                    <div class="small-3 columns tight text-right">with</div>
+                    <div class="small-3 columns tight side-label">with</div>
                     <div class="small-9 columns tight"><input type="text" data-bind="notesvalue: model.Fundus2" /></div>
                 </div>
             </div>
@@ -1305,15 +1298,15 @@
                 <label>Follow-up</label>
                 <select data-bind="notesselect: model.FollowUp1"></select>
             </div>
-            <div class="small-3 columns col-narrow">
+            <div class="small-3 columns tight">
                 <label>&nbsp;</label>
                 <select data-bind="notesselect: model.FollowUp2"></select>
             </div>
-            <div class="small-3 columns col-narrow">
+            <div class="small-3 columns tight">
                 <label>&nbsp;</label>
                 <select data-bind="notesselect: model.FollowUp3"></select>
             </div>
-            <div class="small-3 columns col-narrow">
+            <div class="small-3 columns tight">
                 <label>&nbsp;</label>
                 <input type="text" data-bind="notesvalue: model.FollowUp4" />
             </div>
@@ -1323,9 +1316,9 @@
                 <label>Letter to</label>
                 <input type="text" data-bind="notesvalue: model.CopyTo" />
             </div>
-            <div class="small-2 columns col-narrow">
+            <div class="small-2 columns side-label-left">
                 <label>&nbsp;</label>
-                <input type="checkbox" data-bind="notescheck: model.cbPrintQueue" />Print Queue
+                <input type="checkbox" data-bind="notescheck: model.cbPrintQueue" />&nbsp;Print Queue
             </div>
         </div>
         <div class="row row-narrow">

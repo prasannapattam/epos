@@ -35,7 +35,7 @@ namespace epos.Lib.Repository
             using(var db = new PosEntities())
             {
                 var query = from dbLookup in db.LookUps
-                            orderby dbLookup.FieldName, dbLookup.SortOrder
+                            orderby dbLookup.FieldName, dbLookup.SortOrder, dbLookup.LookupID
                             select new LookUpModel
                             {
                                 LookUpID = dbLookup.LookupID,
@@ -273,7 +273,7 @@ namespace epos.Lib.Repository
             }
         }
 
-        public static List<SelectListItem> DoctorsGet()
+        public static List<SelectListItem> PrintQueueDoctorsGet()
         {
             using (var db = new PosEntities())
             {
@@ -289,6 +289,21 @@ namespace epos.Lib.Repository
             }
         }
 
+        public static List<SelectListItem> DoctorsGet()
+        {
+            using (var db = new PosEntities())
+            {
+                var userQuery = from user in db.Users
+                                orderby user.FirstName, user.LastName
+                                select new SelectListItem
+                                {
+                                    Text = user.FirstName + " " + user.LastName,
+                                    Value = user.UserName
+                                };
+                return userQuery.ToList();
+            }
+        }
+
         public static PrintQueueModel PrintQueueGet()
         {
             //first populating the users
@@ -297,7 +312,7 @@ namespace epos.Lib.Repository
             {
                 
                 PrintQueueModel model = new PrintQueueModel();
-                model.Doctors = DoctorsGet();
+                model.Doctors = PrintQueueDoctorsGet();
 
                 var itemQuery = from queue in db.PrintQueues
                                 join exam in db.Exams on queue.ExamID equals exam.ExamID

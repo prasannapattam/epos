@@ -50,9 +50,11 @@ namespace epos.Lib.Domain
                 notes.User.Value = userName;
             }
 
-            //In old code sometimes Patient Number is empty. This is causing problem. Setting that
+            //In old code sometimes Patient Number & name is empty. This is causing problem. Setting that
             if (notes.PatientNumber.Value == "")
                 notes.PatientNumber.Value = patient.PatientNumber;
+            if (notes.PatientName.Value == "")
+                notes.PatientNumber.Value = patient.FirstName + " " + patient.LastName;
 
 			return notesVM;
         }

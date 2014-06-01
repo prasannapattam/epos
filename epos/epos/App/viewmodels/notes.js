@@ -298,7 +298,7 @@
         }, vm.model);
 
         vm.model.DiscussedCalculation = ko.computed(function () {
-            var discussed = "Discussed findings with " + vm.model.PatientName.Value();
+            var discussed = "Discussed findings with " + vm.model.FirstName.Value();
             
             var hxFrom = vm.model.HxFrom.Value();
             if (hxFrom !== "" && hxFrom != "patient")
@@ -459,7 +459,7 @@
         var ret = CheckNoPref();
 
         if (ret) {
-            if ((vm.model.SLE.Value() === true || vm.model.SLE.Value() === true) && vm.model.Dilate3.Value() !== undefined)
+            if ((vm.model.SLE.Value() === true || vm.model.PenLight.Value() === true) && vm.model.Dilate3.Value() !== undefined)
                 ret = true;
             else {
                 toastr.error('SLE/Pen-light options and dilated options are required');
