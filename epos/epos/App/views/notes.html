@@ -7,7 +7,7 @@
                     <a href="#" class="button tiny selected" data-bind="click: save, css: { display_none: model.NotesType() !== constants.enum.notesType.New && model.NotesType() !== constants.enum.notesType.Saved, disabled: !session.isDirty() }"><i class="button-icon fi-check"></i>Save</a>
                     <a href="#" class="button tiny selected" data-bind="click: correct, css: { display_none: model.NotesType() !== constants.enum.notesType.Correct, disabled: !session.isDirty() }"><i class="button-icon fi-clipboard-pencil"></i>Correct</a>
                     <a href="#" class="button tiny selected" data-bind="click: signOff, css: { display_none: model.NotesType() !== constants.enum.notesType.New && model.NotesType() !== constants.enum.notesType.Saved, disabled: !session.isDirty() }"><i class="button-icon fi-clipboard-notes"></i>Sign off</a>
-                    <a href="#" class="button tiny selected" data-bind="click: cancel"><i class="button-icon fi-x"></i>Cancel</a>
+                    <div class="button tiny selected" data-bind="click: cancel"><i class="button-icon fi-x"></i>Cancel</div>
             </div>
         </div>
         <div class="row row-narrow notes-menu">
@@ -516,6 +516,7 @@
         </div>
     </fieldset>
     <fieldset class="no-bottom-border">
+    <div class="row row-narrow">
         <div class="small-4 columns col-narrow">
             <label>Man Rfx</label>
             <div class="row row-narrow">
@@ -610,106 +611,112 @@
                 </div>
             </div>
         </div>
+
+        <div class="row text-center">
+            <div class="button tiny selected" data-bind="click: priorExam"><i class="button-icon fi-first-aid"></i>Prior Exam</div>
+        </div>
+    </div>
     </fieldset>
-<!--    <div class="row row-narrow">
+    <div id="priorExamWindow" style="display:none">
         <fieldset>
-            <legend>Prior Exam</legend>
-            <div class="small-4 columns col-narrow">
-                <label>Man Rfx</label>
-                <div class="row row-narrow">
-                    <div class="small-1 columns tight">
-                        OD:
+            <div class="row tight">
+                <div class="small-4 columns tight">
+                    <label>Man Rfx</label>
+                    <div class="row tight">
+                        <div class="small-1 columns tight side-label">
+                            OD:
+                        </div>
+                        <div class="small-6 columns tight">
+                            <input type="text" data-bind="notesvalue: model.LastManRfxOD1" disabled="disabled" />
+                        </div>
+                        <div class="small-5 columns tight">
+                            <input type="text" data-bind="notesvalue: model.LastManRfxOD2" disabled="disabled" />
+                        </div>
                     </div>
-                    <div class="small-6 columns tight">
-                        <input type="text" data-bind="notesvalue: model.LastManRfxOD1" />
-                    </div>
-                    <div class="small-5 columns tight">
-                        <input type="text" data-bind="notesvalue: model.LastManRfxOD2" />
-                    </div>
-                </div>
-                <div class="row row-narrow">
-                    <div class="small-1 columns tight">
-                        OS:
-                    </div>
-                    <div class="small-6 columns tight">
-                        <input type="text" data-bind="notesvalue: model.LastManRfxOS1" />
-                    </div>
-                    <div class="small-5 columns tight">
-                        <input type="text" data-bind="notesvalue: model.LastManRfxOS2" />
-                    </div>
-                </div>
-            </div>
-            <div class="small-3 columns col-narrow">
-                <label>VA</label>
-                <div class="row row-narrow">
-                    <div class="tiny-3 columns tight">
-                        OD:
-                    </div>
-                    <div class="tiny-9 columns tight">
-                        <select data-bind="notesselect: model.LastManVAOD1"></select>
-                    </div>
-                    <div class="tiny-12 columns tight">
-                        <input type="text" data-bind="notesvalue: model.LastManVAOD2" />
+                    <div class="row tight">
+                        <div class="small-1 columns tight side-label">
+                            OS:
+                        </div>
+                        <div class="small-6 columns tight">
+                            <input type="text" data-bind="notesvalue: model.LastManRfxOS1" disabled="disabled" />
+                        </div>
+                        <div class="small-5 columns tight">
+                            <input type="text" data-bind="notesvalue: model.LastManRfxOS2" disabled="disabled" />
+                        </div>
                     </div>
                 </div>
-                <div class="row row-narrow">
-                    <div class="tiny-3 columns tight">
-                        OS:
+                <div class="small-3 columns tight">
+                    <label>VA</label>
+                    <div class="row tight">
+                        <div class="small-2 columns tight side-label">
+                            OD:
+                        </div>
+                        <div class="small-4 columns tight">
+                            <input type="text" data-bind="notesvalue: model.LastManVAOD1" disabled="disabled" />
+                        </div>
+                        <div class="small-6 columns tight">
+                            <input type="text" data-bind="notesvalue: model.LastManVAOD2" disabled="disabled" />
+                        </div>
                     </div>
-                    <div class="tiny-9 columns tight">
-                        <select data-bind="notesselect: model.LastManVSOS1"></select>
-                    </div>
-                    <div class="tiny-12 columns tight">
-                        <input type="text" data-bind="notesvalue: model.LastManVSOS2" />
-                    </div>
-                </div>
-            </div>
-            <div class="small-2 columns col-narrow">
-                <label>Cyc Rfx</label>
-                <div class="row row-narrow">
-                    <div class="small-2 columns tight">
-                        OD:
-                    </div>
-                    <div class="small-10 columns tight">
-                        <input type="text" data-bind="notesvalue: model.LastCycRfxOD" />
-                    </div>
-                </div>
-                <div class="row row-narrow">
-                    <div class="small-2 columns tight">
-                        OS:
-                    </div>
-                    <div class="small-10 columns tight">
-                        <input type="text" data-bind="notesvalue: model.LastCycRfxOS" />
+                    <div class="row tight">
+                        <div class="small-2 columns tight side-label">
+                            OS:
+                        </div>
+                        <div class="small-4 columns tight">
+                            <input type="text" data-bind="notesvalue: model.LastManVSOS1" disabled="disabled" />
+                        </div>
+                        <div class="small-6 columns tight">
+                            <input type="text" data-bind="notesvalue: model.LastManVSOS2" disabled="disabled" />
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div class="small-3 columns col-narrow">
-                <label>VA</label>
-                <div class="row row-narrow">
-                    <div class="tiny-3 columns tight">
-                        OD:
+                <div class="small-2 columns tight">
+                    <label>Cyc Rfx</label>
+                    <div class="row tight">
+                        <div class="small-2 columns tight side-label">
+                            OD:
+                        </div>
+                        <div class="small-10 columns tight">
+                            <input type="text" data-bind="notesvalue: model.LastCycRfxOD" disabled="disabled"  />
+                        </div>
                     </div>
-                    <div class="tiny-9 columns tight">
-                        <select data-bind="notesselect: model.LastCycVAOD3"></select>
-                    </div>
-                    <div class="tiny-12 columns tight">
-                        <input type="text" data-bind="notesvalue: model.LastCycVAOD4" />
+                    <div class="row tight">
+                        <div class="small-2 columns tight side-label">
+                            OS:
+                        </div>
+                        <div class="small-10 columns tight">
+                            <input type="text" data-bind="notesvalue: model.LastCycRfxOS" disabled="disabled"  />
+                        </div>
                     </div>
                 </div>
-                <div class="row row-narrow">
-                    <div class="tiny-3 columns tight">
-                        OS:
+                <div class="small-3 columns tight">
+                    <label>VA</label>
+                    <div class="row tight">
+                        <div class="small-2 columns tight side-label">
+                            OD:
+                        </div>
+                        <div class="small-4 columns tight">
+                            <input type="text" data-bind="notesvalue: model.LastCycVAOD3" disabled="disabled" />
+                        </div>
+                        <div class="small-6 columns tight">
+                            <input type="text" data-bind="notesvalue: model.LastCycVAOD4" disabled="disabled" />
+                        </div>
                     </div>
-                    <div class="tiny-9 columns tight">
-                        <select data-bind="notesselect: model.LastCycVSOS1"></select>
-                    </div>
-                    <div class="tiny-12 columns tight">
-                        <input type="text" data-bind="notesvalue: model.LastCycVSOS2" />
+                    <div class="row tight">
+                        <div class="small-2 columns tight side-label">
+                            OS:
+                        </div>
+                        <div class="small-4 columns tight">
+                            <input type="text" data-bind="notesvalue: model.LastCycVSOS1" disabled="disabled" />
+                        </div>
+                        <div class="small-6 columns tight">
+                            <input type="text" data-bind="notesvalue: model.LastCycVSOS2" disabled="disabled" />
+                        </div>
                     </div>
                 </div>
             </div>
         </fieldset>
-    </div>-->
+    </div>
     <fieldset class="no-bottom-border">
         <div class="small-7 columns col-narrow">
             <label>Rx given</label>
@@ -732,16 +739,16 @@
             <label>CTL Rx</label>
             <div class="row row-narrow tight">
                 <div class="small-1 columns tight odos">OD:</div>
-                <div class="small-3 columns tight"><input type="text" data-bind="notesvalue: model.CTLRxOD1" /></div>
+                <div class="small-4 columns tight"><input type="text" data-bind="notesvalue: model.CTLRxOD1" /></div>
                 <div class="small-3 columns tight"><input type="text" data-bind="notesvalue: model.CTLRxOD2" /></div>
-                <div class="small-3 columns tight"><input type="text" data-bind="notesvalue: model.CTLRxOD3" /></div>
+                <div class="small-2 columns tight"><input type="text" data-bind="notesvalue: model.CTLRxOD3" /></div>
                 <div class="small-2 columns tight small-font side-label-left">&nbsp;<input type="checkbox" data-bind="notescheck: model.PopulateCtlRx"  />Populate</div>
             </div>
             <div class="row row-narrow tight">
                 <div class="small-1 columns tight odos">OS:</div>
-                <div class="small-3 columns tight"><input type="text" data-bind="notesvalue: model.CTLRxOS1" /></div>
+                <div class="small-4 columns tight"><input type="text" data-bind="notesvalue: model.CTLRxOS1" /></div>
                 <div class="small-3 columns tight"><input type="text" data-bind="notesvalue: model.CTLRxOS2" /></div>
-                <div class="small-3 columns tight"><input type="text" data-bind="notesvalue: model.CTLRxOS3" /></div>
+                <div class="small-2 columns tight"><input type="text" data-bind="notesvalue: model.CTLRxOS3" /></div>
                 <div class="small-2 columns tight small-font side-label-left">&nbsp;</div>
             </div>
         </div>
@@ -1334,5 +1341,4 @@
             </div>
         </div>
     </fieldset>
-
 </div>

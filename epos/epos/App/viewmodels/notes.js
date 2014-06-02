@@ -22,7 +22,8 @@
         defaultSave: defaultSave,
         cancel: cancel,
         savePatient: savePatient,
-        doctorChange: doctorChange
+        doctorChange: doctorChange,
+        priorExam: priorExam
 };
 
     return vm;
@@ -407,6 +408,17 @@
         }
     }
 
+    function priorExam() {
+        var priorExamWindow = $("#priorExamWindow");
+        if (!priorExamWindow.data("kendoWindow")) {
+            priorExamWindow.kendoWindow({
+                width: "850px",
+                title: "Prior Exam",
+            });
+        }
+        priorExamWindow.data("kendoWindow").open();
+    }
+
     function cancel() {
         if (session.isDirty()) {
             utility.showMessage('Are you sure you want cancel and loose all changes?', 'Notes').then(function (dialogResult) {
@@ -419,6 +431,8 @@
         else {
             router.navigateBack();
         }
+
+        return true;
     }
 
     function signOff() {

@@ -21,12 +21,16 @@ namespace epos.App_Start
                     .Include("~/scripts/foundation/foundation.js")
                     .IncludeDirectory("~/scripts/foundation", "*.js")
 					.Include("~/scripts/moment-with-langs.js")
-					.Include("~/scripts/jquery.textcomplete.js")
-				);
+                    .Include("~/scripts/jquery.textcomplete.js")
+                    .Include("~/scripts/kendo/kendo.ui.core.min.js")
+                    .Include("~/scripts/kendo/kendo.window.min.js")
+            );
 
             bundles.Add(
                 new StyleBundle("~/content/css")
                     .Include("~/content/normalize.css")
+                    .Include("~/content/kendo.common.min.css")
+                    .Include("~/content/kendo.blueopal.min.css")
                     .Include("~/content/foundation.css")
                     .Include("~/content/foundation-icons.css")
                     .Include("~/content/foundation-datepicker.css")

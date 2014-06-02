@@ -46,6 +46,7 @@ namespace epos.Lib.Domain
             if (notes.NotesType == PosConstants.NotesType.New)
             {
                 SetPatientInfo(patient, notes);
+                SetPriorValues(notes);
                 //SetOverides(notes);
                 notes.User.Value = userName;
             }
@@ -54,7 +55,7 @@ namespace epos.Lib.Domain
             if (notes.PatientNumber.Value == "")
                 notes.PatientNumber.Value = patient.PatientNumber;
             if (notes.PatientName.Value == "")
-                notes.PatientNumber.Value = patient.FirstName + " " + patient.LastName;
+                notes.PatientName.Value = patient.FirstName + " " + patient.LastName;
 
 			return notesVM;
         }
@@ -361,6 +362,49 @@ namespace epos.Lib.Domain
             return displaySex;
 
         }
+
+        private void SetPriorValues(NotesModel notes)
+        {
+            SetFieldValue(notes.LastManRfxOD1, notes.ManRfxOD1.Value);
+            SetFieldValue(notes.LastManRfxOD2, notes.ManRfxOD2.Value);
+            SetFieldValue(notes.LastManVAOD1, notes.ManVAOD1.Value);
+            SetFieldValue(notes.LastManVAOD2, notes.ManVAOD2.Value);
+            SetFieldValue(notes.LastCycRfxOD, notes.CycRfxOD.Value);
+            SetFieldValue(notes.LastCycVAOD3, notes.CycVAOD3.Value);
+            SetFieldValue(notes.LastCycVAOD4, notes.CycVAOD4.Value);
+            SetFieldValue(notes.LastManRfxOS1, notes.ManRfxOS1.Value);
+            SetFieldValue(notes.LastManRfxOS2, notes.ManRfxOS2.Value);
+            SetFieldValue(notes.LastManVSOS1, notes.ManVSOS1.Value);
+            SetFieldValue(notes.LastManVSOS2, notes.ManVSOS2.Value);
+            SetFieldValue(notes.LastCycRfxOS, notes.CycRfxOS.Value);
+            SetFieldValue(notes.LastCycVSOS1, notes.CycVSOS1.Value);
+            SetFieldValue(notes.LastCycVSOS2, notes.CycVSOS2.Value);
+
+            //setting the original values to blank
+            SetFieldValue(notes.ManRfxOD1, "");
+            SetFieldValue(notes.ManRfxOD2, "");
+            SetFieldValue(notes.ManVAOD1, "");
+            SetFieldValue(notes.ManVAOD2, "");
+            SetFieldValue(notes.CycRfxOD, "");
+            SetFieldValue(notes.CycVAOD3, "");
+            SetFieldValue(notes.CycVAOD4, "");
+
+            SetFieldValue(notes.ManRfxOS1, "");
+            SetFieldValue(notes.ManRfxOS2, "");
+            SetFieldValue(notes.ManVSOS1, "");
+            SetFieldValue(notes.ManVSOS2, "");
+            SetFieldValue(notes.CycRfxOS, "");
+            SetFieldValue(notes.CycVSOS1, "");
+            SetFieldValue(notes.CycVSOS2, "");
+        }
+
+        private void SetFieldValue(Field field, string value)
+        {
+            field.Value = value;
+            field.ColourType = (int)PosConstants.ColourType.Normal;
+        }
+
+
 
         public string Save(PosConstants.NotesSaveType saveType, NotesModel model)
         {
