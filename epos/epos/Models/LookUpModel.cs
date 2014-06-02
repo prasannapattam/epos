@@ -12,5 +12,7 @@ namespace epos.Models
         public string FieldValue { get; set; }
         public string FieldDescription { get; set; }
         public int? SortOrder { get; set; }
+        public bool  IsNew { get; set; }
+        public bool IsDeleted { get; set; }
     }
 }

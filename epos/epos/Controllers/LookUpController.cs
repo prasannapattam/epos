@@ -29,6 +29,46 @@ namespace epos.Controllers
             return ajax; 
         }
 
+        public AjaxModel<String> PostSaveLookUps(List<LookUpModel> lookupList)
+        {
+
+            AjaxModel<string> ajax = new AjaxModel<string>();
+            try
+            {
+
+                if (lookupList != null)
+                {
+                    foreach (var lookupModel in lookupList)
+                    {
+                        if (lookupModel.IsNew)
+                        {
+                            PosRepository.AddLookUpModel(lookupModel);
+                        }
+
+                        else if (lookupModel.IsDeleted)
+                        {
+                            PosRepository.RemoveLookUpModel(lookupModel.LookUpID);
+                        }
+                        else
+                        {
+                            PosRepository.UpdateLookUpModel(lookupModel);
+                        }
+                    }
+                    ajax.Success = true;
+                ajax.Message = PosMessage.LookupsSavedSuccessfully  ;
+
+                }
+            }
+            catch (Exception exp)
+            {
+
+                ajax.Success = false;
+                ajax.Message = String.Format("Message {0}  Error {1}" ,PosMessage.LookUpsSaveError , exp.Message) ;
+            }
+
+            return ajax;
+        }
+
         private Dictionary<string, List<LookUpModel>> GetLookUpDictionary(List<LookUpModel> list)
         {
             var dic = new Dictionary<string, List<LookUpModel>>();
