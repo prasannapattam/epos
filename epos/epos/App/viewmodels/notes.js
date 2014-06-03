@@ -417,6 +417,8 @@
             });
         }
         priorExamWindow.data("kendoWindow").open();
+
+        return false;
     }
 
     function cancel() {
@@ -432,7 +434,7 @@
             router.navigateBack();
         }
 
-        return true;
+        return false;
     }
 
     function signOff() {
