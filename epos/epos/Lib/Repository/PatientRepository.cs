@@ -1,9 +1,11 @@
 ﻿using AutoMapper;
 using epos.Lib.Shared;
 using epos.Models;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Web;
 
 namespace epos.Lib.Repository
@@ -203,6 +205,48 @@ namespace epos.Lib.Repository
                 exam.ExamID = dbExam.ExamID;
             }
 
+        }
+
+        public static void ExamDataSave(int examID, NotesModel notes)
+        {
+            PropertyInfo[] notesFields = notes.GetType().GetProperties();
+            Field field;
+            PropertyInfo pi;
+            Dictionary<string, string> dicJson;
+            ExamData data = new ExamData();
+
+            using(var db = new PosEntities())
+            {
+                var dataConfigurationQuery = from dbConfig in db.ExamDataConfigurations select dbConfig;
+
+                foreach(var config in dataConfigurationQuery)
+                {
+                    dicJson = new Dictionary<string, string>();
+                    if (config.FieldDataType == (int)PosConstants.FieldDataType.Json)
+                    {
+                        string[] examFields = config.Field.Replace(" ", "") .Split(',');
+                        
+                        foreach(string examField in examFields)
+                        {
+                            pi = notesFields.First(f => f.Name == examField);
+                            field = (Field) pi.GetValue(notes);
+                            dicJson.Add(field.Name, field.Value);
+                        }
+
+                        data = new ExamData();
+                        data.ExamID = examID;
+                        data.ExamDataConfigurationID = config.ExamDataConfigurationID;
+                        data.FieldName = config.Name;
+                        data.FieldValue = JsonConvert.SerializeObject(dicJson);
+                    }
+
+                    db.ExamDatas.Add(data);
+                    
+                }
+
+                //finally saving
+                db.SaveChanges();
+            }
         }
 
         public static ExamDefaultModel ExamDefaultGet(int examDefaultID)

@@ -30,29 +30,24 @@ warning 6002: The table/view 'ExamPatient.dbo.AutoCorrect' does not have a prima
           <Property Name="LastUpdatedDate" Type="datetime" />
           <Property Name="UserName" Type="varchar" MaxLength="50" />
         </EntityType>
-        <!--Errors Found During Generation:
-warning 6002: The table/view 'ExamPatient.dbo.ExamDataConfiguration' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="ExamData">
+          <Key>
+            <PropertyRef Name="ExamDataID" />
+          </Key>
+          <Property Name="ExamDataID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ExamID" Type="int" Nullable="false" />
+          <Property Name="ExamDataConfigurationID" Type="int" Nullable="false" />
+          <Property Name="FieldName" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="FieldValue" Type="varchar" MaxLength="8000" Nullable="false" />
+        </EntityType>
         <EntityType Name="ExamDataConfiguration">
           <Key>
             <PropertyRef Name="ExamDataConfigurationID" />
-            <PropertyRef Name="FieldName" />
-            <PropertyRef Name="FieldDataType" />
           </Key>
           <Property Name="ExamDataConfigurationID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="FieldName" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="FieldDataType" Type="int" Nullable="false" />
-        </EntityType>
-        <!--Errors Found During Generation:
-warning 6002: The table/view 'ExamPatient.dbo.ExamDataXml' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
-        <EntityType Name="ExamDataXml">
-          <Key>
-            <PropertyRef Name="ExamDataXmlID" />
-            <PropertyRef Name="ExamID" />
-            <PropertyRef Name="ExamDataXml" />
-          </Key>
-          <Property Name="ExamDataXmlID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="ExamID" Type="int" Nullable="false" />
-          <Property Name="ExamDataXml" Type="varchar" MaxLength="8000" Nullable="false" />
+          <Property Name="Field" Type="varchar" MaxLength="2000" Nullable="false" />
         </EntityType>
         <EntityType Name="ExamDefault">
           <Key>
@@ -144,6 +139,8 @@ warning 6002: The table/view 'ExamPatient.dbo.ExamDataXml' does not have a prima
         </EntityType>
         <EntityContainer Name="PosModelStoreContainer">
           <EntitySet Name="Exam" EntityType="Self.Exam" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ExamData" EntityType="Self.ExamData" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ExamDataConfiguration" EntityType="Self.ExamDataConfiguration" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ExamDefault" EntityType="Self.ExamDefault" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ExamLookUp" EntityType="Self.ExamLookUp" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="LookUp" EntityType="Self.LookUp" Schema="dbo" store:Type="Tables" />
@@ -157,20 +154,6 @@ warning 6002: The table/view 'ExamPatient.dbo.ExamDataXml' does not have a prima
     [AutoCorrect].[Value] AS [Value], 
     [AutoCorrect].[UserName] AS [UserName]
     FROM [dbo].[AutoCorrect] AS [AutoCorrect]</DefiningQuery>
-          </EntitySet>
-          <EntitySet Name="ExamDataConfiguration" EntityType="Self.ExamDataConfiguration" store:Type="Tables" store:Schema="dbo">
-            <DefiningQuery>SELECT 
-    [ExamDataConfiguration].[ExamDataConfigurationID] AS [ExamDataConfigurationID], 
-    [ExamDataConfiguration].[FieldName] AS [FieldName], 
-    [ExamDataConfiguration].[FieldDataType] AS [FieldDataType]
-    FROM [dbo].[ExamDataConfiguration] AS [ExamDataConfiguration]</DefiningQuery>
-          </EntitySet>
-          <EntitySet Name="ExamDataXml" EntityType="Self.ExamDataXml" store:Type="Tables" store:Schema="dbo">
-            <DefiningQuery>SELECT 
-    [ExamDataXml].[ExamDataXmlID] AS [ExamDataXmlID], 
-    [ExamDataXml].[ExamID] AS [ExamID], 
-    [ExamDataXml].[ExamDataXml] AS [ExamDataXml]
-    FROM [dbo].[ExamDataXml] AS [ExamDataXml]</DefiningQuery>
           </EntitySet>
         </EntityContainer>
       </Schema></edmx:StorageModels>
@@ -298,28 +281,27 @@ warning 6002: The table/view 'ExamPatient.dbo.ExamDataXml' does not have a prima
           <EntitySet Name="Schedules" EntityType="Self.Schedule" />
           <EntitySet Name="Users" EntityType="Self.User" />
           <EntitySet Name="AutoCorrects" EntityType="Self.AutoCorrect" />
+          <EntitySet Name="ExamDatas" EntityType="PosModel.ExamData" />
           <EntitySet Name="ExamDataConfigurations" EntityType="PosModel.ExamDataConfiguration" />
-          <EntitySet Name="ExamDataXmls" EntityType="PosModel.ExamDataXml" />
         </EntityContainer>
+        <EntityType Name="ExamData">
+          <Key>
+            <PropertyRef Name="ExamDataID" />
+          </Key>
+          <Property Name="ExamDataID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ExamID" Type="Int32" Nullable="false" />
+          <Property Name="ExamDataConfigurationID" Type="Int32" Nullable="false" />
+          <Property Name="FieldName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="FieldValue" Type="String" Nullable="false" MaxLength="8000" FixedLength="false" Unicode="false" />
+        </EntityType>
         <EntityType Name="ExamDataConfiguration">
           <Key>
             <PropertyRef Name="ExamDataConfigurationID" />
-            <PropertyRef Name="FieldName" />
-            <PropertyRef Name="FieldDataType" />
           </Key>
           <Property Name="ExamDataConfigurationID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="FieldName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="FieldDataType" Type="Int32" Nullable="false" />
-        </EntityType>
-        <EntityType Name="ExamDataXml">
-          <Key>
-            <PropertyRef Name="ExamDataXmlID" />
-            <PropertyRef Name="ExamID" />
-            <PropertyRef Name="ExamDataXml1" />
-          </Key>
-          <Property Name="ExamDataXmlID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="ExamID" Type="Int32" Nullable="false" />
-          <Property Name="ExamDataXml1" Type="String" Nullable="false" MaxLength="8000" FixedLength="false" Unicode="false" />
+          <Property Name="Field" Type="String" Nullable="false" MaxLength="2000" FixedLength="false" Unicode="false" />
         </EntityType>
       </Schema>
     </edmx:ConceptualModels>
@@ -446,21 +428,24 @@ warning 6002: The table/view 'ExamPatient.dbo.ExamDataXml' does not have a prima
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="ExamDataConfigurations">
-            <EntityTypeMapping TypeName="PosModel.ExamDataConfiguration">
-              <MappingFragment StoreEntitySet="ExamDataConfiguration">
-                <ScalarProperty Name="FieldDataType" ColumnName="FieldDataType" />
+          <EntitySetMapping Name="ExamDatas">
+            <EntityTypeMapping TypeName="PosModel.ExamData">
+              <MappingFragment StoreEntitySet="ExamData">
+                <ScalarProperty Name="FieldValue" ColumnName="FieldValue" />
                 <ScalarProperty Name="FieldName" ColumnName="FieldName" />
                 <ScalarProperty Name="ExamDataConfigurationID" ColumnName="ExamDataConfigurationID" />
+                <ScalarProperty Name="ExamID" ColumnName="ExamID" />
+                <ScalarProperty Name="ExamDataID" ColumnName="ExamDataID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="ExamDataXmls">
-            <EntityTypeMapping TypeName="PosModel.ExamDataXml">
-              <MappingFragment StoreEntitySet="ExamDataXml">
-                <ScalarProperty Name="ExamDataXml1" ColumnName="ExamDataXml" />
-                <ScalarProperty Name="ExamID" ColumnName="ExamID" />
-                <ScalarProperty Name="ExamDataXmlID" ColumnName="ExamDataXmlID" />
+          <EntitySetMapping Name="ExamDataConfigurations">
+            <EntityTypeMapping TypeName="PosModel.ExamDataConfiguration">
+              <MappingFragment StoreEntitySet="ExamDataConfiguration">
+                <ScalarProperty Name="Field" ColumnName="Field" />
+                <ScalarProperty Name="FieldDataType" ColumnName="FieldDataType" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="ExamDataConfigurationID" ColumnName="ExamDataConfigurationID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

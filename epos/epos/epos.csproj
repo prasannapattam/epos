@@ -163,10 +163,10 @@
     <Compile Include="Lib\Repository\Exam.cs">
       <DependentUpon>Pos.tt</DependentUpon>
     </Compile>
-    <Compile Include="Lib\Repository\ExamDataConfiguration.cs">
+    <Compile Include="Lib\Repository\ExamData.cs">
       <DependentUpon>Pos.tt</DependentUpon>
     </Compile>
-    <Compile Include="Lib\Repository\ExamDataXml.cs">
+    <Compile Include="Lib\Repository\ExamDataConfiguration.cs">
       <DependentUpon>Pos.tt</DependentUpon>
     </Compile>
     <Compile Include="Lib\Repository\ExamDefault.cs">

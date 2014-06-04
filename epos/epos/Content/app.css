@@ -737,3 +737,7 @@ select:disabled{
     border-right: 1px solid black;
 }
 
+.textcomplete-item{
+    font-size: 9pt !important;
+    font-family: Verdana, Geneva, sans-serif;
+}

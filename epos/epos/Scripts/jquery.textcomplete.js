@@ -238,6 +238,8 @@
           this.term = null;
           this.listView.deactivate();
         }
+
+        window.searchTerm = this.term;
       },
 
       /**
@@ -576,17 +578,23 @@
             this.index += 1;
           }
           this.activateIndexedItem();
-        } else if (e.keyCode === 13 || e.keyCode === 9 || e.keyCode === 32 || e.keyCode === 188 || e.keyCode === 190 ) {  // ENTER or TAB
+        } else if (e.keyCode === 13 || e.keyCode === 9) {  // ENTER or TAB
             e.preventDefault();
-            var delimiter;
-            if (e.keyCode !== 13 && e.keyCode !== 9) {
-                //delimiter = String.fromCharCode(e.keyCode);
-                if (e.keyCode === 188)
-                    delimiter = ', ';
-                else if (e.keyCode === 190)
-                    delimiter = '. ';
-            }
-            this.select(parseInt(this.getActiveItem().data('index'), 10), delimiter);
+            this.select(parseInt(this.getActiveItem().data('index'), 10), ' ');
+        } else if (e.keyCode === 32 || e.keyCode === 188 || e.keyCode === 190) {
+                var word = this.data[0];
+                word = word.slice(0, word.indexOf(':'));
+                if (word === window.searchTerm) {
+                    var delimiter = ' ';
+                    if (e.keyCode === 188)
+                        delimiter = ', ';
+                    else if (e.keyCode === 190)
+                        delimiter = '. ';
+                    else
+                        delimiter = ' ';
+                    e.preventDefault();
+                    this.select(parseInt(this.getActiveItem().data('index'), 10), ' ');
+                }
         }
       },
 

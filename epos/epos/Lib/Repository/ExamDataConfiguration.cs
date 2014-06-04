@@ -15,7 +15,8 @@ namespace epos.Lib.Repository
     public partial class ExamDataConfiguration
     {
         public int ExamDataConfigurationID { get; set; }
-        public string FieldName { get; set; }
+        public string Name { get; set; }
         public int FieldDataType { get; set; }
+        public string Field { get; set; }
     }
 }

@@ -43,5 +43,13 @@ namespace epos.Lib.Shared
             Male = 0,
             Female = 1
         }
+
+        public enum FieldDataType
+        {
+            Json = 1,
+            Value = 2
+        }
+
+
     }
 }

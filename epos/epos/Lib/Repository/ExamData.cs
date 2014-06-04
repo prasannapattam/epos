@@ -12,10 +12,12 @@ namespace epos.Lib.Repository
     using System;
     using System.Collections.Generic;
     
-    public partial class ExamDataXml
+    public partial class ExamData
     {
-        public int ExamDataXmlID { get; set; }
+        public int ExamDataID { get; set; }
         public int ExamID { get; set; }
-        public string ExamDataXml1 { get; set; }
+        public int ExamDataConfigurationID { get; set; }
+        public string FieldName { get; set; }
+        public string FieldValue { get; set; }
     }
 }

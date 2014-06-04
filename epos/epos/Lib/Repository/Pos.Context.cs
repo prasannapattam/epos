@@ -34,7 +34,7 @@ namespace epos.Lib.Repository
         public virtual DbSet<Schedule> Schedules { get; set; }
         public virtual DbSet<User> Users { get; set; }
         public virtual DbSet<AutoCorrect> AutoCorrects { get; set; }
+        public virtual DbSet<ExamData> ExamDatas { get; set; }
         public virtual DbSet<ExamDataConfiguration> ExamDataConfigurations { get; set; }
-        public virtual DbSet<ExamDataXml> ExamDataXmls { get; set; }
     }
 }

@@ -14,8 +14,8 @@
         <EntityTypeShape EntityType="PosModel.Schedule" Width="1.5" PointX="6.75" PointY="0.75" IsExpanded="true" />
         <EntityTypeShape EntityType="PosModel.User" Width="1.5" PointX="6.75" PointY="3.75" IsExpanded="true" />
         <EntityTypeShape EntityType="PosModel.AutoCorrect" Width="1.5" PointX="6.75" PointY="6.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="PosModel.ExamData" Width="1.5" PointX="8.5" PointY="6.125" />
         <EntityTypeShape EntityType="PosModel.ExamDataConfiguration" Width="1.5" PointX="9.375" PointY="0.75" />
-        <EntityTypeShape EntityType="PosModel.ExamDataXml" Width="1.5" PointX="9.375" PointY="3.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
