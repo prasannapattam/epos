@@ -593,7 +593,7 @@
                     else
                         delimiter = ' ';
                     e.preventDefault();
-                    this.select(parseInt(this.getActiveItem().data('index'), 10), ' ');
+                    this.select(parseInt(this.getActiveItem().data('index'), 10), delimiter);
                 }
         }
       },
