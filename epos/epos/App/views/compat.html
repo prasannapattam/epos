@@ -1,0 +1,25 @@
+﻿<div>
+    <h3 class="display_none">Old EMR Compatibility</h3>
+    <div>
+        <p>
+            The functions in this page are used to update the old EMR data so that it will be compatibile with the new EMR. Depending on the requirements these functions may be needed to run frequently.<br />
+            Please don't run these functions during the busy time<br />
+            Once the new EMR completely replaces the old EMR we don't need these functions
+        </p>
+    </div>
+    <fieldset>
+        <h5>Patient's Last Visit</h5>
+        Updates all the Patient records with their last visit. Run this function if you don't see the last patients in the search.
+        <br /><br />
+        <div class="row text-center">
+            <div class="button tiny selected" data-bind="click: updateLastDate"><i class="button-icon fi-check"></i>Update Patient's Last Visit Date</div>
+        </div>
+        <div id="lastDateWindow" style="display:none">
+            Click the button below to update patient records
+            <br />
+            <div class="button tiny selected" data-bind="click: updateLastDatePopup"><i class="button-icon fi-check"></i>Update</div>
+        </div>
+
+        <br />
+    </fieldset>
+</div>

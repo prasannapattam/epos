@@ -27,8 +27,9 @@
                         { route: 'dropdown', moduleId: 'dropdown', title: 'Drop Downs' },
                         { route: 'autocorrect', moduleId: 'autocorrect', title: 'Auto Correct' },
                         { route: 'messagebox', moduleId: 'messagebox', title: 'messagebox' },
-                        { route: 'patient/:id', moduleId: 'patient', title: 'Patient' }
-        ];
+                        { route: 'patient/:id', moduleId: 'patient', title: 'Patient' },
+                        { route: 'compat', moduleId: 'compat', title: 'Compatibility' }
+                    ];
 
         router.makeRelative({ moduleId: 'viewmodels' }) // router will look here for viewmodels by convention
             .map(routes)            // Map the routes

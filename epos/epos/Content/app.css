@@ -36,6 +36,12 @@ body.main
     max-width:1000px;
    
 }
+
+p
+{
+    font-size: 9pt !important;
+    font-family: Verdana, Geneva, sans-serif;
+}
    
 h5.notes_heading
 {
