@@ -175,6 +175,18 @@ namespace epos.Lib.Domain
 
             notes.NotesType = notesType;
 
+            GetNotesFromXml(notes, examText);
+
+			return notesVM;
+        }
+        private NotesModel GetNotesFromXml(string examText)
+        {
+            NotesModel notes = new NotesModel();
+            GetNotesFromXml(notes, examText);
+            return notes;
+        }
+        private void GetNotesFromXml(NotesModel notes, string examText)
+        {
             PropertyInfo[] notesFields = notes.GetType().GetProperties();
 
             //looping through the xml and setting the Notes
@@ -219,8 +231,6 @@ namespace epos.Lib.Domain
             reader.Close();
             stringReader.Close();
             stringReader.Dispose();
-
-			return notesVM;
         }
 
         private NotesViewModel GetBlankNotes(string userName)
@@ -275,6 +285,8 @@ namespace epos.Lib.Domain
             if (pi == null) return;
 
             Field field = (Field)pi.GetValue(notes);
+            if (field == null)
+                field = new Field();
             field.Value = fieldValue;
             field.ColourType = colourType;
 
@@ -466,6 +478,16 @@ namespace epos.Lib.Domain
             }
 
             return message;
+        }
+
+        public void PatientExamDataSave(int patientID)
+        {
+            
+            List<ExamModel> exams = PatientRepository.PatientGetExams(patientID);
+            foreach (ExamModel exam in exams)
+            {
+                PatientRepository.ExamDataSave(exam.ExamID, GetNotesFromXml(exam.ExamText));
+            }
         }
     }
 }

@@ -288,5 +288,35 @@ namespace epos.Lib.Repository
                 return defaultQuery.FirstOrDefault();
             }
         }
+
+        public static List<int> PatientGetAllIds()
+        {
+            using (var db = new PosEntities())
+            {
+                var query = from dbPatient in db.Patients select dbPatient.PatientID;
+                return query.Take(10).ToList();
+            }
+        }
+
+        public static List<ExamModel> PatientGetExams(int patientID)
+        {
+            using (var db = new PosEntities())
+            {
+                var examQuery = from exam in db.Exams
+                                where exam.PatientID == patientID
+                                select new ExamModel
+                                {
+                                    ExamID = exam.ExamID,
+                                    ExamText = exam.ExamText,
+                                    ExamDate = exam.ExamDate,
+                                    SaveInd = exam.SavedInd.Value,
+                                    CorrectExamID = exam.CorrectExamID,
+                                    ExamCorrectDate = exam.ExamCorrectDate,
+                                    LastUpdatedDate = exam.LastUpdatedDate.Value
+                                };
+
+                return examQuery.ToList();
+            }
+        }
     }
 }

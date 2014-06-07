@@ -12,14 +12,48 @@
         Updates all the Patient records with their last visit. Run this function if you don't see the last patients in the search.
         <br /><br />
         <div class="row text-center">
-            <div class="button tiny selected" data-bind="click: updateLastDate"><i class="button-icon fi-check"></i>Update Patient's Last Visit Date</div>
-        </div>
-        <div id="lastDateWindow" style="display:none">
-            Click the button below to update patient records
-            <br />
-            <div class="button tiny selected" data-bind="click: updateLastDatePopup"><i class="button-icon fi-check"></i>Update</div>
+            <div class="button tiny selected" data-bind="click: updateLastDate"><i class="button-icon fi-check"></i>Update Last Visit Date</div>
         </div>
 
+        <div id="lastDateWindow" class="text-center" style="display:none">
+            <div data-bind="css: { display_block: displayType() === 1 }" style="display:none">
+            Click the button below to update patient records
+            <br /><br />
+            <div class="button tiny selected" data-bind="click: updateLastDatePopup"><i class="button-icon fi-check"></i>Update</div>
+            </div>
+            <div class="text-center" data-bind="css: { display_block: displayType() === 2 }" style="display:none">
+                <img class="loading" data-bind="attr: { src: utility.virtualDirectory + '/content/images/loading.gif' }" />
+            </div>
+            <div class="text-center" data-bind="css: { display_block: displayType() === 3, error: serverError }, text: serverMessage" style="display:none">
+
+            </div>
+        </div>
+        <br />
+    </fieldset>
+    <fieldset>
+        <h5>Patient's History</h5>
+        Updates all the Patient records with their history information. Run this function if you don't see the patient history in the notes properly.
+        <br /><br />
+        <div class="row text-center">
+            <div class="button tiny selected" data-bind="click: updateHistory"><i class="button-icon fi-check"></i>Update History</div>
+        </div>
+
+        <div id="patientHistoryWindow" class="text-center" style="display:none">
+            <div data-bind="css: { display_block: displayType() === 1 }" style="display:none">
+            Click the button below to update patient history
+            <br /><br />
+            <div class="button tiny selected" data-bind="click: updateHistoryPopup"><i class="button-icon fi-check"></i>Update</div>
+            </div>
+            <div class="text-center" data-bind="css: { display_block: displayType() === 2 }" style="display:none">
+                <img class="loading" data-bind="attr: { src: utility.virtualDirectory + '/content/images/loading.gif' }" />
+            </div>
+            <div class="text-center" data-bind="css: { display_block: displayType() === 3 }" style="display:none">
+                Progress bar<div id="historyProgressBar"></div>
+            </div>
+            <div class="text-center" data-bind="css: { display_block: displayType() === 4, error: serverError }, text: serverMessage" style="display:none">
+
+            </div>
+        </div>
         <br />
     </fieldset>
 </div>

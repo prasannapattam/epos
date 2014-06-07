@@ -1,10 +1,10 @@
 ﻿//require configuration for durandal
 require.config({
     paths: {
-        'text': '../Scripts/text',
-        'durandal': '../Scripts/durandal',
-        'plugins': '../Scripts/durandal/plugins',
-        'transitions': '../Scripts/durandal/transitions'
+        'text': '../scripts/text',
+        'durandal': '../scripts/durandal',
+        'plugins': '../scripts/durandal/plugins',
+        'transitions': '../scripts/durandal/transitions'
 }
 });
 

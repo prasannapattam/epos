@@ -383,6 +383,21 @@ namespace epos.Lib.Repository
 			}
 		}
 
+        public static void UpdateLastVisitDate()
+        {
+            using(var db = new PosEntities())
+            {
+                string sql = @"UPDATE p
+                                SET
+                                    p.LastExamDate = e.MaxExamDate
+                                FROM Patient p
+                                INNER JOIN (select e1.PatientID, MaxExamDate = Max(e1.ExamDate) from Exam e1 group by e1.PatientID
+				                            )As e ON p.PatientID = e.PatientID
+                            ";
+                db.Database.ExecuteSqlCommand(sql);
+            }
+        }
+
     }
 }
 

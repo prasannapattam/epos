@@ -39,6 +39,9 @@ namespace epos.Lib.Shared
         //Lookups
         public const string LookupsSavedSuccessfully = "Lookups saved successfully";
         public const string LookUpsSaveError = "Unable saved Lookups";
+
+        //compat
+        public const string LastVisitDateUpdateSuccess = "Successfully updated Last Visit Date";
      
     }
 }

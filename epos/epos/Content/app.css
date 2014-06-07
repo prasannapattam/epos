@@ -747,3 +747,7 @@ select:disabled{
     font-size: 9pt !important;
     font-family: Verdana, Geneva, sans-serif;
 }
+
+.error{
+    color: red;
+}
