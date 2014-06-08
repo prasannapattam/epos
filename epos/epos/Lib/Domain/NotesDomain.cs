@@ -286,7 +286,11 @@ namespace epos.Lib.Domain
 
             Field field = (Field)pi.GetValue(notes);
             if (field == null)
+            {
                 field = new Field();
+                field.Name = pi.Name;
+                pi.SetValue(notes, field);
+            }
             field.Value = fieldValue;
             field.ColourType = colourType;
 

@@ -53,15 +53,15 @@ namespace epos.Controllers
         }
         [Route("api/compatupdatehistory")]
         [HttpPost]
-        public AjaxModel<List<int>> UpdatePatientHistory(int patientID)
+        public AjaxModel<List<int>> UpdatePatientHistory([FromBody] int patientID)
         {
             AjaxModel<List<int>> ajax = new AjaxModel<List<int>>() { Success = true, Message = "", Model = null };
 
             try
             {
-                System.Threading.Thread.Sleep(100);
-                //NotesDomain domain = new NotesDomain();
-                //domain.PatientExamDataSave(patientID);
+                //System.Threading.Thread.Sleep(100);
+                NotesDomain domain = new NotesDomain();
+                domain.PatientExamDataSave(patientID);
             }
             catch (Exception exp)
             {

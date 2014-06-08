@@ -294,7 +294,7 @@ namespace epos.Lib.Repository
             using (var db = new PosEntities())
             {
                 var query = from dbPatient in db.Patients select dbPatient.PatientID;
-                return query.Take(10).ToList();
+                return query.Take(1).ToList();
             }
         }
 
@@ -318,5 +318,13 @@ namespace epos.Lib.Repository
                 return examQuery.ToList();
             }
         }
+
+        //public static void PatientDeleteExamData(int patientID)
+        //{
+        //    using (var db = new PosEntities())
+        //    {
+        //        db.Database.ExecuteSqlCommand("Delete from ExamData ")
+        //    }
+        //}
     }
 }

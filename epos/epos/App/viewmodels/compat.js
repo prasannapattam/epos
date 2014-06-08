@@ -3,6 +3,7 @@
     var displayType = ko.observable(1);
     var serverError = ko.observable(false);
     var serverMessage = ko.observable('');
+    var patientCount = ko.observable();
     var vm = {
         activate: activate,
         title: title,
@@ -12,7 +13,8 @@
         updateHistoryPopup: updateHistoryPopup,
         displayType: displayType,
         serverMessage: serverMessage,
-        serverError: serverError
+        serverError: serverError,
+        patientCount: patientCount
     };
 
     return vm;
@@ -81,7 +83,8 @@
         return utility.httpPost('api/compatpatientids').then(function (data) {
             if (data.Success === true) {
                 //toastr.info(data.Message);
-                updateHistoryForeachPatient(data.Model)
+                vm.displayType(3);
+                updateHistoryForAllPatients(data.Model)
             }
             else {
                 vm.serverError(true);
@@ -92,29 +95,43 @@
         return false;
     }
 
-    function updateHistoryForeachPatient(patients) {
-        vm.displayType(3);
+    function updateHistoryForAllPatients(patients) {
         var patient;
+        var currentIndex;
+        var totalPatients = patients.length;
+        patientCount(totalPatients);
 
         //setting the progress bar
         var historyProgressBar = $("#historyProgressBar").data("kendoProgressBar");
         if (!historyProgressBar) {
             $("#historyProgressBar").kendoProgressBar({
-                max: patients.length,
+                max: totalPatients,
+                value: 0,
                 animation: {
                     duration: 50  
                 }            
             });
             historyProgressBar = $("#historyProgressBar").data("kendoProgressBar");
         }
+        historyProgressBar.value(0);
 
         for (var index = 0; index < patients.length; index++) {
             var patientID = patients[index];
-            historyProgressBar.value(index + 1);
+            currentIndex = index + 1;
+            updateHistoryForeachPatient(patientID, currentIndex, historyProgressBar)
         }
 
         //alert('done');
 
     }
+
+    function updateHistoryForeachPatient(patientID, currentIndex, historyProgressBar) {
+        utility.httpPost('api/compatupdatehistory', patientID).then(function (data) {
+            if (currentIndex > historyProgressBar.value())
+                historyProgressBar.value(currentIndex);
+        });
+    }
+
+    //compatupdatehistory
 
 });
