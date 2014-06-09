@@ -40,7 +40,7 @@ namespace epos.Controllers
     
             try
             {
-                System.Threading.Thread.Sleep(100);
+                //System.Threading.Thread.Sleep(100);
                 ajax.Model = PatientRepository.PatientGetAllIds();
             }
             catch (Exception exp)
