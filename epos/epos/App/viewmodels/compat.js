@@ -103,32 +103,55 @@
 
         //setting the progress bar
         var historyProgressBar = $("#historyProgressBar").data("kendoProgressBar");
-        if (!historyProgressBar) {
-            $("#historyProgressBar").kendoProgressBar({
-                max: totalPatients,
-                value: 0,
-                animation: {
-                    duration: 50  
-                }            
-            });
-            historyProgressBar = $("#historyProgressBar").data("kendoProgressBar");
+        if (historyProgressBar) {
+            //destroying the existing progress bar
+            historyProgressBar.destroy();
+            $("#historyProgressBarWrapper").empty().append("<div id='historyProgressBar'></div>");
         }
-        historyProgressBar.value(0);
+        $("#historyProgressBar").kendoProgressBar({
+            max: totalPatients,
+            value: 0,
+            animation: {
+                duration: 0  
+            },
+            complete: function (e) {
+                vm.serverError(false);
+                vm.serverMessage('History updated successfully');
+                vm.displayType(4);
+            }
+        });
+        historyProgressBar = $("#historyProgressBar").data("kendoProgressBar");
 
-        for (var index = 0; index < patients.length; index++) {
-            var patientID = patients[index];
-            currentIndex = index + 1;
-            updateHistoryForeachPatient(patientID, currentIndex, historyProgressBar)
-        }
-
-        //alert('done');
-
+        updateHistoryBatch(patients, 0, historyProgressBar);
     }
 
-    function updateHistoryForeachPatient(patientID, currentIndex, historyProgressBar) {
+    function updateHistoryBatch(patients, startIndex, historyProgressBar) {
+        var batchsize = 100;
+        var nextBatctStartIndex = 80;
+
+        if (startIndex % batchsize === nextBatctStartIndex) {
+            startIndex = (parseInt(startIndex / batchsize) + 1) * batchsize
+        }
+        else if (startIndex !== 0) {
+            return;
+        }
+
+        var endIndex = startIndex + batchsize;
+        endIndex = endIndex < patients.length ? endIndex : patients.length;
+
+        for (var index = startIndex; index < endIndex; index++) {
+            var patientID = patients[index];
+            currentIndex = index + 1;
+            updateHistoryForeachPatient(patientID, currentIndex, patients, historyProgressBar)
+        }
+    }
+
+    function updateHistoryForeachPatient(patientID, currentIndex, patients, historyProgressBar) {
         utility.httpPost('api/compatupdatehistory', patientID).then(function (data) {
             if (currentIndex > historyProgressBar.value())
                 historyProgressBar.value(currentIndex);
+            //call to process the next batch as needed
+            updateHistoryBatch(patients, currentIndex, historyProgressBar)
         });
     }
 

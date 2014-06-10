@@ -17,7 +17,6 @@ namespace epos.Lib.Shared
     public class PatientLetter
     {
         Dictionary<string, string> dict;
-        int maxBaby = 6;  //months for a baby
 
         Body body;
         Paragraph paragraph;

@@ -19,5 +19,6 @@ namespace epos.Lib.Repository
         public int ExamDataConfigurationID { get; set; }
         public string FieldName { get; set; }
         public string FieldValue { get; set; }
+        public int PatientID { get; set; }
     }
 }

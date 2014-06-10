@@ -473,7 +473,7 @@ namespace epos.Lib.Domain
             if(saveType == PosConstants.NotesSaveType.SignOff || saveType == PosConstants.NotesSaveType.Correct)
             {
                 //saving additional data
-                PatientRepository.ExamDataSave(exam.ExamID, model);
+                PatientRepository.ExamDataSave(exam.ExamID, exam.PatientID, model);
 
                 if(model.cbPrintQueue.Value == true.ToString())
                     PosRepository.PrintQueueAdd(new PrintQueueItem() { ExamID = exam.ExamID, UserName = exam.UserName, PrintExamNote = null });
@@ -488,10 +488,13 @@ namespace epos.Lib.Domain
         {
             
             List<ExamModel> exams = PatientRepository.PatientGetExams(patientID);
+            //first deleting all the existing records and adding it back
+            PatientRepository.PatientDeleteExamData(patientID);
             foreach (ExamModel exam in exams)
             {
-                PatientRepository.ExamDataSave(exam.ExamID, GetNotesFromXml(exam.ExamText));
+                if(exam.SaveInd != 1)
+                    PatientRepository.ExamDataSave(exam.ExamID, patientID, GetNotesFromXml(exam.ExamText));
             }
         }
     }
-}
+};

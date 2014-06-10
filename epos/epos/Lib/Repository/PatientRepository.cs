@@ -207,7 +207,7 @@ namespace epos.Lib.Repository
 
         }
 
-        public static void ExamDataSave(int examID, NotesModel notes)
+        public static void ExamDataSave(int examID, int patientID, NotesModel notes)
         {
             PropertyInfo[] notesFields = notes.GetType().GetProperties();
             Field field;
@@ -233,11 +233,14 @@ namespace epos.Lib.Repository
                             dicJson.Add(field.Name, field.Value);
                         }
 
-                        data = new ExamData();
-                        data.ExamID = examID;
-                        data.ExamDataConfigurationID = config.ExamDataConfigurationID;
-                        data.FieldName = config.Name;
-                        data.FieldValue = JsonConvert.SerializeObject(dicJson);
+                        data = new ExamData()
+                                {
+                                    PatientID = patientID,
+                                    ExamID = examID,
+                                    ExamDataConfigurationID = config.ExamDataConfigurationID,
+                                    FieldName = config.Name,
+                                    FieldValue = JsonConvert.SerializeObject(dicJson)
+                                };
                     }
 
                     db.ExamDatas.Add(data);
@@ -293,8 +296,9 @@ namespace epos.Lib.Repository
         {
             using (var db = new PosEntities())
             {
-                var query = from dbPatient in db.Patients select dbPatient.PatientID;
-                return query.Take(1).ToList();
+                var query = from dbPatient in db.Patients
+                            select dbPatient.PatientID;
+                return query.ToList();
             }
         }
 
@@ -319,12 +323,12 @@ namespace epos.Lib.Repository
             }
         }
 
-        //public static void PatientDeleteExamData(int patientID)
-        //{
-        //    using (var db = new PosEntities())
-        //    {
-        //        db.Database.ExecuteSqlCommand("Delete from ExamData ")
-        //    }
-        //}
+        public static void PatientDeleteExamData(int patientID)
+        {
+            using (var db = new PosEntities())
+            {
+                db.Database.ExecuteSqlCommand("DELETE FROM ExamData WHERE PatientID = " + patientID.ToString());
+            }
+        }
     }
 }
