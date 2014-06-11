@@ -292,13 +292,18 @@ namespace epos.Lib.Repository
             }
         }
 
-        public static List<int> PatientGetAllIds()
+        public static List<int> PatientGetAllIds(int patientUpdateCount)
         {
             using (var db = new PosEntities())
             {
                 var query = from dbPatient in db.Patients
+                            orderby dbPatient.LastExamDate descending
                             select dbPatient.PatientID;
-                return query.ToList();
+                if (patientUpdateCount == 0)
+                    return query.ToList();
+                else
+                    return query.Take(patientUpdateCount).ToList();
+
             }
         }
 

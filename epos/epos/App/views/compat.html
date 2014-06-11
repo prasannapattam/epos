@@ -40,9 +40,20 @@
 
         <div id="patientHistoryWindow" class="text-center" style="display:none">
             <div data-bind="css: { display_block: displayType() === 1 }" style="display:none">
-            Click the button below to update patient history
+            Select the number of patients to update and click the update button
             <br /><br />
-            <div class="button tiny selected" data-bind="click: updateHistoryPopup"><i class="button-icon fi-check"></i>Update</div>
+            <div class="row">
+                <div class="small-5 columns text-right">
+                    <select data-bind="value: patientUpdateCount">
+                        <option value="100">Last 100 patients</option>
+                        <option value="1000">Last 1000 patients</option>
+                        <option value="0">All Patients</option>
+                    </select>
+                </div>
+                <div class="small-4 columns text-left">
+                    <div class="button tiny selected" data-bind="click: updateHistoryPopup"><i class="button-icon fi-check"></i>Update</div>
+                </div>
+            </div>
             </div>
             <div class="text-center" data-bind="css: { display_block: displayType() === 2 }" style="display:none">
                 <img class="loading" data-bind="attr: { src: utility.virtualDirectory + '/content/images/loading.gif' }" />

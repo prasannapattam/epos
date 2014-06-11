@@ -277,8 +277,10 @@
             var oldAge = vm.model.Age.Value();
             var newAge = vm.model.tbAge.Value();
             if (oldAge !== newAge) {
-                if (oldAge !== "")
+                if (oldAge !== "" && summary.indexOf(oldAge) !== -1)
                     summary = summary.replace(oldAge, newAge);
+                else
+                    summary = summary.replace(/[0-9. ]+year[- ]+old/i, newAge);
                 vm.model.Age.Value(newAge)
             }
                

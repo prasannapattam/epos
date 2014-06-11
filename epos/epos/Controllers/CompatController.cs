@@ -34,14 +34,14 @@ namespace epos.Controllers
 
         [Route("api/compatpatientids")]
         [HttpPost]
-        public AjaxModel<List<int>> GetPatientIds()
+        public AjaxModel<List<int>> GetPatientIds([FromBody] int patientUpdateCount)
         {
             AjaxModel<List<int>> ajax = new AjaxModel<List<int>>() { Success = true, Message = "", Model = null };
     
             try
             {
                 //System.Threading.Thread.Sleep(100);
-                ajax.Model = PatientRepository.PatientGetAllIds();
+                ajax.Model = PatientRepository.PatientGetAllIds(patientUpdateCount);
             }
             catch (Exception exp)
             {

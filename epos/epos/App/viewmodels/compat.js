@@ -4,6 +4,8 @@
     var serverError = ko.observable(false);
     var serverMessage = ko.observable('');
     var patientCount = ko.observable();
+    var patientUpdateCount = ko.observable(100);
+
     var vm = {
         activate: activate,
         title: title,
@@ -14,7 +16,8 @@
         displayType: displayType,
         serverMessage: serverMessage,
         serverError: serverError,
-        patientCount: patientCount
+        patientCount: patientCount,
+        patientUpdateCount: patientUpdateCount
     };
 
     return vm;
@@ -29,6 +32,7 @@
         vm.displayType(1);
         vm.serverError(false);
         vm.serverMessage('');
+        vm.patientUpdateCount(100);
     }
 
     function updateLastDate() {
@@ -80,7 +84,7 @@
 
     function updateHistoryPopup() {
         vm.displayType(2);
-        return utility.httpPost('api/compatpatientids').then(function (data) {
+        return utility.httpPost('api/compatpatientids', patientUpdateCount).then(function (data) {
             if (data.Success === true) {
                 //toastr.info(data.Message);
                 vm.displayType(3);
