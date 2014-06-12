@@ -84,6 +84,7 @@
 
     function updateHistoryPopup() {
         vm.displayType(2);
+        //passing the number of patients so that we can run a small batch.
         return utility.httpPost('api/compatpatientids', patientUpdateCount).then(function (data) {
             if (data.Success === true) {
                 //toastr.info(data.Message);
