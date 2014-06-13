@@ -51,6 +51,12 @@ namespace epos.Lib.Domain
                 notes.User.Value = userName;
             }
 
+            //getting the history
+            if (notes.NotesType != PosConstants.NotesType.Default)
+            {
+                notes.History = GetNotesHistory(patientID);
+            }
+
             //In old code sometimes Patient Number & name is empty. This is causing problem. Setting that
             if (notes.PatientNumber.Value == "")
                 notes.PatientNumber.Value = patient.PatientNumber;
@@ -318,6 +324,27 @@ namespace epos.Lib.Domain
                 examText = examText.Replace("[Sex]", GetSex(patient.DateOfBirth.Value, patient.Sex));
             }
             return examText;
+        }
+
+        private Dictionary<string, ExamHistoryDataModel> GetNotesHistory(int patientID)
+        {
+            List<ExamHistoryDataModel> data = PatientRepository.GetNotesHistory(patientID);
+
+            Dictionary<string, ExamHistoryDataModel> history = new Dictionary<string, ExamHistoryDataModel>();
+
+            foreach (var model in data)
+            {
+                if (history.ContainsKey(model.FieldName))
+                {
+                    history[model.FieldName] = model;
+                }
+                else
+                {
+                    history.Add(model.FieldName, model);
+                }
+            }
+
+            return history;
         }
 
         private string GetPatientAge(DateTime dob)

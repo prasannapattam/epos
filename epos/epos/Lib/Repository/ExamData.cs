@@ -20,5 +20,6 @@ namespace epos.Lib.Repository
         public string FieldName { get; set; }
         public string FieldValue { get; set; }
         public int PatientID { get; set; }
+        public int FieldDataType { get; set; }
     }
 }

@@ -40,6 +40,7 @@ warning 6002: The table/view 'ExamPatient.dbo.AutoCorrect' does not have a prima
           <Property Name="ExamDataConfigurationID" Type="int" Nullable="false" />
           <Property Name="FieldName" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="FieldValue" Type="varchar" MaxLength="8000" Nullable="false" />
+          <Property Name="FieldDataType" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="ExamDataConfiguration">
           <Key>
@@ -295,6 +296,7 @@ warning 6002: The table/view 'ExamPatient.dbo.AutoCorrect' does not have a prima
           <Property Name="FieldName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="FieldValue" Type="String" Nullable="false" MaxLength="8000" FixedLength="false" Unicode="false" />
           <Property Name="PatientID" Type="Int32" Nullable="false" />
+          <Property Name="FieldDataType" Type="Int32" Nullable="false" />
         </EntityType>
         <EntityType Name="ExamDataConfiguration">
           <Key>
@@ -433,6 +435,7 @@ warning 6002: The table/view 'ExamPatient.dbo.AutoCorrect' does not have a prima
           <EntitySetMapping Name="ExamDatas">
             <EntityTypeMapping TypeName="PosModel.ExamData">
               <MappingFragment StoreEntitySet="ExamData">
+                <ScalarProperty Name="FieldDataType" ColumnName="FieldDataType" />
                 <ScalarProperty Name="PatientID" ColumnName="PatientID" />
                 <ScalarProperty Name="FieldValue" ColumnName="FieldValue" />
                 <ScalarProperty Name="FieldName" ColumnName="FieldName" />

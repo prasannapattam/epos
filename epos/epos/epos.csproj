@@ -214,6 +214,7 @@
     <Compile Include="Lib\Shared\PosMessage.cs" />
     <Compile Include="Lib\Shared\WebUtil.cs" />
     <Compile Include="Models\AjaxModel.cs" />
+    <Compile Include="Models\ExamHistoryDataModel.cs" />
     <Compile Include="Models\ExamDefaultModel.cs" />
     <Compile Include="Models\ExamModel.cs" />
     <Compile Include="Models\LoginModel.cs" />

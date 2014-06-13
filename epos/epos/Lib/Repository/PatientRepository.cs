@@ -239,7 +239,8 @@ namespace epos.Lib.Repository
                                     ExamID = examID,
                                     ExamDataConfigurationID = config.ExamDataConfigurationID,
                                     FieldName = config.Name,
-                                    FieldValue = JsonConvert.SerializeObject(dicJson)
+                                    FieldValue = JsonConvert.SerializeObject(dicJson),
+                                    FieldDataType = (int)PosConstants.FieldDataType.Json
                                 };
                     }
 
@@ -333,6 +334,29 @@ namespace epos.Lib.Repository
             using (var db = new PosEntities())
             {
                 db.Database.ExecuteSqlCommand("DELETE FROM ExamData WHERE PatientID = " + patientID.ToString());
+            }
+        }
+
+        public static List<ExamHistoryDataModel> GetNotesHistory(int patientID)
+        {
+            using (var db = new PosEntities())
+            {
+                var query = from data in db.ExamDatas
+                            join exam in db.Exams on data.ExamID equals exam.ExamID
+                            where data.PatientID == patientID
+                                && data.FieldDataType == (int)PosConstants.FieldDataType.Json
+                            orderby data.FieldName, exam.ExamDate descending
+                            select new ExamHistoryDataModel
+                            {
+                                ExamID = data.ExamID,
+                                ExamDate = exam.ExamDate,
+                                CorrectExamID = exam.CorrectExamID,
+                                ExamCorrectDate = exam.ExamCorrectDate,
+                                FieldName = data.FieldName,
+                                FieldValue = data.FieldValue
+                            };
+
+                return query.ToList();
             }
         }
     }
