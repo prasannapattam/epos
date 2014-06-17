@@ -326,21 +326,21 @@ namespace epos.Lib.Domain
             return examText;
         }
 
-        private Dictionary<string, ExamHistoryDataModel> GetNotesHistory(int patientID)
+        private Dictionary<string, List<ExamHistoryDataModel>> GetNotesHistory(int patientID)
         {
             List<ExamHistoryDataModel> data = PatientRepository.GetNotesHistory(patientID);
 
-            Dictionary<string, ExamHistoryDataModel> history = new Dictionary<string, ExamHistoryDataModel>();
+            Dictionary<string, List<ExamHistoryDataModel>> history = new Dictionary<string, List<ExamHistoryDataModel>>();
 
             foreach (var model in data)
             {
                 if (history.ContainsKey(model.FieldName))
                 {
-                    history[model.FieldName] = model;
+                    history[model.FieldName].Add(model);
                 }
                 else
                 {
-                    history.Add(model.FieldName, model);
+                    history.Add(model.FieldName, new List<ExamHistoryDataModel>() { model });
                 }
             }
 

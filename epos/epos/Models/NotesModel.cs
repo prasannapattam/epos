@@ -324,7 +324,7 @@ namespace epos.Models
         public PosConstants.NotesType NotesType { get; set; }
         public bool DefaultInd { get; set; }
 
-        public Dictionary<string, ExamHistoryDataModel> History { get; set; }
+        public Dictionary<string, List<ExamHistoryDataModel>> History { get; set; }
     }
 
     public class Field

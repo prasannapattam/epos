@@ -345,7 +345,7 @@ namespace epos.Lib.Repository
                             join exam in db.Exams on data.ExamID equals exam.ExamID
                             where data.PatientID == patientID
                                 && data.FieldDataType == (int)PosConstants.FieldDataType.Json
-                            orderby data.FieldName, exam.ExamDate descending
+                            orderby data.FieldName, exam.ExamDate descending, exam.ExamID descending
                             select new ExamHistoryDataModel
                             {
                                 ExamID = data.ExamID,
@@ -356,7 +356,14 @@ namespace epos.Lib.Repository
                                 FieldValue = data.FieldValue
                             };
 
-                return query.ToList();
+                var history = query.ToList();
+
+                foreach (var item in history)
+                {
+                    item.FieldValue = JsonConvert.DeserializeObject(item.FieldValue);
+                }
+
+                return history;
             }
         }
     }

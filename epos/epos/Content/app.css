@@ -489,6 +489,14 @@ select{
     font-size: 0.6875rem;
 }
 
+.button.icon {
+    padding-top: 0.2125rem;
+    padding-right: 1.25rem;
+    padding-bottom: 0.24375rem;
+    padding-left: 1.25rem;
+    font-size: 0.6875rem;
+}
+
 .button-icon{
     display: inline-block;
     width: 10%;

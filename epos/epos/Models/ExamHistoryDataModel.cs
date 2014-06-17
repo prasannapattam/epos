@@ -12,7 +12,7 @@ namespace epos.Models
         public int? CorrectExamID { get; set; }
         public DateTime? ExamCorrectDate { get; set; }
         public string FieldName { get; set; }
-        public string FieldValue { get; set; }
+        public dynamic FieldValue { get; set; }
         public string Header
         {
             get
