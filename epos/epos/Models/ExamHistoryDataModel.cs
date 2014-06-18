@@ -17,8 +17,7 @@ namespace epos.Models
         {
             get
             {
-                return ExamDate.ToString("d/M/yyyy") + (CorrectExamID.HasValue ? " (Corrected on " + ExamCorrectDate.Value.ToString("d/M/yyyy") + ")" : "");
-
+                return "Notes taken on " + ExamDate.ToString("MM/dd/yyyy") + (CorrectExamID.HasValue ? " (Corrected on " + ExamCorrectDate.Value.ToString("MM/dd/yyyy") + ")" : "");
             }
         }
     }

@@ -14,7 +14,6 @@
         activate: activate,
         canDeactivate: canDeactivate,
         canReuseForRoute: canReuseForRoute,
-        attached: attached,
         compositionComplete: compositionComplete,
         signOff: signOff,
         correct: correct,
@@ -23,7 +22,7 @@
         cancel: cancel,
         savePatient: savePatient,
         doctorChange: doctorChange,
-        priorExam: priorExam
+        rfxHistory: rfxHistory
 };
 
     return vm;
@@ -88,8 +87,10 @@
 
                 if (vm.model !== undefined)
                     ko.viewmodel.updateFromModel(vm.model, model);
-                else
-                    vm.model = ko.viewmodel.fromModel(model);
+                else {
+                    options = addViewModelExtenders();
+                    vm.model = ko.viewmodel.fromModel(model, options);
+                }
                 vm.doctors = ko.viewmodel.fromModel(data.Model.Doctors);
                 window.autoComplete = data.Model.AutoComplete;
                 addComputedProperties();
@@ -109,9 +110,6 @@
     }
 
 
-    function attached() {
-//        alert('attached');
-    }
     function compositionComplete() {
         session.trackDirty(true);
         pageloaded = true;
@@ -176,7 +174,39 @@
             }
         });
 
+        //History windows
+        loadHistoryWindow('rfxHistoryWindow', "850px", "200px", "Rfx History", "rfx");
+
+
         return true;
+    }
+
+    function loadHistoryWindow(id, width, height, title, prefix) {
+        var historyWindow = $("#" + id);
+        historyWindow.kendoWindow({
+            width: width,
+            height: height,
+            title: title,
+            activate: function () {
+                var el = document.getElementById(prefix + notesexamid);
+                var winelement = document.getElementById(id);
+                if (el !== undefined && el !== null)
+                    winelement.scrollTop = el.offsetTop;
+                else
+                    winelement.scrollTop = 0;
+            }
+        });
+
+    }
+
+    function destroyWindows() {
+        destroyWindow("rfxHistoryWindow");
+    }
+
+    function destroyWindow(id) {
+        var historyWindow = $("#" + id);
+        if (historyWindow.data("kendoWindow"))
+            historyWindow.data("kendoWindow").destroy();
     }
 
     function scrollToHeader(tag) {
@@ -383,6 +413,50 @@
 
     }
 
+    function addViewModelExtenders() {
+        return { 
+            extend:{
+                "{root}.History.Rfx[i].FieldValue": function (rfx) {
+                    rfx.ManRfx = ko.observable(GetOdOsString(rfx.ManRfxOD1(), rfx.ManRfxOD2(), rfx.ManRfxOS1(), rfx.ManRfxOS2()));
+                    rfx.ManVA = ko.observable(GetOdOsString(rfx.ManVAOD1(), rfx.ManVAOD2(), rfx.ManVSOS1(), rfx.ManVSOS2()));
+                    rfx.CycRfx = ko.observable(GetOdOsString(rfx.CycRfxOD(), "", rfx.CycRfxOS(), ""));
+                    rfx.CycVA = ko.observable(GetOdOsString(rfx.CycVAOD3(), rfx.CycVAOD4(), rfx.CycVSOS1(), rfx.CycVSOS2()));
+                    rfx.HasHistory = ko.observable(rfx.ManRfx() !== "" || rfx.ManVA() !== "" || rfx.CycRfx() !== "" || rfx.CycVA() !== "");
+                }
+            }
+        };
+    }
+
+    function GetOdOsString(od1, od2, os1, os2) {
+        od = od1;
+        if (od2 !== "")
+            od = + " " + od2;
+        os = os1;
+        if (os2 !== "")
+            os = + " " + os2;
+
+        ou = "";
+
+        if (od == os)
+            ou = od;
+
+        od = od == "" ? od : od + " OD ";
+        os = os == "" ? os : os + " OS";
+        ou = ou == "" ? ou : ou + " OU";
+
+        odosString = "";
+
+        if (od != "" || os != "")
+        {
+            if (ou != "")
+                odosString = ou;
+            else
+                odosString = od + os;
+        }
+
+        return odosString;
+    }
+
     function setOverrides() {
         //if (profile.userName() !== undefined) {
         //    vm.model.User.Value = profile.userName;
@@ -410,16 +484,8 @@
         }
     }
 
-    function priorExam() {
-        var priorExamWindow = $("#priorExamWindow");
-        if (!priorExamWindow.data("kendoWindow")) {
-            priorExamWindow.kendoWindow({
-                width: "850px",
-                title: "Prior Exam",
-            });
-        }
-        priorExamWindow.data("kendoWindow").open();
-
+    function rfxHistory() {
+        $("#rfxHistoryWindow").data("kendoWindow").open();
         return false;
     }
 
@@ -538,6 +604,7 @@
         if (session.isDirty()) {
             return utility.showMessage('There are unsaved changes. Do you want to loose those changes?', 'Notes').then(function (dialogResult) {
                 if (dialogResult === 'Yes') {
+                    destroyWindows();
                     return true;
                 }
                 else {
@@ -546,6 +613,7 @@
             });
         }
         else {
+            destroyWindows();
             return true;
         }
     }
