@@ -22,7 +22,9 @@
         cancel: cancel,
         savePatient: savePatient,
         doctorChange: doctorChange,
-        rfxHistory: rfxHistory
+        rfxHistory: rfxHistory,
+        sumHistory: sumHistory,
+        cchHistory: cchHistory
 };
 
     return vm;
@@ -174,33 +176,34 @@
             }
         });
 
-        //History windows
-        loadHistoryWindow('rfxHistoryWindow', "850px", "200px", "Rfx History", "rfx");
-
-
         return true;
     }
 
     function loadHistoryWindow(id, width, height, title, prefix) {
         var historyWindow = $("#" + id);
-        historyWindow.kendoWindow({
-            width: width,
-            height: height,
-            title: title,
-            activate: function () {
-                var el = document.getElementById(prefix + notesexamid);
-                var winelement = document.getElementById(id);
-                if (el !== undefined && el !== null)
-                    winelement.scrollTop = el.offsetTop;
-                else
-                    winelement.scrollTop = 0;
-            }
-        });
+        if (!historyWindow.data("kendoWindow")) {
+            historyWindow.kendoWindow({
+                width: width,
+                height: height,
+                title: title,
+                activate: function () {
+                    var el = document.getElementById(prefix + notesexamid);
+                    var winelement = document.getElementById(id);
+                    if (el !== undefined && el !== null)
+                        winelement.scrollTop = el.offsetTop;
+                    else
+                        winelement.scrollTop = 0;
+                }
+            });
+        }
 
+        historyWindow.data("kendoWindow").open();
     }
 
     function destroyWindows() {
         destroyWindow("rfxHistoryWindow");
+        destroyWindow("cchHistoryWindow");
+        destroyWindow("sumHistoryWindow");
     }
 
     function destroyWindow(id) {
@@ -422,6 +425,10 @@
                     rfx.CycRfx = ko.observable(GetOdOsString(rfx.CycRfxOD(), "", rfx.CycRfxOS(), ""));
                     rfx.CycVA = ko.observable(GetOdOsString(rfx.CycVAOD3(), rfx.CycVAOD4(), rfx.CycVSOS1(), rfx.CycVSOS2()));
                     rfx.HasHistory = ko.observable(rfx.ManRfx() !== "" || rfx.ManVA() !== "" || rfx.CycRfx() !== "" || rfx.CycVA() !== "");
+                },
+                "{root}.History.Cch[i].FieldValue": function (cch) {
+                    cch.HasCcHistory = ko.observable(cch.Compliant() !== "" || cch.SubjectiveHistory() !== "");
+                    cch.HasSumHistory = ko.observable(cch.Summary() !== "");
                 }
             }
         };
@@ -485,7 +492,20 @@
     }
 
     function rfxHistory() {
-        $("#rfxHistoryWindow").data("kendoWindow").open();
+        //History windows
+        loadHistoryWindow('rfxHistoryWindow', "850px", "200px", "Rfx History", "rfx");
+        return false;
+    }
+
+    function cchHistory() {
+        //History windows
+        loadHistoryWindow('cchHistoryWindow', "850px", "200px", "CC History", "cch");
+        return false;
+    }
+
+    function sumHistory() {
+        //History windows
+        loadHistoryWindow('sumHistoryWindow', "850px", "200px", "Summary History", "sum");
         return false;
     }
 

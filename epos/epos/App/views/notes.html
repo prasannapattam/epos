@@ -150,8 +150,31 @@
                 <textarea data-bind="notesvalue: model.Compliant"></textarea>
             </div>
             <div class="small-6 columns col-narrow">
-                <label>History</label>
+                <div class="row row-narrow">
+                    <div class="small-8 columns tight"><label>History</label></div>
+                    <div class="small-4 columns tight text-right">
+                        <div class="button icon selected" title="CC History" data-bind="click: cchHistory"><i class="button-icon fi-first-aid"></i></div>
+                    </div>
+                </div>
                 <textarea data-bind="notesvalue: model.SubjectiveHistory"></textarea>
+            </div>
+        </div>
+        <div id="cchHistoryWindow" style="display:none">
+            <div data-bind="foreach: model.History.Cch">
+            <h6 data-bind="text: Header, attr: { id: 'cch' + ExamID() }"></h6>
+            <fieldset>
+                <div data-bind="css: { display_none: FieldValue.HasCcHistory }">No History</div>
+                <div class="row tight" data-bind="css: { display_none: !FieldValue.HasCcHistory() }">
+                    <div class="small-12 columns tight">
+                        <b>Chief Complaint:</b>
+                        <span data-bind="text: FieldValue.Compliant"></span>
+                    </div>
+                    <div class="small-12 columns tight">
+                        <b>History:</b>
+                        <span data-bind="text: FieldValue.SubjectiveHistory"></span>
+                    </div>
+                </div>
+            </fieldset>
             </div>
         </div>
         <div class="row row-narrow">
@@ -1211,8 +1234,27 @@
     <fieldset class="no-bottom-border">
         <div class="row row-narrow">
             <div class="small-12 columns col-narrow">
-                <label>Summary</label>
+                <div class="row row-narrow">
+                    <div class="small-8 columns tight"><label>Summary</label></div>
+                    <div class="small-4 columns tight text-right">
+                        <div class="button icon selected" title="Summary History" data-bind="click: sumHistory"><i class="button-icon fi-first-aid"></i></div>
+                    </div>
+                </div>
                 <textarea data-bind="notesvalue: model.Summary"></textarea>
+            </div>
+        </div>
+        <div id="sumHistoryWindow" style="display:none">
+            <div data-bind="foreach: model.History.Cch">
+            <h6 data-bind="text: Header, attr: { id: 'sum' + ExamID() }"></h6>
+            <fieldset>
+                <div data-bind="css: { display_none: FieldValue.HasSumHistory }">No History</div>
+                <div class="row tight" data-bind="css: { display_none: !FieldValue.HasSumHistory() }">
+                    <div class="small-12 columns tight">
+                        <b>Summary:</b>
+                        <span data-bind="text: FieldValue.Summary"></span>
+                    </div>
+                </div>
+            </fieldset>
             </div>
         </div>
         <div class="row row-narrow">
