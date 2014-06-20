@@ -161,14 +161,15 @@
         </div>
         <div id="cchHistoryWindow" style="display:none">
             <div data-bind="foreach: model.History.Cch">
-            <h6 data-bind="text: Header, attr: { id: 'cch' + ExamID() }"></h6>
-            <fieldset>
+            <div class="row title" data-bind="text: Header, attr: { id: 'cch' + ExamID() }"></div>
+            <fieldset class="history-box">
                 <div data-bind="css: { display_none: FieldValue.HasCcHistory }">No History</div>
-                <div class="row tight" data-bind="css: { display_none: !FieldValue.HasCcHistory() }">
+                <div class="row row-narrow tight" data-bind="css: { display_none: !FieldValue.HasCcHistory() }">
                     <div class="small-12 columns tight">
                         <b>Chief Complaint:</b>
                         <span data-bind="text: FieldValue.Compliant"></span>
                     </div>
+                <div class="row row-narrow tight" data-bind="css: { display_none: !FieldValue.HasCcHistory() }">
                     <div class="small-12 columns tight">
                         <b>History:</b>
                         <span data-bind="text: FieldValue.SubjectiveHistory"></span>
@@ -453,7 +454,12 @@
                 </div>
             </div>
             <div class="small-4 columns col-narrow">
-                <label>VA Near</label>
+                <div class="row row-narrow">
+                    <div class="small-8 columns tight"><label>VA Near</label></div>
+                    <div class="small-4 columns tight text-right">
+                        <div class="button icon selected" title="Dist & Near History" data-bind="click: distHistory"><i class="button-icon fi-first-aid"></i></div>
+                    </div>
+                </div>
                 <div class="row row-narrow">
                     <div class="small-1 columns odos">
                         OD:
@@ -479,6 +485,30 @@
             </div>
         </div> 
     </fieldset>
+    <div id="distHistoryWindow" style="display:none">
+        <div data-bind="foreach: model.History.Dist">
+        <div class="row title" data-bind="text: Header, attr: { id: 'dist' + ExamID() }"></div>
+        <fieldset class="history-box">
+            <div data-bind="css: { display_none: FieldValue.HasHistory }">No History</div>
+            <div class="row row-narrow tight" data-bind="css: { display_none: !FieldValue.HasHistory() }">
+                <div class="small-6 columns tight">
+                    <b>VA sc Dist:</b>
+                    <span data-bind="text: FieldValue.VAsc"></span>
+                </div>
+                <div class="small-6 columns tight">
+                    <b>VA Near:</b>
+                    <span data-bind="text: FieldValue.VAnear"></span>
+                </div>
+            </div>
+            <div class="row row-narrow tight" data-bind="css: { display_none: !FieldValue.HasHistory() }">
+                <div class="small-6 columns tight">
+                    <b>VA cc Dist:</b>
+                    <span data-bind="text: FieldValue.VAcc"></span>
+                </div>
+            </div>
+        </fieldset>
+        </div>
+    </div>
     <fieldset class="no-bottom-border">
         <div class="small-4 columns col-narrow">
             <label>Spc Wr1</label>
@@ -645,25 +675,27 @@
     </fieldset>
     <div id="rfxHistoryWindow" style="display:none">
         <div data-bind="foreach: model.History.Rfx">
-        <h6 data-bind="text: Header, attr: { id: 'rfx' + ExamID() }"></h6>
-        <fieldset>
+        <div class="row title"  data-bind="text: Header, attr: { id: 'rfx' + ExamID() }"></div>
+        <fieldset class="history-box">
             <div data-bind="css: { display_none: FieldValue.HasHistory }">No History</div>
-            <div class="row tight" data-bind="css: { display_none: !FieldValue.HasHistory() }">
-                <div class="small-4 columns tight">
-                    <label>Man Rfx</label>
-                    <div data-bind="text: FieldValue.ManRfx"></div>
+            <div class="row row-narrow tight" data-bind="css: { display_none: !FieldValue.HasHistory() }">
+                <div class="small-6 columns tight">
+                    <b>Man Rfx: </b>
+                    <span data-bind="text: FieldValue.ManRfx"></span>
                 </div>
-                <div class="small-3 columns tight">
-                    <label>VA</label>
-                    <div data-bind="text: FieldValue.ManVA"></div>
+                <div class="small-6 columns tight">
+                    <b>Cyc Rfx: </b>
+                    <span data-bind="text: FieldValue.CycRfx"></span>
                 </div>
-                <div class="small-2 columns tight">
-                    <label>Cyc Rfx</label>
-                    <div data-bind="text: FieldValue.CycRfx"></div>
+            </div>
+            <div class="row row-narrow tight" data-bind="css: { display_none: !FieldValue.HasHistory() }">
+                <div class="small-6 columns tight">
+                    <b>VA:</b>
+                    <span data-bind="text: FieldValue.ManVA"></span>
                 </div>
-                <div class="small-3 columns tight">
-                    <label>VA</label>
-                    <div data-bind="text: FieldValue.CycVA"></div>
+                <div class="small-6 columns tight">
+                    <b>VA:</b>
+                    <span data-bind="text: FieldValue.CycVA"></span>
                 </div>
             </div>
         </fieldset>
@@ -975,7 +1007,13 @@
         </div>
     </fieldset>
     <fieldset>
-        <h6>Binocularity</h6>
+        
+        <div class="row row-narrow">
+            <div class="small-8 columns tight"><h6>Binocularity</h6></div>
+            <div class="small-4 columns tight text-right">
+                <div class="button icon selected" title="Binocularity History" data-bind="click: binoHistory"><i class="button-icon fi-first-aid"></i></div>
+            </div>
+        </div>
         <div class="row row-narrow">
             <div class="small-4 columns col-narrow">
                 <div class="row row-narrow">
@@ -1019,6 +1057,36 @@
             </div>
         </div>
     </fieldset>
+    <div id="binoHistoryWindow" style="display:none">
+        <div data-bind="foreach: model.History.Bino">
+        <div class="row title" data-bind="text: Header, attr: { id: 'bino' + ExamID() }"></div>
+        <fieldset class="history-box">
+            <div data-bind="css: { display_none: FieldValue.HasHistory }">No History</div>
+            <div class="row row-narrow tight" data-bind="css: { display_none: !FieldValue.HasHistory() }">
+                <div class="small-12 columns tight">
+                    <b>Binocularity:</b>
+                    <span data-bind="text: FieldValue.Binocularity"></span>
+                </div>
+            </div>
+            <div class="row row-narrow tight" data-bind="css: { display_none: !FieldValue.HasHistory() }">
+                <div class="small-6 columns tight">
+                    <b>W4D Near:</b>
+                    <span data-bind="text: FieldValue.W4DNear"></span>
+                </div>
+                <div class="small-6 columns tight">
+                    <b>Stereo(Titmus):</b>
+                    <span data-bind="text: FieldValue.Stereo"></span>
+                </div>
+            </div>
+            <div class="row row-narrow tight" data-bind="css: { display_none: !FieldValue.HasHistory() }">
+                <div class="small-6 columns tight">
+                    <b>W4D Distance:</b>
+                    <span data-bind="text: FieldValue.W4DDist"></span>
+                </div>
+            </div>
+        </fieldset>
+        </div>
+    </div>
     <h5 class="notes_heading" id="ant-seg-header">Anterior Segment</h5>
     <fieldset class="no-bottom-border">
         <div class="row row-narrow">
@@ -1245,10 +1313,10 @@
         </div>
         <div id="sumHistoryWindow" style="display:none">
             <div data-bind="foreach: model.History.Cch">
-            <h6 data-bind="text: Header, attr: { id: 'sum' + ExamID() }"></h6>
-            <fieldset>
+            <div class="row title" data-bind="text: Header, attr: { id: 'sum' + ExamID() }"></div>
+            <fieldset class="history-box">
                 <div data-bind="css: { display_none: FieldValue.HasSumHistory }">No History</div>
-                <div class="row tight" data-bind="css: { display_none: !FieldValue.HasSumHistory() }">
+                <div class="row row-narrow tight" data-bind="css: { display_none: !FieldValue.HasSumHistory() }">
                     <div class="small-12 columns tight">
                         <b>Summary:</b>
                         <span data-bind="text: FieldValue.Summary"></span>

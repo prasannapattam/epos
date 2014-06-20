@@ -24,8 +24,10 @@
         doctorChange: doctorChange,
         rfxHistory: rfxHistory,
         sumHistory: sumHistory,
-        cchHistory: cchHistory
-};
+        cchHistory: cchHistory,
+        distHistory: distHistory,
+        binoHistory: binoHistory
+    };
 
     return vm;
 
@@ -204,6 +206,8 @@
         destroyWindow("rfxHistoryWindow");
         destroyWindow("cchHistoryWindow");
         destroyWindow("sumHistoryWindow");
+        destroyWindow("distHistoryWindow");
+        destroyWindow("binoHistoryWindow");
     }
 
     function destroyWindow(id) {
@@ -429,7 +433,20 @@
                 "{root}.History.Cch[i].FieldValue": function (cch) {
                     cch.HasCcHistory = ko.observable(cch.Compliant() !== "" || cch.SubjectiveHistory() !== "");
                     cch.HasSumHistory = ko.observable(cch.Summary() !== "");
-                }
+                },
+                "{root}.History.Dist[i].FieldValue": function (dist) {
+                    dist.VAsc = ko.observable(GetOdOsString(dist.VAscOD1(), dist.VAscOD2(), dist.DistOS1(), dist.DistOS2()));
+                    dist.VAcc = ko.observable(GetOdOsString(dist.VAccOD1(), dist.VAccOD2(), dist.DistOS3(), dist.DistOS4()));
+                    dist.VAnear = ko.observable(GetOdOsString(dist.VAOD1(), dist.VAOD2(), dist.NearOS1(), dist.NearOS2()));
+                    dist.HasHistory = ko.observable(dist.VAsc() !== "" || dist.VAcc() !== "" || dist.VAnear() !== "");
+                },
+                "{root}.History.Bino[i].FieldValue": function (bino) {
+                    bino.Binocularity = ko.observable(bino.Binocularity1() + " " + bino.Binocularity2() + " " + bino.Binocularity3() + " " + bino.Binocularity4());
+                    bino.W4DNear = ko.observable(bino.W4DNear1() + " " + bino.W4DNear2());
+                    bino.W4DDist = ko.observable(bino.W4DDistance1() + " " + bino.W4DDistance2());
+                    bino.Stereo = ko.observable(bino.Stereo1() + " " +  bino.Stereo2());
+                    bino.HasHistory = ko.observable(bino.Binocularity() !== "" || bino.W4DNear() !== "" || bino.W4DDist() !== "" || bino.Stereo() !== "");
+                },
             }
         };
     }
@@ -437,10 +454,10 @@
     function GetOdOsString(od1, od2, os1, os2) {
         od = od1;
         if (od2 !== "")
-            od = + " " + od2;
+            od += " " + od2;
         os = os1;
         if (os2 !== "")
-            os = + " " + os2;
+            os += " " + os2;
 
         ou = "";
 
@@ -508,6 +525,20 @@
         loadHistoryWindow('sumHistoryWindow', "850px", "200px", "Summary History", "sum");
         return false;
     }
+
+    function distHistory() {
+        //History windows
+        loadHistoryWindow('distHistoryWindow', "850px", "200px", "Summary History", "dist");
+        return false;
+    }
+
+    function binoHistory() {
+        //History windows
+        loadHistoryWindow('binoHistoryWindow', "850px", "200px", "Summary History", "bino");
+        return false;
+    }
+
+
 
     function cancel() {
         if (session.isDirty()) {

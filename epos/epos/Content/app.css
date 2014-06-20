@@ -65,6 +65,11 @@ fieldset.notes-box{
     padding: 3px 0px 2px 5px;
 }
 
+fieldset.history-box{
+    padding-top: 0px;
+    padding-bottom: .3rem;
+}
+
 img.top-header{
     height: 65px;
     width: 65px;
@@ -492,9 +497,9 @@ select{
 }
 
 .button.icon {
-    padding-top: 0.2125rem;
+    padding-top: 0rem;
     padding-right: 0rem;
-    padding-bottom: 0.24375rem;
+    padding-bottom: 0rem;
     padding-left: 0rem;
     font-size: 0.6875rem;
 }
