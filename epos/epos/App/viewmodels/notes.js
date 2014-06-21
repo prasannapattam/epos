@@ -26,7 +26,8 @@
         sumHistory: sumHistory,
         cchHistory: cchHistory,
         distHistory: distHistory,
-        binoHistory: binoHistory
+        binoHistory: binoHistory,
+        ocmHistory: ocmHistory
     };
 
     return vm;
@@ -208,6 +209,7 @@
         destroyWindow("sumHistoryWindow");
         destroyWindow("distHistoryWindow");
         destroyWindow("binoHistoryWindow");
+        destroyWindow("ocmHistoryWindow");
     }
 
     function destroyWindow(id) {
@@ -447,6 +449,9 @@
                     bino.Stereo = ko.observable(bino.Stereo1() + " " +  bino.Stereo2());
                     bino.HasHistory = ko.observable(bino.Binocularity() !== "" || bino.W4DNear() !== "" || bino.W4DDist() !== "" || bino.Stereo() !== "");
                 },
+                "{root}.History.Ocm[i].FieldValue": function (ocm) {
+                    ocm.HasHistory = ko.observable(true);
+                },
             }
         };
     }
@@ -528,16 +533,21 @@
 
     function distHistory() {
         //History windows
-        loadHistoryWindow('distHistoryWindow', "850px", "200px", "Summary History", "dist");
+        loadHistoryWindow('distHistoryWindow', "850px", "200px", "VA Dist & Near History", "dist");
         return false;
     }
 
     function binoHistory() {
         //History windows
-        loadHistoryWindow('binoHistoryWindow', "850px", "200px", "Summary History", "bino");
+        loadHistoryWindow('binoHistoryWindow', "850px", "200px", "Binocularity History", "bino");
         return false;
     }
 
+    function ocmHistory() {
+        //History windows
+        loadHistoryWindow('ocmHistoryWindow', "850px", "200px", "Ocular Motility History", "ocm");
+        return false;
+    }
 
 
     function cancel() {

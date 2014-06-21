@@ -856,7 +856,68 @@
                     </div>
                 </fieldset>
             </div>
-            <div class="small-1 columns col-narrow">&nbsp;</div>
+            <div class="small-1 columns col-narrow">        
+                <div class="button icon selected display_none" title="Ocular Motility History" data-bind="click: ocmHistory"><i class="button-icon fi-first-aid"></i></div>
+            </div>
+        </div>
+        <div id="ocmHistoryWindow" style="display:none">
+            <div data-bind="foreach: model.History.Ocm">
+            <div class="row title" data-bind="text: Header, attr: { id: 'ocm' + ExamID() }"></div>
+            <fieldset class="history-box">
+                <table class="ocm-outer">
+                    <tr>
+                        <td>
+                            <table class="ocm-inner">
+                                <tr>
+                                    <td data-bind="text: FieldValue.OcMot1a">&nbsp;</td>
+                                    <td data-bind="text: FieldValue.OcMot1b">&nbsp;</td>
+                                </tr>
+                                <tr>
+                                    <td data-bind="text: FieldValue.OcMot4a">&nbsp;</td>
+                                    <td data-bind="text: FieldValue.OcMot4b">&nbsp;</td>
+                                </tr>
+                                <tr>
+                                    <td data-bind="text: FieldValue.OcMot7a"></td>
+                                    <td data-bind="text: FieldValue.OcMot7b"></td>
+                                </tr>
+                            </table>
+                        </td>
+                        <td>
+                            <table class="ocm-inner">
+                                <tr>
+                                    <td data-bind="text: FieldValue.OcMot2a"></td>
+                                    <td data-bind="text: FieldValue.OcMot2b"></td>
+                                </tr>
+                                <tr>
+                                    <td data-bind="text: FieldValue.OcMot5a"></td>
+                                    <td data-bind="text: FieldValue.OcMot5b"></td>
+                                </tr>
+                                <tr>
+                                    <td data-bind="text: FieldValue.OcMot8a"></td>
+                                    <td data-bind="text: FieldValue.OcMot8b"></td>
+                                </tr>
+                            </table>
+                        </td>
+                        <td>
+                            <table class="ocm-inner">
+                                <tr>
+                                    <td data-bind="text: FieldValue.OcMot3a"></td>
+                                    <td data-bind="text: FieldValue.OcMot3b"></td>
+                                </tr>
+                                <tr>
+                                    <td data-bind="text: FieldValue.OcMot6a"></td>
+                                    <td data-bind="text: FieldValue.OcMot6b"></td>
+                                </tr>
+                                <tr>
+                                    <td data-bind="text: FieldValue.OcMot9a"></td>
+                                    <td data-bind="text: FieldValue.OcMot9b"></td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                </table>
+            </fieldset>
+            </div>
         </div>
         <div class="row row-narrow">
             <div class="small-4 columns col-narrow">
