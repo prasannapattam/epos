@@ -113,7 +113,7 @@ define(['durandal/system', 'durandal/app', 'durandal/viewLocator', 'durandal/com
 
             ko.applyBindingsToNode(element, {
                 value: field.Value,
-                css: { focusctrl: field.focusctrl, correctctrl: field.correctctrl },
+                css: { focusctrl: field.focusctrl, correctctrl: field.correctctrl, notestextctrl: false },
                 event: { 
                     focus: function() { 
                         if(field.ColourType() === 1){
@@ -159,7 +159,7 @@ define(['durandal/system', 'durandal/app', 'durandal/viewLocator', 'durandal/com
                     optionsText: 'FieldValue',
                     optionsCaption: '',
                     value: field.Value,
-                    css: { focusctrl: field.focusctrl, correctctrl: field.correctctrl },
+                    css: { focusctrl: field.focusctrl, correctctrl: field.correctctrl, notesselectctrl: false },
                     event: {
                         focus: function () {
                             if (field.ColourType() === 1) {

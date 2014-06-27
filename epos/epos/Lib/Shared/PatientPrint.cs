@@ -171,7 +171,7 @@ namespace epos.Lib.Shared
                 premature = true;
 
             if (dict.ContainsKey("Premature"))
-                premature = Convert.ToBoolean(dict["Premature"]);
+                premature = Convert.ToBoolean(dict["Premature"] == "" ? "false" : dict["Premature"]);
 
 
             int patientMonths = monthDifference(dob, DateTime.Now);
