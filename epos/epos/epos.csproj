@@ -140,6 +140,7 @@
   <ItemGroup>
     <Compile Include="App_Start\AutoMapperConfig.cs" />
     <Compile Include="App_Start\BundleConfig.cs" />
+    <Compile Include="App_Start\VersionInfo.cs" />
     <Compile Include="Controllers\CompatController.cs" />
     <Compile Include="Controllers\ExamDefaultController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
