@@ -515,37 +515,37 @@
 
     function rfxHistory() {
         //History windows
-        loadHistoryWindow('rfxHistoryWindow', "850px", "200px", "Rfx History", "rfx");
+        loadHistoryWindow('rfxHistoryWindow', "600px", "200px", "Rfx History", "rfx");
         return false;
     }
 
     function cchHistory() {
         //History windows
-        loadHistoryWindow('cchHistoryWindow', "850px", "200px", "CC History", "cch");
+        loadHistoryWindow('cchHistoryWindow', "600px", "200px", "CC History", "cch");
         return false;
     }
 
     function sumHistory() {
         //History windows
-        loadHistoryWindow('sumHistoryWindow', "850px", "200px", "Summary History", "sum");
+        loadHistoryWindow('sumHistoryWindow', "600px", "200px", "Summary History", "sum");
         return false;
     }
 
     function distHistory() {
         //History windows
-        loadHistoryWindow('distHistoryWindow', "850px", "200px", "VA Dist & Near History", "dist");
+        loadHistoryWindow('distHistoryWindow', "600px", "200px", "VA Dist & Near History", "dist");
         return false;
     }
 
     function binoHistory() {
         //History windows
-        loadHistoryWindow('binoHistoryWindow', "850px", "200px", "Binocularity History", "bino");
+        loadHistoryWindow('binoHistoryWindow', "600px", "200px", "Binocularity History", "bino");
         return false;
     }
 
     function ocmHistory() {
         //History windows
-        loadHistoryWindow('ocmHistoryWindow', "850px", "200px", "Ocular Motility History", "ocm");
+        loadHistoryWindow('ocmHistoryWindow', "600px", "200px", "Ocular Motility History", "ocm");
         return false;
     }
 
