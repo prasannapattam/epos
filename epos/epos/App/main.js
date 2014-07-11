@@ -144,6 +144,27 @@ define(['durandal/system', 'durandal/app', 'durandal/viewLocator', 'durandal/com
         }
     };
 
+    ko.bindingHandlers.displaytext = {
+        init: function (element, valueAccessor, allBindingsAccessor, data) {
+            var field = valueAccessor();
+
+            var computedtext = ko.computed(function () {
+                var disptext = "";
+                for (var index = 0; index < field.length; index++) {
+                    if (field[index].Value() !== undefined && field[index].Value() !== "") {
+                        disptext += " " + field[index].Value();
+                    }
+                }
+                return disptext;
+            });
+
+            ko.applyBindingsToNode(element, {
+                text: computedtext
+            });
+        }
+    };
+
+
     ko.bindingHandlers.notesselect = {
         init: function (element, valueAccessor, allBindingsAccessor, data) {
             var field = valueAccessor();

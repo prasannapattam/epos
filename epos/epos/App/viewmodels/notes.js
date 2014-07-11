@@ -27,7 +27,8 @@
         cchHistory: cchHistory,
         distHistory: distHistory,
         binoHistory: binoHistory,
-        ocmHistory: ocmHistory
+        ocmHistory: ocmHistory,
+        ddlValue: ddlValue
     };
 
     return vm;
@@ -179,7 +180,21 @@
             }
         });
 
+
+        jQuery(document).ready(function () {
+            $('.togglenotes').click(function () {
+                $(this).next().toggle('slow');
+                return false;
+            }).next().hide();
+        });
         return true;
+    }
+
+    function ddlValue(value) {
+        if (value === undefined)
+            return "";
+        else
+            return value;
     }
 
     function loadHistoryWindow(id, width, height, title, prefix) {

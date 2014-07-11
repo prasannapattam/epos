@@ -688,6 +688,10 @@ hr{
     background-image: none;
 }
 
+.notes-display{
+    background-color: lightblue;
+}
+
 .title{
     background-color: #4677cf;
     color: white;
