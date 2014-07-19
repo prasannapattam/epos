@@ -499,105 +499,91 @@
         </div>
     </fieldset>
     <fieldset class="no-bottom-border">
-        <div class="togglenotes">
-            <div class="row row-narrow tight">
-                <div class="small-4 columns tight">
-                    <b>Tested with:</b>
-                    <span data-bind="displaytext: [model.VisualAcuity]"></span>
+        <div class="row row-narrow">
+            <div class="small-4 columns col-narrow">
+                <div class="row row-narrow">
+                    <div class="small-8 columns tight">
+                        <label>VA sc Dist</label>
+                    </div>
+                    <div class="small-4 columns tight text-right small-font">
+                        <input type="checkbox" class="tight" data-bind="notescheck: model.NoPref" /> No pref
+                    </div>
                 </div>
-                <div class="small-8 columns tight">
-                    <b>BINOC sc Dist:</b>
-                    <span data-bind="displaytext: [model.Binocsc1, model.Binocsc2]"></span>
+                <div class="row row-narrow">
+                    <div class="small-1 columns odos">
+                        OD:
+                    </div>
+                    <div class="small-6 columns tight">
+                        <select data-bind="notesselect: model.VAscOD1"></select>
+                    </div>
+                    <div class="small-5 columns tight">
+                        <input type="text" data-bind="notesvalue: model.VAscOD2" />
+                    </div>
+                </div>
+                <div class="row row-narrow">
+                    <div class="small-1 columns odos">
+                        OS:
+                    </div>
+                    <div class="small-6 columns tight">
+                        <select data-bind="notesselect: model.DistOS1"></select>
+                    </div>
+                    <div class="small-5 columns tight">
+                        <input type="text" data-bind="notesvalue: model.DistOS2" />
+                    </div>
                 </div>
             </div>
-        </div>
-        <div class="notes-display">
-            <div class="row row-narrow">
-                <div class="small-4 columns col-narrow">
-                    <div class="row row-narrow">
-                        <div class="small-8 columns tight">
-                            <label>VA sc Dist</label>
-                        </div>
-                        <div class="small-4 columns tight text-right small-font">
-                            <input type="checkbox" class="tight" data-bind="notescheck: model.NoPref" /> No pref
-                        </div>
+            <div class="small-4 columns col-narrow">
+                <label>VA cc Dist</label>
+                <div class="row row-narrow">
+                    <div class="small-1 columns odos">
+                        OD:
                     </div>
-                    <div class="row row-narrow">
-                        <div class="small-1 columns odos">
-                            OD:
-                        </div>
-                        <div class="small-6 columns tight">
-                            <select data-bind="notesselect: model.VAscOD1"></select>
-                        </div>
-                        <div class="small-5 columns tight">
-                            <input type="text" data-bind="notesvalue: model.VAscOD2" />
-                        </div>
+                    <div class="small-6 columns tight">
+                        <select data-bind="notesselect: model.VAccOD1"></select>
                     </div>
-                    <div class="row row-narrow">
-                        <div class="small-1 columns odos">
-                            OS:
-                        </div>
-                        <div class="small-6 columns tight">
-                            <select data-bind="notesselect: model.DistOS1"></select>
-                        </div>
-                        <div class="small-5 columns tight">
-                            <input type="text" data-bind="notesvalue: model.DistOS2" />
-                        </div>
+                    <div class="small-5 columns tight">
+                        <input type="text" data-bind="notesvalue: model.VAccOD2" />
                     </div>
                 </div>
-                <div class="small-4 columns col-narrow">
-                    <label>VA cc Dist</label>
-                    <div class="row row-narrow">
-                        <div class="small-1 columns odos">
-                            OD:
-                        </div>
-                        <div class="small-6 columns tight">
-                            <select data-bind="notesselect: model.VAccOD1"></select>
-                        </div>
-                        <div class="small-5 columns tight">
-                            <input type="text" data-bind="notesvalue: model.VAccOD2" />
-                        </div>
+                <div class="row row-narrow">
+                    <div class="small-1 columns odos">
+                        OS:
                     </div>
-                    <div class="row row-narrow">
-                        <div class="small-1 columns odos">
-                            OS:
-                        </div>
-                        <div class="small-6 columns tight">
-                            <select data-bind="notesselect: model.DistOS3"></select>
-                        </div>
-                        <div class="small-5 columns tight">
-                            <input type="text" data-bind="notesvalue: model.DistOS4" />
-                        </div>
+                    <div class="small-6 columns tight">
+                        <select data-bind="notesselect: model.DistOS3"></select>
+                    </div>
+                    <div class="small-5 columns tight">
+                        <input type="text" data-bind="notesvalue: model.DistOS4" />
                     </div>
                 </div>
-                <div class="small-4 columns col-narrow">
-                    <div class="row row-narrow">
-                        <div class="small-8 columns tight"><label>VA Near</label></div>
-                        <div class="small-4 columns tight text-right">
-                            <div class="button icon selected" title="Dist & Near History" data-bind="click: distHistory"><i class="button-icon fi-first-aid"></i></div>
-                        </div>
+            </div>
+            <div class="small-4 columns col-narrow">
+                <div class="row row-narrow">
+                    <div class="small-8 columns tight"><label>VA Near</label></div>
+                    <div class="small-4 columns tight text-right">
+                        <div class="button icon selected" title="Dist & Near History" data-bind="click: distHistory"><i class="button-icon fi-first-aid"></i></div>
                     </div>
-                    <div class="row row-narrow">
-                        <div class="small-1 columns odos">
-                            OD:
-                        </div>
-                        <div class="small-6 columns tight">
-                            <select data-bind="notesselect: model.VAOD1"></select>
-                        </div>
-                        <div class="small-5 columns tight">
-                            <input type="text" data-bind="notesvalue: model.VAOD2" />
-                        </div>
+                </div>
+                <div class="row row-narrow">
+                    <div class="small-1 columns odos">
+                        OD:
                     </div>
-                    <div class="row row-narrow">
-                        <div class="small-1 columns odos">
-                            OS:
-                        </div>
-                        <div class="small-6 columns tight">
-                            <select data-bind="notesselect: model.NearOS1"></select>
-                        </div>
-                        <div class="small-5 columns tight">
-                            <input type="text" data-bind="notesvalue: model.NearOS2" />
-                        </div>
+                    <div class="small-6 columns tight">
+                        <select data-bind="notesselect: model.VAOD1"></select>
+                    </div>
+                    <div class="small-5 columns tight">
+                        <input type="text" data-bind="notesvalue: model.VAOD2" />
+                    </div>
+                </div>
+                <div class="row row-narrow">
+                    <div class="small-1 columns odos">
+                        OS:
+                    </div>
+                    <div class="small-6 columns tight">
+                        <select data-bind="notesselect: model.NearOS1"></select>
+                    </div>
+                    <div class="small-5 columns tight">
+                        <input type="text" data-bind="notesvalue: model.NearOS2" />
                     </div>
                 </div>
             </div>
