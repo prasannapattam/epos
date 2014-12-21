@@ -188,7 +188,7 @@ namespace epos.Lib.Shared
 
             paragraph.Append(GetTextRun(doctorName, "Cambria", 24, true, false, 1));
             //paragraph.Append(GetTextRun("", "Cambria", 10, false, false, 1));
-            paragraph.Append(GetTextRun("LONG ISLAND PEDIATRIC OPHTHALMOLOGY AND STRABISMUS, PC", "Cambria", 30, true, false, 0));
+            paragraph.Append(GetTextRun("PEDIATRIC OPHTHALMOLOGY AND STRABISMUS", "Cambria", 30, true, false, 0));
             //paragraph.Append(GetTextRun("", "Century Gothic", 3, false, false, 2));
             body.Append(paragraph);
 
